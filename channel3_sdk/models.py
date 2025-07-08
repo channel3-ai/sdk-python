@@ -91,15 +91,26 @@ class ProductDetail(BaseModel):
     )
 
 
+class SearchFilterPrice(BaseModel):
+    """Price filter for product search."""
+
+    min_price: Optional[float] = Field(None, description="Minimum price filter")
+    max_price: Optional[float] = Field(None, description="Maximum price filter")
+
+
 class SearchFilters(BaseModel):
     """Search filters for product search."""
 
-    colors: Optional[List[str]] = Field(None, description="List of colors to filter by")
-    materials: Optional[List[str]] = Field(
-        None, description="List of materials to filter by"
+    brands: Optional[List[str]] = Field(None, description="List of brands to filter by")
+    gender: Optional[Literal["male", "female", "unisex"]] = Field(
+        None, description="Gender to filter by"
     )
-    min_price: Optional[float] = Field(None, description="Minimum price filter")
-    max_price: Optional[float] = Field(None, description="Maximum price filter")
+    price: Optional[SearchFilterPrice] = Field(
+        None, description="Price range to filter by"
+    )
+    availability: Optional[AvailabilityStatus] = Field(
+        None, description="Availability status to filter by"
+    )
 
 
 class SearchRequest(BaseModel):
@@ -110,7 +121,9 @@ class SearchRequest(BaseModel):
     base64_image: Optional[str] = Field(
         None, description="Base64-encoded image for visual search"
     )
-    filters: Optional[SearchFilters] = Field(None, description="Search filters")
+    filters: SearchFilters = Field(
+        default_factory=SearchFilters, description="Search filters"
+    )
     limit: Optional[int] = Field(
         default=20, description="Maximum number of results to return"
     )
