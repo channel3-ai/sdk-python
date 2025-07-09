@@ -1,7 +1,7 @@
 """Pydantic models for the Channel3 API."""
 
 from enum import Enum
-from typing import List, Optional, Union, Literal
+from typing import List, Optional, Literal
 from pydantic import BaseModel, Field
 
 
@@ -78,6 +78,12 @@ class ProductDetail(BaseModel):
     price: Price = Field(..., description="Price information")
     availability: AvailabilityStatus = Field(
         ..., description="Product availability status"
+    )
+    gender: Optional[Literal["unisex", "men", "women"]] = Field(
+        None, description="Gender of the product, if applicable"
+    )
+    materials: Optional[List[str]] = Field(
+        None, description="List of materials, if applicable"
     )
     key_features: Optional[List[str]] = Field(
         None, description="List of key product features"

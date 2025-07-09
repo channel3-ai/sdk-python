@@ -12,10 +12,7 @@ from channel3_sdk import (
     SearchFilters,
     Brand,
     Channel3AuthenticationError,
-    Channel3ValidationError,
     Channel3NotFoundError,
-    Channel3ServerError,
-    Channel3ConnectionError,
 )
 
 

@@ -86,7 +86,7 @@ class Channel3Client(BaseChannel3Client):
         query: Optional[str] = None,
         image_url: Optional[str] = None,
         base64_image: Optional[str] = None,
-        filters: Optional[Union[SearchFilters, Dict[str, Any]]] = None,
+        filters: Optional[SearchFilters] = None,
         limit: int = 20,
     ) -> List[Product]:
         """
@@ -96,7 +96,7 @@ class Channel3Client(BaseChannel3Client):
             query: Text search query
             image_url: URL to an image to use for visual search
             base64_image: Base64-encoded image to use for visual search
-            filters: Search filters (SearchFilters object or dict)
+            filters: Search filters (SearchFilters object)
             limit: Maximum number of products to return (default: 20)
 
         Returns:
@@ -118,7 +118,7 @@ class Channel3Client(BaseChannel3Client):
 
             # Multimodal search with filters
             from channel3_sdk.models import SearchFilters
-            filters = SearchFilters(colors=["blue"], min_price=50.0, max_price=150.0)
+            filters = SearchFilters(min_price=50.0, max_price=150.0)
             products = client.search(query="denim jacket", filters=filters)
             ```
         """
@@ -127,7 +127,7 @@ class Channel3Client(BaseChannel3Client):
             query=query,
             image_url=image_url,
             base64_image=base64_image,
-            filters=filters or SearchFilters(),
+            filters=filters,
             limit=limit,
         )
 
