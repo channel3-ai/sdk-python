@@ -26,14 +26,27 @@ products = client.search(query="blue denim jacket")
 for product in products:
     print(f"Product: {product.title}")
     print(f"Brand: {product.brand_name}")
-    print(f"Price: ${product.offers[0].price.price}")
+    print(f"Price: {product.price.currency} {product.price.price}")
+    print(f"Availability: {product.availability}")
     print("---")
 
 # Get detailed product information
 product_detail = client.get_product("prod_123456")
 print(f"Detailed info for: {product_detail.title}")
-print(f"Materials: {product_detail.materials}")
-print(f"Key features: {product_detail.key_features}")
+print(f"Brand: {product_detail.brand_name}")
+if product_detail.key_features:
+    print(f"Key features: {product_detail.key_features}")
+
+# Get all brands
+brands = client.get_brands()
+for brand in brands:
+    print(f"Brand: {brand.name}")
+    if brand.description:
+        print(f"Description: {brand.description}")
+
+# Get specific brand details
+brand = client.get_brand("brand_123")
+print(f"Brand: {brand.name}")
 ```
 
 ### Asynchronous Client
@@ -52,11 +65,16 @@ async def main():
     for product in products:
         print(f"Product: {product.title}")
         print(f"Score: {product.score}")
+        print(f"Price: {product.price.currency} {product.price.price}")
     
     # Get detailed product information
     if products:
         product_detail = await client.get_product(products[0].id)
-        print(f"Gender: {product_detail.gender}")
+        print(f"Availability: {product_detail.availability}")
+    
+    # Get brands
+    brands = await client.get_brands()
+    print(f"Found {len(brands)} brands")
 
 # Run the async function
 asyncio.run(main())
@@ -90,14 +108,14 @@ products = client.search(
 ### Search with Filters
 
 ```python
-from channel3_sdk import SearchFilters
+from channel3_sdk import SearchFilters, AvailabilityStatus
 
 # Create search filters
 filters = SearchFilters(
-    colors=["blue", "navy"],
-    materials=["cotton", "denim"],
-    min_price=50.0,
-    max_price=200.0
+    brand_ids=["brand_123", "brand_456"],
+    gender="male",
+    availability=[AvailabilityStatus.IN_STOCK],
+    price={"min_price": 50.0, "max_price": 200.0}
 )
 
 # Search with filters
@@ -106,6 +124,21 @@ products = client.search(
     filters=filters,
     limit=10
 )
+```
+
+### Brand Management
+
+```python
+# Get all brands with pagination
+brands = client.get_brands(page=1, size=50)
+
+# Search for specific brands
+nike_brands = client.get_brands(query="nike")
+
+# Get detailed brand information
+brand_detail = client.get_brand("brand_123")
+print(f"Brand: {brand_detail.name}")
+print(f"Logo: {brand_detail.logo_url}")
 ```
 
 ## API Reference
@@ -118,6 +151,8 @@ Synchronous client for the Channel3 API.
 **Methods:**
 - `search(query=None, image_url=None, base64_image=None, filters=None, limit=20)` → `List[Product]`
 - `get_product(product_id)` → `ProductDetail`
+- `get_brands(query=None, page=1, size=100)` → `List[Brand]`
+- `get_brand(brand_id)` → `Brand`
 
 #### `AsyncChannel3Client` 
 Asynchronous client for the Channel3 API.
@@ -125,47 +160,61 @@ Asynchronous client for the Channel3 API.
 **Methods:**
 - `async search(query=None, image_url=None, base64_image=None, filters=None, limit=20)` → `List[Product]`
 - `async get_product(product_id)` → `ProductDetail`
+- `async get_brands(query=None, page=1, size=100)` → `List[Brand]`
+- `async get_brand(brand_id)` → `Brand`
 
 ### Models
 
 #### `Product`
 - `id: str` - Unique product identifier
 - `score: float` - Search relevance score
-- `brand_name: str` - Brand name
 - `title: str` - Product title
-- `description: str` - Product description
+- `description: Optional[str]` - Product description
+- `brand_name: str` - Brand name
 - `image_url: str` - Main product image URL
-- `offers: List[MerchantOffering]` - Available purchase options
-- `family: List[FamilyMember]` - Related products
-
-#### `ProductDetail`
-- `brand_id: str` - Brand identifier
-- `brand_name: str` - Brand name
-- `title: str` - Product title
-- `description: str` - Product description
-- `image_urls: List[str]` - Product image URLs
-- `merchant_offerings: List[MerchantOffering]` - Purchase options
-- `gender: Literal["na", "men", "women"]` - Target gender
-- `materials: Optional[List[str]]` - Product materials
-- `key_features: List[str]` - Key product features
-- `family_members: List[FamilyMember]` - Related products
-
-#### `SearchFilters`
-- `colors: Optional[List[str]]` - Color filters
-- `materials: Optional[List[str]]` - Material filters
-- `min_price: Optional[float]` - Minimum price
-- `max_price: Optional[float]` - Maximum price
-
-#### `MerchantOffering`
-- `url: str` - Purchase URL
-- `merchant_name: str` - Merchant name
 - `price: Price` - Price information
 - `availability: AvailabilityStatus` - Availability status
+- `variants: List[Variant]` - Product variants
+
+#### `ProductDetail`
+- `title: str` - Product title
+- `description: Optional[str]` - Product description
+- `brand_id: Optional[str]` - Brand identifier
+- `brand_name: Optional[str]` - Brand name
+- `image_urls: Optional[List[str]]` - Product image URLs
+- `price: Price` - Price information
+- `availability: AvailabilityStatus` - Availability status
+- `key_features: Optional[List[str]]` - Key product features
+- `variants: List[Variant]` - Product variants
+
+#### `Brand`
+- `id: str` - Unique brand identifier
+- `name: str` - Brand name
+- `logo_url: Optional[str]` - Brand logo URL
+- `description: Optional[str]` - Brand description
+
+#### `Variant`
+- `product_id: str` - Associated product identifier
+- `title: str` - Variant title
+- `image_url: str` - Variant image URL
+
+#### `SearchFilters`
+- `brand_ids: Optional[List[str]]` - Brand ID filters
+- `gender: Optional[Literal["male", "female", "unisex"]]` - Gender filter
+- `price: Optional[SearchFilterPrice]` - Price range filter
+- `availability: Optional[List[AvailabilityStatus]]` - Availability filters
+
+#### `SearchFilterPrice`
+- `min_price: Optional[float]` - Minimum price
+- `max_price: Optional[float]` - Maximum price
 
 #### `Price`
 - `price: float` - Current price
 - `compare_at_price: Optional[float]` - Original price (if discounted)
 - `currency: str` - Currency code
+
+#### `AvailabilityStatus`
+Enum with values: `IN_STOCK`, `OUT_OF_STOCK`, `PRE_ORDER`, `LIMITED_AVAILABILITY`, `BACK_ORDER`, `DISCONTINUED`, `SOLD_OUT`, `UNKNOWN`
 
 ## Error Handling
 

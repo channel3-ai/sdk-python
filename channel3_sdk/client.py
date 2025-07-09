@@ -6,7 +6,7 @@ import aiohttp
 import asyncio
 from pydantic import ValidationError
 
-from .models import Product, ProductDetail, SearchFilters, SearchRequest
+from .models import Product, ProductDetail, SearchFilters, SearchRequest, Brand
 from .exceptions import (
     Channel3Error,
     Channel3AuthenticationError,
@@ -127,7 +127,7 @@ class Channel3Client(BaseChannel3Client):
             query=query,
             image_url=image_url,
             base64_image=base64_image,
-            filters=filters,
+            filters=filters or SearchFilters(),
             limit=limit,
         )
 
@@ -210,6 +210,119 @@ class Channel3Client(BaseChannel3Client):
         except ValidationError as e:
             raise Channel3Error(f"Invalid response format: {str(e)}")
 
+    def get_brands(
+        self,
+        query: Optional[str] = None,
+        page: int = 1,
+        size: int = 100,
+    ) -> List[Brand]:
+        """
+        Get all brands that the vendor currently sells.
+
+        Args:
+            query: Optional text query to filter brands
+            page: Page number for pagination (default: 1)
+            size: Number of brands per page (default: 100)
+
+        Returns:
+            List of Brand objects
+
+        Raises:
+            Channel3AuthenticationError: If API key is invalid
+            Channel3ValidationError: If request parameters are invalid
+            Channel3ServerError: If server encounters an error
+            Channel3ConnectionError: If there are connection issues
+
+        Example:
+            ```python
+            brands = client.get_brands()
+            for brand in brands:
+                print(f"Brand: {brand.name}")
+            ```
+        """
+        url = f"{self.base_url}/brands"
+        params = {}
+
+        if query is not None:
+            params["query"] = query
+        if page != 1:
+            params["page"] = page
+        if size != 100:
+            params["size"] = size
+
+        try:
+            response = requests.get(
+                url, headers=self.headers, params=params, timeout=30
+            )
+            response_data = response.json()
+
+            if response.status_code != 200:
+                self._handle_error_response(response.status_code, response_data, url)
+
+            # Parse and validate response
+            return [Brand(**item) for item in response_data]
+
+        except requests.exceptions.ConnectionError as e:
+            raise Channel3ConnectionError(
+                f"Failed to connect to Channel3 API: {str(e)}"
+            )
+        except requests.exceptions.Timeout as e:
+            raise Channel3ConnectionError(f"Request timed out: {str(e)}")
+        except requests.exceptions.RequestException as e:
+            raise Channel3Error(f"Request failed: {str(e)}")
+        except ValidationError as e:
+            raise Channel3Error(f"Invalid response format: {str(e)}")
+
+    def get_brand(self, brand_id: str) -> Brand:
+        """
+        Get detailed information for a specific brand by its ID.
+
+        Args:
+            brand_id: The unique identifier of the brand
+
+        Returns:
+            Brand object with detailed brand information
+
+        Raises:
+            Channel3AuthenticationError: If API key is invalid
+            Channel3NotFoundError: If brand is not found
+            Channel3ValidationError: If brand_id is invalid
+            Channel3ServerError: If server encounters an error
+            Channel3ConnectionError: If there are connection issues
+
+        Example:
+            ```python
+            brand = client.get_brand("brand_123456")
+            print(f"Brand: {brand.name}")
+            print(f"Description: {brand.description}")
+            ```
+        """
+        if not brand_id or not brand_id.strip():
+            raise ValueError("brand_id cannot be empty")
+
+        url = f"{self.base_url}/brands/{brand_id}"
+
+        try:
+            response = requests.get(url, headers=self.headers, timeout=30)
+            response_data = response.json()
+
+            if response.status_code != 200:
+                self._handle_error_response(response.status_code, response_data, url)
+
+            # Parse and validate response
+            return Brand(**response_data)
+
+        except requests.exceptions.ConnectionError as e:
+            raise Channel3ConnectionError(
+                f"Failed to connect to Channel3 API: {str(e)}"
+            )
+        except requests.exceptions.Timeout as e:
+            raise Channel3ConnectionError(f"Request timed out: {str(e)}")
+        except requests.exceptions.RequestException as e:
+            raise Channel3Error(f"Request failed: {str(e)}")
+        except ValidationError as e:
+            raise Channel3Error(f"Invalid response format: {str(e)}")
+
 
 class AsyncChannel3Client(BaseChannel3Client):
     """Asynchronous Channel3 API client."""
@@ -255,7 +368,7 @@ class AsyncChannel3Client(BaseChannel3Client):
             query=query,
             image_url=image_url,
             base64_image=base64_image,
-            filters=filters,
+            filters=filters or SearchFilters(),
             limit=limit,
         )
 
@@ -328,6 +441,126 @@ class AsyncChannel3Client(BaseChannel3Client):
 
                     # Parse and validate response
                     return ProductDetail(**response_data)
+
+        except aiohttp.ClientConnectionError as e:
+            raise Channel3ConnectionError(
+                f"Failed to connect to Channel3 API: {str(e)}"
+            )
+        except asyncio.TimeoutError as e:
+            raise Channel3ConnectionError(f"Request timed out: {str(e)}")
+        except aiohttp.ClientError as e:
+            raise Channel3Error(f"Request failed: {str(e)}")
+        except ValidationError as e:
+            raise Channel3Error(f"Invalid response format: {str(e)}")
+
+    async def get_brands(
+        self,
+        query: Optional[str] = None,
+        page: int = 1,
+        size: int = 100,
+    ) -> List[Brand]:
+        """
+        Get all brands that the vendor currently sells.
+
+        Args:
+            query: Optional text query to filter brands
+            page: Page number for pagination (default: 1)
+            size: Number of brands per page (default: 100)
+
+        Returns:
+            List of Brand objects
+
+        Raises:
+            Channel3AuthenticationError: If API key is invalid
+            Channel3ValidationError: If request parameters are invalid
+            Channel3ServerError: If server encounters an error
+            Channel3ConnectionError: If there are connection issues
+
+        Example:
+            ```python
+            brands = await async_client.get_brands()
+            for brand in brands:
+                print(f"Brand: {brand.name}")
+            ```
+        """
+        url = f"{self.base_url}/brands"
+        params = {}
+
+        if query is not None:
+            params["query"] = query
+        if page != 1:
+            params["page"] = page
+        if size != 100:
+            params["size"] = size
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(
+                    url,
+                    headers=self.headers,
+                    params=params,
+                    timeout=aiohttp.ClientTimeout(total=30),
+                ) as response:
+                    response_data = await response.json()
+
+                    if response.status != 200:
+                        self._handle_error_response(response.status, response_data, url)
+
+                    # Parse and validate response
+                    return [Brand(**item) for item in response_data]
+
+        except aiohttp.ClientConnectionError as e:
+            raise Channel3ConnectionError(
+                f"Failed to connect to Channel3 API: {str(e)}"
+            )
+        except asyncio.TimeoutError as e:
+            raise Channel3ConnectionError(f"Request timed out: {str(e)}")
+        except aiohttp.ClientError as e:
+            raise Channel3Error(f"Request failed: {str(e)}")
+        except ValidationError as e:
+            raise Channel3Error(f"Invalid response format: {str(e)}")
+
+    async def get_brand(self, brand_id: str) -> Brand:
+        """
+        Get detailed information for a specific brand by its ID.
+
+        Args:
+            brand_id: The unique identifier of the brand
+
+        Returns:
+            Brand object with detailed brand information
+
+        Raises:
+            Channel3AuthenticationError: If API key is invalid
+            Channel3NotFoundError: If brand is not found
+            Channel3ValidationError: If brand_id is invalid
+            Channel3ServerError: If server encounters an error
+            Channel3ConnectionError: If there are connection issues
+
+        Example:
+            ```python
+            brand = await async_client.get_brand("brand_123456")
+            print(f"Brand: {brand.name}")
+            print(f"Description: {brand.description}")
+            ```
+        """
+        if not brand_id or not brand_id.strip():
+            raise ValueError("brand_id cannot be empty")
+
+        url = f"{self.base_url}/brands/{brand_id}"
+
+        try:
+            async with aiohttp.ClientSession() as session:
+                async with session.get(
+                    url, headers=self.headers, timeout=aiohttp.ClientTimeout(total=30)
+                ) as response:
+                    response_data = await response.json()
+
+                    if response.status != 200:
+                        self._handle_error_response(response.status, response_data, url)
+
+                    # Parse and validate response
+                    return Brand(**response_data)
 
         except aiohttp.ClientConnectionError as e:
             raise Channel3ConnectionError(

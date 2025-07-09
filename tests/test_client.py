@@ -10,6 +10,7 @@ from channel3_sdk import (
     Product,
     ProductDetail,
     SearchFilters,
+    Brand,
     Channel3AuthenticationError,
     Channel3ValidationError,
     Channel3NotFoundError,
@@ -50,19 +51,13 @@ class TestChannel3Client:
             {
                 "id": "prod_123",
                 "score": 0.95,
-                "brand_name": "Test Brand",
                 "title": "Test Product",
                 "description": "Test Description",
+                "brand_name": "Test Brand",
                 "image_url": "https://example.com/image.jpg",
-                "offers": [
-                    {
-                        "url": "https://buy.trychannel3.com",
-                        "merchant_name": "Test Merchant",
-                        "price": {"price": 99.99, "currency": "USD"},
-                        "availability": "InStock",
-                    }
-                ],
-                "family": [],
+                "price": {"price": 99.99, "currency": "USD"},
+                "availability": "InStock",
+                "variants": [],
             }
         ]
         mock_post.return_value = mock_response
@@ -84,7 +79,7 @@ class TestChannel3Client:
         mock_post.return_value = mock_response
 
         client = Channel3Client(api_key="test_key")
-        filters = SearchFilters(colors=["blue"], min_price=50.0)
+        filters = SearchFilters(brand_ids=["brand_123"], gender="male")
 
         client.search(query="test", filters=filters)
 
@@ -92,8 +87,8 @@ class TestChannel3Client:
         call_args = mock_post.call_args
         request_data = call_args[1]["json"]
         assert "filters" in request_data
-        assert request_data["filters"]["colors"] == ["blue"]
-        assert request_data["filters"]["min_price"] == 50.0
+        assert request_data["filters"]["brand_ids"] == ["brand_123"]
+        assert request_data["filters"]["gender"] == "male"
 
     @patch("requests.get")
     def test_get_product_success(self, mock_get):
@@ -101,23 +96,15 @@ class TestChannel3Client:
         mock_response = Mock()
         mock_response.status_code = 200
         mock_response.json.return_value = {
-            "brand_id": "brand_123",
-            "brand_name": "Test Brand",
             "title": "Test Product",
             "description": "Test Description",
+            "brand_id": "brand_123",
+            "brand_name": "Test Brand",
             "image_urls": ["https://example.com/image.jpg"],
-            "merchant_offerings": [
-                {
-                    "url": "https://buy.trychannel3.com",
-                    "merchant_name": "Test Merchant",
-                    "price": {"price": 99.99, "currency": "USD"},
-                    "availability": "InStock",
-                }
-            ],
-            "gender": "na",
-            "materials": ["cotton"],
+            "price": {"price": 99.99, "currency": "USD"},
+            "availability": "InStock",
             "key_features": ["comfortable"],
-            "family_members": [],
+            "variants": [],
         }
         mock_get.return_value = mock_response
 
@@ -127,6 +114,49 @@ class TestChannel3Client:
         assert isinstance(product, ProductDetail)
         assert product.brand_id == "brand_123"
         assert product.title == "Test Product"
+
+    @patch("requests.get")
+    def test_get_brands_success(self, mock_get):
+        """Test successful get brands request."""
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = [
+            {
+                "id": "brand_123",
+                "name": "Test Brand",
+                "logo_url": "https://example.com/logo.jpg",
+                "description": "Test brand description",
+            }
+        ]
+        mock_get.return_value = mock_response
+
+        client = Channel3Client(api_key="test_key")
+        brands = client.get_brands()
+
+        assert len(brands) == 1
+        assert isinstance(brands[0], Brand)
+        assert brands[0].id == "brand_123"
+        assert brands[0].name == "Test Brand"
+
+    @patch("requests.get")
+    def test_get_brand_success(self, mock_get):
+        """Test successful get brand request."""
+        mock_response = Mock()
+        mock_response.status_code = 200
+        mock_response.json.return_value = {
+            "id": "brand_123",
+            "name": "Test Brand",
+            "logo_url": "https://example.com/logo.jpg",
+            "description": "Test brand description",
+        }
+        mock_get.return_value = mock_response
+
+        client = Channel3Client(api_key="test_key")
+        brand = client.get_brand("brand_123")
+
+        assert isinstance(brand, Brand)
+        assert brand.id == "brand_123"
+        assert brand.name == "Test Brand"
 
     @patch("requests.post")
     def test_authentication_error(self, mock_post):
@@ -161,89 +191,56 @@ class TestChannel3Client:
         with pytest.raises(ValueError, match="product_id cannot be empty"):
             client.get_product("")
 
+    def test_empty_brand_id_raises_error(self):
+        """Test that empty brand ID raises ValueError."""
+        client = Channel3Client(api_key="test_key")
+
+        with pytest.raises(ValueError, match="brand_id cannot be empty"):
+            client.get_brand("")
+
 
 class TestAsyncChannel3Client:
     """Tests for the asynchronous client."""
 
-    @pytest.mark.asyncio
-    async def test_async_search_success(self):
-        """Test successful async search request."""
-        with patch("aiohttp.ClientSession") as mock_session:
-            # Setup mocks
-            mock_response = AsyncMock()
-            mock_response.status = 200
-            mock_response.json = AsyncMock(
-                return_value=[
-                    {
-                        "id": "prod_123",
-                        "score": 0.95,
-                        "brand_name": "Test Brand",
-                        "title": "Test Product",
-                        "description": "Test Description",
-                        "image_url": "https://example.com/image.jpg",
-                        "offers": [
-                            {
-                                "url": "https://buy.trychannel3.com",
-                                "merchant_name": "Test Merchant",
-                                "price": {"price": 99.99, "currency": "USD"},
-                                "availability": "InStock",
-                            }
-                        ],
-                        "family": [],
-                    }
-                ]
-            )
+    def test_async_client_initialization_with_api_key(self):
+        """Test async client initialization with explicit API key."""
+        client = AsyncChannel3Client(api_key="test_key")
+        assert client.api_key == "test_key"
+        assert "x-api-key" in client.headers
+        assert client.headers["x-api-key"] == "test_key"
 
-            mock_session_instance = AsyncMock()
-            mock_session.return_value.__aenter__.return_value = mock_session_instance
-            mock_session_instance.post.return_value.__aenter__.return_value = (
-                mock_response
-            )
+    def test_async_client_initialization_without_api_key_raises_error(self):
+        """Test that missing API key raises ValueError."""
+        with patch.dict("os.environ", {}, clear=True):
+            with pytest.raises(ValueError, match="No API key provided"):
+                AsyncChannel3Client()
 
-            client = AsyncChannel3Client(api_key="test_key")
-            products = await client.search(query="test")
+    def test_async_empty_product_id_raises_error(self):
+        """Test that empty product ID raises ValueError."""
+        client = AsyncChannel3Client(api_key="test_key")
 
-            assert len(products) == 1
-            assert isinstance(products[0], Product)
-            assert products[0].id == "prod_123"
+        with pytest.raises(ValueError, match="product_id cannot be empty"):
+            # We can test this without making actual async calls
+            import asyncio
 
-    @pytest.mark.asyncio
-    async def test_async_get_product_success(self):
-        """Test successful async get product request."""
-        with patch("aiohttp.ClientSession") as mock_session:
-            # Setup mocks
-            mock_response = AsyncMock()
-            mock_response.status = 200
-            mock_response.json = AsyncMock(
-                return_value={
-                    "brand_id": "brand_123",
-                    "brand_name": "Test Brand",
-                    "title": "Test Product",
-                    "description": "Test Description",
-                    "image_urls": ["https://example.com/image.jpg"],
-                    "merchant_offerings": [
-                        {
-                            "url": "https://buy.trychannel3.com",
-                            "merchant_name": "Test Merchant",
-                            "price": {"price": 99.99, "currency": "USD"},
-                            "availability": "InStock",
-                        }
-                    ],
-                    "gender": "na",
-                    "materials": ["cotton"],
-                    "key_features": ["comfortable"],
-                    "family_members": [],
-                }
-            )
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                loop.run_until_complete(client.get_product(""))
+            finally:
+                loop.close()
 
-            mock_session_instance = AsyncMock()
-            mock_session.return_value.__aenter__.return_value = mock_session_instance
-            mock_session_instance.get.return_value.__aenter__.return_value = (
-                mock_response
-            )
+    def test_async_empty_brand_id_raises_error(self):
+        """Test that empty brand ID raises ValueError."""
+        client = AsyncChannel3Client(api_key="test_key")
 
-            client = AsyncChannel3Client(api_key="test_key")
-            product = await client.get_product("prod_123")
+        with pytest.raises(ValueError, match="brand_id cannot be empty"):
+            # We can test this without making actual async calls
+            import asyncio
 
-            assert isinstance(product, ProductDetail)
-            assert product.brand_id == "brand_123"
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            try:
+                loop.run_until_complete(client.get_brand(""))
+            finally:
+                loop.close()

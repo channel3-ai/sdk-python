@@ -30,25 +30,21 @@ class Price(BaseModel):
     currency: str = Field(..., description="The currency code of the product.")
 
 
-class MerchantOffering(BaseModel):
-    """A merchant offering a product."""
+class Brand(BaseModel):
+    """A brand."""
 
-    url: str = Field(
-        default="https://buy.trychannel3.com", description="URL to purchase the product"
-    )
-    merchant_name: str = Field(..., description="Name of the merchant")
-    price: Price = Field(..., description="Price information")
-    availability: AvailabilityStatus = Field(
-        ..., description="Product availability status"
-    )
+    id: str = Field(..., description="Unique identifier for the brand")
+    name: str = Field(..., description="Name of the brand")
+    logo_url: Optional[str] = Field(None, description="Logo URL for the brand")
+    description: Optional[str] = Field(None, description="Description of the brand")
 
 
-class FamilyMember(BaseModel):
-    """A family member product."""
+class Variant(BaseModel):
+    """A product variant."""
 
-    id: str = Field(..., description="Unique identifier for the family member")
-    title: str = Field(..., description="Title of the family member product")
-    image_url: str = Field(..., description="Image URL for the family member product")
+    product_id: str = Field(..., description="Unique identifier for the product")
+    title: str = Field(..., description="Title of the variant")
+    image_url: str = Field(..., description="Image URL for the variant")
 
 
 class Product(BaseModel):
@@ -56,38 +52,38 @@ class Product(BaseModel):
 
     id: str = Field(..., description="Unique identifier for the product")
     score: float = Field(..., description="Relevance score for the search query")
-    brand_name: str = Field(..., description="Brand name of the product")
     title: str = Field(..., description="Product title")
-    description: str = Field(..., description="Product description")
+    description: Optional[str] = Field(None, description="Product description")
+    brand_name: str = Field(..., description="Brand name of the product")
     image_url: str = Field(..., description="Main product image URL")
-    offers: List[MerchantOffering] = Field(
-        ..., description="List of merchant offerings"
+    price: Price = Field(..., description="Price information")
+    availability: AvailabilityStatus = Field(
+        ..., description="Product availability status"
     )
-    family: List[FamilyMember] = Field(
-        default_factory=list, description="Related family products"
+    variants: List[Variant] = Field(
+        default_factory=list, description="Product variants"
     )
 
 
 class ProductDetail(BaseModel):
     """Detailed information about a product."""
 
-    brand_id: str = Field(..., description="Unique identifier for the brand")
-    brand_name: str = Field(..., description="Brand name of the product")
     title: str = Field(..., description="Product title")
-    description: str = Field(..., description="Product description")
-    image_urls: List[str] = Field(..., description="List of product image URLs")
-    merchant_offerings: List[MerchantOffering] = Field(
-        ..., description="List of merchant offerings"
+    description: Optional[str] = Field(None, description="Product description")
+    brand_id: Optional[str] = Field(None, description="Unique identifier for the brand")
+    brand_name: Optional[str] = Field(None, description="Brand name of the product")
+    image_urls: Optional[List[str]] = Field(
+        None, description="List of product image URLs"
     )
-    gender: Literal["na", "men", "women"] = Field(
-        default="na", description="Target gender"
+    price: Price = Field(..., description="Price information")
+    availability: AvailabilityStatus = Field(
+        ..., description="Product availability status"
     )
-    materials: Optional[List[str]] = Field(None, description="List of materials")
-    key_features: List[str] = Field(
-        default_factory=list, description="List of key product features"
+    key_features: Optional[List[str]] = Field(
+        None, description="List of key product features"
     )
-    family_members: List[FamilyMember] = Field(
-        default_factory=list, description="Related family products"
+    variants: List[Variant] = Field(
+        default_factory=list, description="Product variants"
     )
 
 
@@ -101,15 +97,17 @@ class SearchFilterPrice(BaseModel):
 class SearchFilters(BaseModel):
     """Search filters for product search."""
 
-    brands: Optional[List[str]] = Field(None, description="List of brands to filter by")
+    brand_ids: Optional[List[str]] = Field(
+        None, description="List of brand IDs to filter by"
+    )
     gender: Optional[Literal["male", "female", "unisex"]] = Field(
         None, description="Gender to filter by"
     )
     price: Optional[SearchFilterPrice] = Field(
         None, description="Price range to filter by"
     )
-    availability: Optional[AvailabilityStatus] = Field(
-        None, description="Availability status to filter by"
+    availability: Optional[List[AvailabilityStatus]] = Field(
+        None, description="Availability statuses to filter by"
     )
 
 
@@ -121,9 +119,7 @@ class SearchRequest(BaseModel):
     base64_image: Optional[str] = Field(
         None, description="Base64-encoded image for visual search"
     )
-    filters: SearchFilters = Field(
-        default_factory=SearchFilters, description="Search filters"
-    )
     limit: Optional[int] = Field(
         default=20, description="Maximum number of results to return"
     )
+    filters: Optional[SearchFilters] = Field(default=None, description="Search filters")

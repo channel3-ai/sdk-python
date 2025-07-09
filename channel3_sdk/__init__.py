@@ -6,8 +6,9 @@ from .models import (
     ProductDetail,
     SearchFilters,
     SearchRequest,
-    MerchantOffering,
-    FamilyMember,
+    SearchFilterPrice,
+    Brand,
+    Variant,
     Price,
     AvailabilityStatus,
 )
@@ -20,7 +21,7 @@ from .exceptions import (
     Channel3ConnectionError,
 )
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
 __all__ = [
     # Clients
     "Channel3Client",
@@ -30,8 +31,9 @@ __all__ = [
     "ProductDetail",
     "SearchFilters",
     "SearchRequest",
-    "MerchantOffering",
-    "FamilyMember",
+    "SearchFilterPrice",
+    "Brand",
+    "Variant",
     "Price",
     "AvailabilityStatus",
     # Exceptions
