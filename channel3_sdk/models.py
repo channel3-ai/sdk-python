@@ -55,7 +55,7 @@ class Product(BaseModel):
     score: float = Field(..., description="Relevance score for the search query")
     title: str = Field(..., description="Product title")
     description: Optional[str] = Field(None, description="Product description")
-    brand: Brand = Field(..., description="Brand of the product")
+    brand_name: str = Field(..., description="Brand name for the product")
     image_url: str = Field(..., description="Main product image URL")
     price: Price = Field(..., description="Price information")
     availability: AvailabilityStatus = Field(
