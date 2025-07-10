@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "channel3-sdk"
-version = "0.1.12"
+version = "0.2.0"
 description = "The official Python SDK for Channel3 AI Shopping API"
 authors = ["Channel3 <alex@trychannel3.com>"]
 readme = "README.md"

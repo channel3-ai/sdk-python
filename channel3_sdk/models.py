@@ -51,10 +51,11 @@ class Product(BaseModel):
     """A product returned from search."""
 
     id: str = Field(..., description="Unique identifier for the product")
+    url: str = Field(..., description="URL for the product")
     score: float = Field(..., description="Relevance score for the search query")
     title: str = Field(..., description="Product title")
     description: Optional[str] = Field(None, description="Product description")
-    brand_name: str = Field(..., description="Brand name of the product")
+    brand: Brand = Field(..., description="Brand of the product")
     image_url: str = Field(..., description="Main product image URL")
     price: Price = Field(..., description="Price information")
     availability: AvailabilityStatus = Field(
@@ -68,6 +69,9 @@ class Product(BaseModel):
 class ProductDetail(BaseModel):
     """Detailed information about a product."""
 
+    id: str = Field(..., description="Unique identifier for the product")
+    url: str = Field(..., description="URL for the product")
+    score: float = Field(..., description="Relevance score for the search query")
     title: str = Field(..., description="Product title")
     description: Optional[str] = Field(None, description="Product description")
     brand_id: Optional[str] = Field(None, description="Unique identifier for the brand")
