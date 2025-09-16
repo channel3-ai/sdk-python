@@ -55,6 +55,9 @@ class Filters(TypedDict, total=False):
     brand_ids: Optional[SequenceNotStr[str]]
     """List of brand IDs"""
 
+    exclude_product_ids: Optional[SequenceNotStr[str]]
+    """List of product IDs to exclude"""
+
     gender: Optional[Literal["male", "female", "unisex"]]
 
     price: Optional[FiltersPrice]

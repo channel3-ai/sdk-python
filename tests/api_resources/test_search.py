@@ -36,6 +36,7 @@ class TestSearch:
             filters={
                 "availability": ["InStock"],
                 "brand_ids": ["string"],
+                "exclude_product_ids": ["string"],
                 "gender": "male",
                 "price": {
                     "max_price": 0,
@@ -95,6 +96,7 @@ class TestAsyncSearch:
             filters={
                 "availability": ["InStock"],
                 "brand_ids": ["string"],
+                "exclude_product_ids": ["string"],
                 "gender": "male",
                 "price": {
                     "max_price": 0,
