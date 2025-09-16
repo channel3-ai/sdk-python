@@ -8,15 +8,15 @@ from typing_extensions import Required, Annotated, TypedDict
 
 import pytest
 
-from public_sdk._types import NOT_GIVEN, Base64FileInput
-from public_sdk._utils import (
+from channel3_sdk._types import NOT_GIVEN, Base64FileInput
+from channel3_sdk._utils import (
     PropertyInfo,
     transform as _transform,
     parse_datetime,
     async_transform as _async_transform,
 )
-from public_sdk._compat import PYDANTIC_V1
-from public_sdk._models import BaseModel
+from channel3_sdk._compat import PYDANTIC_V1
+from channel3_sdk._models import BaseModel
 
 _T = TypeVar("_T")
 

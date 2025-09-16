@@ -7,8 +7,8 @@ from typing import Any, cast
 
 import pytest
 
-from public_sdk import PublicSDK, AsyncPublicSDK
 from tests.utils import assert_matches_type
+from channel3_sdk import Channel3, AsyncChannel3
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -18,13 +18,13 @@ class TestClient:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_retrieve(self, client: PublicSDK) -> None:
+    def test_method_retrieve(self, client: Channel3) -> None:
         client_ = client.retrieve()
         assert_matches_type(object, client_, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_retrieve(self, client: PublicSDK) -> None:
+    def test_raw_response_retrieve(self, client: Channel3) -> None:
         response = client.with_raw_response.retrieve()
 
         assert response.is_closed is True
@@ -34,7 +34,7 @@ class TestClient:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_retrieve(self, client: PublicSDK) -> None:
+    def test_streaming_response_retrieve(self, client: Channel3) -> None:
         with client.with_streaming_response.retrieve() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -52,13 +52,13 @@ class TestAsyncClient:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_retrieve(self, async_client: AsyncPublicSDK) -> None:
+    async def test_method_retrieve(self, async_client: AsyncChannel3) -> None:
         client = await async_client.retrieve()
         assert_matches_type(object, client, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_retrieve(self, async_client: AsyncPublicSDK) -> None:
+    async def test_raw_response_retrieve(self, async_client: AsyncChannel3) -> None:
         response = await async_client.with_raw_response.retrieve()
 
         assert response.is_closed is True
@@ -68,7 +68,7 @@ class TestAsyncClient:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_retrieve(self, async_client: AsyncPublicSDK) -> None:
+    async def test_streaming_response_retrieve(self, async_client: AsyncChannel3) -> None:
         async with async_client.with_streaming_response.retrieve() as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
