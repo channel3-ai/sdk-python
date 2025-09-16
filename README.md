@@ -30,8 +30,6 @@ from channel3_sdk import Channel3
 
 client = Channel3(
     api_key=os.environ.get("CHANNEL3_API_KEY"),  # This is the default and can be omitted
-    # defaults to "production".
-    environment="development",
 )
 
 response = client.search.perform()
@@ -53,8 +51,6 @@ from channel3_sdk import AsyncChannel3
 
 client = AsyncChannel3(
     api_key=os.environ.get("CHANNEL3_API_KEY"),  # This is the default and can be omitted
-    # defaults to "production".
-    environment="development",
 )
 
 
