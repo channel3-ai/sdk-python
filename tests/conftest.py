@@ -10,15 +10,15 @@ import httpx
 import pytest
 from pytest_asyncio import is_async_test
 
-from public_sdk import PublicSDK, AsyncPublicSDK, DefaultAioHttpClient
-from public_sdk._utils import is_dict
+from channel3_sdk import Channel3, AsyncChannel3, DefaultAioHttpClient
+from channel3_sdk._utils import is_dict
 
 if TYPE_CHECKING:
     from _pytest.fixtures import FixtureRequest  # pyright: ignore[reportPrivateImportUsage]
 
 pytest.register_assert_rewrite("tests.utils")
 
-logging.getLogger("public_sdk").setLevel(logging.DEBUG)
+logging.getLogger("channel3_sdk").setLevel(logging.DEBUG)
 
 
 # automatically add `pytest.mark.asyncio()` to all of our async tests
@@ -49,17 +49,17 @@ api_key = "My API Key"
 
 
 @pytest.fixture(scope="session")
-def client(request: FixtureRequest) -> Iterator[PublicSDK]:
+def client(request: FixtureRequest) -> Iterator[Channel3]:
     strict = getattr(request, "param", True)
     if not isinstance(strict, bool):
         raise TypeError(f"Unexpected fixture parameter type {type(strict)}, expected {bool}")
 
-    with PublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=strict) as client:
+    with Channel3(base_url=base_url, api_key=api_key, _strict_response_validation=strict) as client:
         yield client
 
 
 @pytest.fixture(scope="session")
-async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncPublicSDK]:
+async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncChannel3]:
     param = getattr(request, "param", True)
 
     # defaults
@@ -78,7 +78,7 @@ async def async_client(request: FixtureRequest) -> AsyncIterator[AsyncPublicSDK]
     else:
         raise TypeError(f"Unexpected fixture parameter type {type(param)}, expected bool or dict")
 
-    async with AsyncPublicSDK(
+    async with AsyncChannel3(
         base_url=base_url, api_key=api_key, _strict_response_validation=strict, http_client=http_client
     ) as client:
         yield client

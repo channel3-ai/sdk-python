@@ -7,9 +7,9 @@ from typing import Any, cast
 
 import pytest
 
-from public_sdk import PublicSDK, AsyncPublicSDK
 from tests.utils import assert_matches_type
-from public_sdk.types import EnrichEnrichURLResponse
+from channel3_sdk import Channel3, AsyncChannel3
+from channel3_sdk.types import EnrichEnrichURLResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -19,7 +19,7 @@ class TestEnrich:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_method_enrich_url(self, client: PublicSDK) -> None:
+    def test_method_enrich_url(self, client: Channel3) -> None:
         enrich = client.enrich.enrich_url(
             url="url",
         )
@@ -27,7 +27,7 @@ class TestEnrich:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_raw_response_enrich_url(self, client: PublicSDK) -> None:
+    def test_raw_response_enrich_url(self, client: Channel3) -> None:
         response = client.enrich.with_raw_response.enrich_url(
             url="url",
         )
@@ -39,7 +39,7 @@ class TestEnrich:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    def test_streaming_response_enrich_url(self, client: PublicSDK) -> None:
+    def test_streaming_response_enrich_url(self, client: Channel3) -> None:
         with client.enrich.with_streaming_response.enrich_url(
             url="url",
         ) as response:
@@ -59,7 +59,7 @@ class TestAsyncEnrich:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_method_enrich_url(self, async_client: AsyncPublicSDK) -> None:
+    async def test_method_enrich_url(self, async_client: AsyncChannel3) -> None:
         enrich = await async_client.enrich.enrich_url(
             url="url",
         )
@@ -67,7 +67,7 @@ class TestAsyncEnrich:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_raw_response_enrich_url(self, async_client: AsyncPublicSDK) -> None:
+    async def test_raw_response_enrich_url(self, async_client: AsyncChannel3) -> None:
         response = await async_client.enrich.with_raw_response.enrich_url(
             url="url",
         )
@@ -79,7 +79,7 @@ class TestAsyncEnrich:
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
-    async def test_streaming_response_enrich_url(self, async_client: AsyncPublicSDK) -> None:
+    async def test_streaming_response_enrich_url(self, async_client: AsyncChannel3) -> None:
         async with async_client.enrich.with_streaming_response.enrich_url(
             url="url",
         ) as response:

@@ -3,8 +3,8 @@
 from __future__ import annotations
 
 import os
-from typing import Any, Union, Mapping
-from typing_extensions import Self, override
+from typing import Any, Dict, Union, Mapping, cast
+from typing_extensions import Self, Literal, override
 
 import httpx
 
@@ -32,7 +32,7 @@ from ._response import (
 )
 from .resources import brands, enrich, search, products
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
-from ._exceptions import APIStatusError, PublicSDKError
+from ._exceptions import Channel3Error, APIStatusError
 from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
@@ -41,33 +41,42 @@ from ._base_client import (
 )
 
 __all__ = [
+    "ENVIRONMENTS",
     "Timeout",
     "Transport",
     "ProxiesTypes",
     "RequestOptions",
-    "PublicSDK",
-    "AsyncPublicSDK",
+    "Channel3",
+    "AsyncChannel3",
     "Client",
     "AsyncClient",
 ]
 
+ENVIRONMENTS: Dict[str, str] = {
+    "production": "https://api.trychannel3.com",
+    "development": "https://localhost:8000",
+}
 
-class PublicSDK(SyncAPIClient):
+
+class Channel3(SyncAPIClient):
     search: search.SearchResource
     products: products.ProductsResource
     brands: brands.BrandsResource
     enrich: enrich.EnrichResource
-    with_raw_response: PublicSDKWithRawResponse
-    with_streaming_response: PublicSDKWithStreamedResponse
+    with_raw_response: Channel3WithRawResponse
+    with_streaming_response: Channel3WithStreamedResponse
 
     # client options
     api_key: str
+
+    _environment: Literal["production", "development"] | NotGiven
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
-        base_url: str | httpx.URL | None = None,
+        environment: Literal["production", "development"] | NotGiven = NOT_GIVEN,
+        base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
@@ -86,22 +95,43 @@ class PublicSDK(SyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new synchronous PublicSDK client instance.
+        """Construct a new synchronous Channel3 client instance.
 
-        This automatically infers the `api_key` argument from the `PUBLIC_SDK_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `CHANNEL3_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("PUBLIC_SDK_API_KEY")
+            api_key = os.environ.get("CHANNEL3_API_KEY")
         if api_key is None:
-            raise PublicSDKError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the PUBLIC_SDK_API_KEY environment variable"
+            raise Channel3Error(
+                "The api_key client option must be set either by passing api_key to the client or by setting the CHANNEL3_API_KEY environment variable"
             )
         self.api_key = api_key
 
-        if base_url is None:
-            base_url = os.environ.get("PUBLIC_SDK_BASE_URL")
-        if base_url is None:
-            base_url = f"https://api.trychannel3.com"
+        self._environment = environment
+
+        base_url_env = os.environ.get("CHANNEL3_BASE_URL")
+        if is_given(base_url) and base_url is not None:
+            # cast required because mypy doesn't understand the type narrowing
+            base_url = cast("str | httpx.URL", base_url)  # pyright: ignore[reportUnnecessaryCast]
+        elif is_given(environment):
+            if base_url_env and base_url is not None:
+                raise ValueError(
+                    "Ambiguous URL; The `CHANNEL3_BASE_URL` env var and the `environment` argument are given. If you want to use the environment, you must pass base_url=None",
+                )
+
+            try:
+                base_url = ENVIRONMENTS[environment]
+            except KeyError as exc:
+                raise ValueError(f"Unknown environment: {environment}") from exc
+        elif base_url_env is not None:
+            base_url = base_url_env
+        else:
+            self._environment = environment = "production"
+
+            try:
+                base_url = ENVIRONMENTS[environment]
+            except KeyError as exc:
+                raise ValueError(f"Unknown environment: {environment}") from exc
 
         super().__init__(
             version=__version__,
@@ -118,8 +148,8 @@ class PublicSDK(SyncAPIClient):
         self.products = products.ProductsResource(self)
         self.brands = brands.BrandsResource(self)
         self.enrich = enrich.EnrichResource(self)
-        self.with_raw_response = PublicSDKWithRawResponse(self)
-        self.with_streaming_response = PublicSDKWithStreamedResponse(self)
+        self.with_raw_response = Channel3WithRawResponse(self)
+        self.with_streaming_response = Channel3WithStreamedResponse(self)
 
     @property
     @override
@@ -145,6 +175,7 @@ class PublicSDK(SyncAPIClient):
         self,
         *,
         api_key: str | None = None,
+        environment: Literal["production", "development"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.Client | None = None,
@@ -180,6 +211,7 @@ class PublicSDK(SyncAPIClient):
         return self.__class__(
             api_key=api_key or self.api_key,
             base_url=base_url or self.base_url,
+            environment=environment or self._environment,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
             max_retries=max_retries if is_given(max_retries) else self.max_retries,
@@ -245,22 +277,25 @@ class PublicSDK(SyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class AsyncPublicSDK(AsyncAPIClient):
+class AsyncChannel3(AsyncAPIClient):
     search: search.AsyncSearchResource
     products: products.AsyncProductsResource
     brands: brands.AsyncBrandsResource
     enrich: enrich.AsyncEnrichResource
-    with_raw_response: AsyncPublicSDKWithRawResponse
-    with_streaming_response: AsyncPublicSDKWithStreamedResponse
+    with_raw_response: AsyncChannel3WithRawResponse
+    with_streaming_response: AsyncChannel3WithStreamedResponse
 
     # client options
     api_key: str
+
+    _environment: Literal["production", "development"] | NotGiven
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
-        base_url: str | httpx.URL | None = None,
+        environment: Literal["production", "development"] | NotGiven = NOT_GIVEN,
+        base_url: str | httpx.URL | None | NotGiven = NOT_GIVEN,
         timeout: Union[float, Timeout, None, NotGiven] = NOT_GIVEN,
         max_retries: int = DEFAULT_MAX_RETRIES,
         default_headers: Mapping[str, str] | None = None,
@@ -279,22 +314,43 @@ class AsyncPublicSDK(AsyncAPIClient):
         # part of our public interface in the future.
         _strict_response_validation: bool = False,
     ) -> None:
-        """Construct a new async AsyncPublicSDK client instance.
+        """Construct a new async AsyncChannel3 client instance.
 
-        This automatically infers the `api_key` argument from the `PUBLIC_SDK_API_KEY` environment variable if it is not provided.
+        This automatically infers the `api_key` argument from the `CHANNEL3_API_KEY` environment variable if it is not provided.
         """
         if api_key is None:
-            api_key = os.environ.get("PUBLIC_SDK_API_KEY")
+            api_key = os.environ.get("CHANNEL3_API_KEY")
         if api_key is None:
-            raise PublicSDKError(
-                "The api_key client option must be set either by passing api_key to the client or by setting the PUBLIC_SDK_API_KEY environment variable"
+            raise Channel3Error(
+                "The api_key client option must be set either by passing api_key to the client or by setting the CHANNEL3_API_KEY environment variable"
             )
         self.api_key = api_key
 
-        if base_url is None:
-            base_url = os.environ.get("PUBLIC_SDK_BASE_URL")
-        if base_url is None:
-            base_url = f"https://api.trychannel3.com"
+        self._environment = environment
+
+        base_url_env = os.environ.get("CHANNEL3_BASE_URL")
+        if is_given(base_url) and base_url is not None:
+            # cast required because mypy doesn't understand the type narrowing
+            base_url = cast("str | httpx.URL", base_url)  # pyright: ignore[reportUnnecessaryCast]
+        elif is_given(environment):
+            if base_url_env and base_url is not None:
+                raise ValueError(
+                    "Ambiguous URL; The `CHANNEL3_BASE_URL` env var and the `environment` argument are given. If you want to use the environment, you must pass base_url=None",
+                )
+
+            try:
+                base_url = ENVIRONMENTS[environment]
+            except KeyError as exc:
+                raise ValueError(f"Unknown environment: {environment}") from exc
+        elif base_url_env is not None:
+            base_url = base_url_env
+        else:
+            self._environment = environment = "production"
+
+            try:
+                base_url = ENVIRONMENTS[environment]
+            except KeyError as exc:
+                raise ValueError(f"Unknown environment: {environment}") from exc
 
         super().__init__(
             version=__version__,
@@ -311,8 +367,8 @@ class AsyncPublicSDK(AsyncAPIClient):
         self.products = products.AsyncProductsResource(self)
         self.brands = brands.AsyncBrandsResource(self)
         self.enrich = enrich.AsyncEnrichResource(self)
-        self.with_raw_response = AsyncPublicSDKWithRawResponse(self)
-        self.with_streaming_response = AsyncPublicSDKWithStreamedResponse(self)
+        self.with_raw_response = AsyncChannel3WithRawResponse(self)
+        self.with_streaming_response = AsyncChannel3WithStreamedResponse(self)
 
     @property
     @override
@@ -338,6 +394,7 @@ class AsyncPublicSDK(AsyncAPIClient):
         self,
         *,
         api_key: str | None = None,
+        environment: Literal["production", "development"] | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = NOT_GIVEN,
         http_client: httpx.AsyncClient | None = None,
@@ -373,6 +430,7 @@ class AsyncPublicSDK(AsyncAPIClient):
         return self.__class__(
             api_key=api_key or self.api_key,
             base_url=base_url or self.base_url,
+            environment=environment or self._environment,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
             max_retries=max_retries if is_given(max_retries) else self.max_retries,
@@ -438,8 +496,8 @@ class AsyncPublicSDK(AsyncAPIClient):
         return APIStatusError(err_msg, response=response, body=body)
 
 
-class PublicSDKWithRawResponse:
-    def __init__(self, client: PublicSDK) -> None:
+class Channel3WithRawResponse:
+    def __init__(self, client: Channel3) -> None:
         self.search = search.SearchResourceWithRawResponse(client.search)
         self.products = products.ProductsResourceWithRawResponse(client.products)
         self.brands = brands.BrandsResourceWithRawResponse(client.brands)
@@ -450,8 +508,8 @@ class PublicSDKWithRawResponse:
         )
 
 
-class AsyncPublicSDKWithRawResponse:
-    def __init__(self, client: AsyncPublicSDK) -> None:
+class AsyncChannel3WithRawResponse:
+    def __init__(self, client: AsyncChannel3) -> None:
         self.search = search.AsyncSearchResourceWithRawResponse(client.search)
         self.products = products.AsyncProductsResourceWithRawResponse(client.products)
         self.brands = brands.AsyncBrandsResourceWithRawResponse(client.brands)
@@ -462,8 +520,8 @@ class AsyncPublicSDKWithRawResponse:
         )
 
 
-class PublicSDKWithStreamedResponse:
-    def __init__(self, client: PublicSDK) -> None:
+class Channel3WithStreamedResponse:
+    def __init__(self, client: Channel3) -> None:
         self.search = search.SearchResourceWithStreamingResponse(client.search)
         self.products = products.ProductsResourceWithStreamingResponse(client.products)
         self.brands = brands.BrandsResourceWithStreamingResponse(client.brands)
@@ -474,8 +532,8 @@ class PublicSDKWithStreamedResponse:
         )
 
 
-class AsyncPublicSDKWithStreamedResponse:
-    def __init__(self, client: AsyncPublicSDK) -> None:
+class AsyncChannel3WithStreamedResponse:
+    def __init__(self, client: AsyncChannel3) -> None:
         self.search = search.AsyncSearchResourceWithStreamingResponse(client.search)
         self.products = products.AsyncProductsResourceWithStreamingResponse(client.products)
         self.brands = brands.AsyncBrandsResourceWithStreamingResponse(client.brands)
@@ -486,6 +544,6 @@ class AsyncPublicSDKWithStreamedResponse:
         )
 
 
-Client = PublicSDK
+Client = Channel3
 
-AsyncClient = AsyncPublicSDK
+AsyncClient = AsyncChannel3

@@ -18,11 +18,11 @@ __all__ = [
 ]
 
 
-class PublicSDKError(Exception):
+class Channel3Error(Exception):
     pass
 
 
-class APIError(PublicSDKError):
+class APIError(Channel3Error):
     message: str
     request: httpx.Request
 

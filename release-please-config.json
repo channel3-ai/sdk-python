@@ -61,6 +61,6 @@
   ],
   "release-type": "python",
   "extra-files": [
-    "src/public_sdk/_version.py"
+    "src/channel3_sdk/_version.py"
   ]
 }

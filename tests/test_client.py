@@ -18,12 +18,12 @@ import pytest
 from respx import MockRouter
 from pydantic import ValidationError
 
-from public_sdk import PublicSDK, AsyncPublicSDK, APIResponseValidationError
-from public_sdk._types import Omit
-from public_sdk._utils import asyncify
-from public_sdk._models import BaseModel, FinalRequestOptions
-from public_sdk._exceptions import APIStatusError, PublicSDKError, APITimeoutError, APIResponseValidationError
-from public_sdk._base_client import (
+from channel3_sdk import Channel3, AsyncChannel3, APIResponseValidationError
+from channel3_sdk._types import Omit
+from channel3_sdk._utils import asyncify
+from channel3_sdk._models import BaseModel, FinalRequestOptions
+from channel3_sdk._exceptions import Channel3Error, APIStatusError, APITimeoutError, APIResponseValidationError
+from channel3_sdk._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
     BaseClient,
@@ -50,7 +50,7 @@ def _low_retry_timeout(*_args: Any, **_kwargs: Any) -> float:
     return 0.1
 
 
-def _get_open_connections(client: PublicSDK | AsyncPublicSDK) -> int:
+def _get_open_connections(client: Channel3 | AsyncChannel3) -> int:
     transport = client._client._transport
     assert isinstance(transport, httpx.HTTPTransport) or isinstance(transport, httpx.AsyncHTTPTransport)
 
@@ -58,8 +58,8 @@ def _get_open_connections(client: PublicSDK | AsyncPublicSDK) -> int:
     return len(pool._requests)
 
 
-class TestPublicSDK:
-    client = PublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+class TestChannel3:
+    client = Channel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     def test_raw_response(self, respx_mock: MockRouter) -> None:
@@ -106,7 +106,7 @@ class TestPublicSDK:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = PublicSDK(
+        client = Channel3(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
@@ -140,7 +140,7 @@ class TestPublicSDK:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = PublicSDK(
+        client = Channel3(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
@@ -232,10 +232,10 @@ class TestPublicSDK:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "public_sdk/_legacy_response.py",
-                        "public_sdk/_response.py",
+                        "channel3_sdk/_legacy_response.py",
+                        "channel3_sdk/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "public_sdk/_compat.py",
+                        "channel3_sdk/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -266,7 +266,7 @@ class TestPublicSDK:
         assert timeout == httpx.Timeout(100.0)
 
     def test_client_timeout_option(self) -> None:
-        client = PublicSDK(
+        client = Channel3(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
@@ -277,7 +277,7 @@ class TestPublicSDK:
     def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         with httpx.Client(timeout=None) as http_client:
-            client = PublicSDK(
+            client = Channel3(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -287,7 +287,7 @@ class TestPublicSDK:
 
         # no timeout given to the httpx client should not use the httpx default
         with httpx.Client() as http_client:
-            client = PublicSDK(
+            client = Channel3(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -297,7 +297,7 @@ class TestPublicSDK:
 
         # explicitly passing the default timeout currently results in it being ignored
         with httpx.Client(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = PublicSDK(
+            client = Channel3(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -308,7 +308,7 @@ class TestPublicSDK:
     async def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             async with httpx.AsyncClient() as http_client:
-                PublicSDK(
+                Channel3(
                     base_url=base_url,
                     api_key=api_key,
                     _strict_response_validation=True,
@@ -316,14 +316,14 @@ class TestPublicSDK:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = PublicSDK(
+        client = Channel3(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = PublicSDK(
+        client2 = Channel3(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -337,17 +337,17 @@ class TestPublicSDK:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = PublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Channel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-api-key") == api_key
 
-        with pytest.raises(PublicSDKError):
-            with update_env(**{"PUBLIC_SDK_API_KEY": Omit()}):
-                client2 = PublicSDK(base_url=base_url, api_key=None, _strict_response_validation=True)
+        with pytest.raises(Channel3Error):
+            with update_env(**{"CHANNEL3_API_KEY": Omit()}):
+                client2 = Channel3(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
-        client = PublicSDK(
+        client = Channel3(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -461,7 +461,7 @@ class TestPublicSDK:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, client: PublicSDK) -> None:
+    def test_multipart_repeating_array(self, client: Channel3) -> None:
         request = client._build_request(
             FinalRequestOptions.construct(
                 method="post",
@@ -548,7 +548,7 @@ class TestPublicSDK:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = PublicSDK(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
+        client = Channel3(base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True)
         assert client.base_url == "https://example.com/from_init/"
 
         client.base_url = "https://example.com/from_setter"  # type: ignore[assignment]
@@ -556,15 +556,25 @@ class TestPublicSDK:
         assert client.base_url == "https://example.com/from_setter/"
 
     def test_base_url_env(self) -> None:
-        with update_env(PUBLIC_SDK_BASE_URL="http://localhost:5000/from/env"):
-            client = PublicSDK(api_key=api_key, _strict_response_validation=True)
+        with update_env(CHANNEL3_BASE_URL="http://localhost:5000/from/env"):
+            client = Channel3(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
+        # explicit environment arg requires explicitness
+        with update_env(CHANNEL3_BASE_URL="http://localhost:5000/from/env"):
+            with pytest.raises(ValueError, match=r"you must pass base_url=None"):
+                Channel3(api_key=api_key, _strict_response_validation=True, environment="production")
+
+            client = Channel3(
+                base_url=None, api_key=api_key, _strict_response_validation=True, environment="production"
+            )
+            assert str(client.base_url).startswith("https://api.trychannel3.com")
+
     @pytest.mark.parametrize(
         "client",
         [
-            PublicSDK(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
-            PublicSDK(
+            Channel3(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
+            Channel3(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -573,7 +583,7 @@ class TestPublicSDK:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: PublicSDK) -> None:
+    def test_base_url_trailing_slash(self, client: Channel3) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -586,8 +596,8 @@ class TestPublicSDK:
     @pytest.mark.parametrize(
         "client",
         [
-            PublicSDK(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
-            PublicSDK(
+            Channel3(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
+            Channel3(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -596,7 +606,7 @@ class TestPublicSDK:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: PublicSDK) -> None:
+    def test_base_url_no_trailing_slash(self, client: Channel3) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -609,8 +619,8 @@ class TestPublicSDK:
     @pytest.mark.parametrize(
         "client",
         [
-            PublicSDK(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
-            PublicSDK(
+            Channel3(base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True),
+            Channel3(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -619,7 +629,7 @@ class TestPublicSDK:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: PublicSDK) -> None:
+    def test_absolute_request_url(self, client: Channel3) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -630,7 +640,7 @@ class TestPublicSDK:
         assert request.url == "https://myapi.com/foo"
 
     def test_copied_client_does_not_close_http(self) -> None:
-        client = PublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Channel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -641,7 +651,7 @@ class TestPublicSDK:
         assert not client.is_closed()
 
     def test_client_context_manager(self) -> None:
-        client = PublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Channel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -662,7 +672,7 @@ class TestPublicSDK:
 
     def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            PublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None))
+            Channel3(base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None))
 
     @pytest.mark.respx(base_url=base_url)
     def test_received_text_for_expected_json(self, respx_mock: MockRouter) -> None:
@@ -671,12 +681,12 @@ class TestPublicSDK:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = PublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = Channel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             strict_client.get("/foo", cast_to=Model)
 
-        client = PublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        client = Channel3(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -704,16 +714,16 @@ class TestPublicSDK:
     )
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = PublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = Channel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("public_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: PublicSDK) -> None:
+    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Channel3) -> None:
         respx_mock.post("/v0/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
@@ -721,9 +731,9 @@ class TestPublicSDK:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("public_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
-    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: PublicSDK) -> None:
+    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Channel3) -> None:
         respx_mock.post("/v0/search").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
@@ -731,12 +741,12 @@ class TestPublicSDK:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("public_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     def test_retries_taken(
         self,
-        client: PublicSDK,
+        client: Channel3,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -762,10 +772,10 @@ class TestPublicSDK:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("public_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_omit_retry_count_header(
-        self, client: PublicSDK, failures_before_success: int, respx_mock: MockRouter
+        self, client: Channel3, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -785,10 +795,10 @@ class TestPublicSDK:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("public_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_overwrite_retry_count_header(
-        self, client: PublicSDK, failures_before_success: int, respx_mock: MockRouter
+        self, client: Channel3, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = client.with_options(max_retries=4)
 
@@ -857,8 +867,8 @@ class TestPublicSDK:
         assert exc_info.value.response.headers["Location"] == f"{base_url}/redirected"
 
 
-class TestAsyncPublicSDK:
-    client = AsyncPublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+class TestAsyncChannel3:
+    client = AsyncChannel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
@@ -907,7 +917,7 @@ class TestAsyncPublicSDK:
         assert isinstance(self.client.timeout, httpx.Timeout)
 
     def test_copy_default_headers(self) -> None:
-        client = AsyncPublicSDK(
+        client = AsyncChannel3(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         assert client.default_headers["X-Foo"] == "bar"
@@ -941,7 +951,7 @@ class TestAsyncPublicSDK:
             client.copy(set_default_headers={}, default_headers={"X-Foo": "Bar"})
 
     def test_copy_default_query(self) -> None:
-        client = AsyncPublicSDK(
+        client = AsyncChannel3(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"foo": "bar"}
         )
         assert _get_params(client)["foo"] == "bar"
@@ -1033,10 +1043,10 @@ class TestAsyncPublicSDK:
                         # to_raw_response_wrapper leaks through the @functools.wraps() decorator.
                         #
                         # removing the decorator fixes the leak for reasons we don't understand.
-                        "public_sdk/_legacy_response.py",
-                        "public_sdk/_response.py",
+                        "channel3_sdk/_legacy_response.py",
+                        "channel3_sdk/_response.py",
                         # pydantic.BaseModel.model_dump || pydantic.BaseModel.dict leak memory for some reason.
-                        "public_sdk/_compat.py",
+                        "channel3_sdk/_compat.py",
                         # Standard library leaks we don't care about.
                         "/logging/__init__.py",
                     ]
@@ -1067,7 +1077,7 @@ class TestAsyncPublicSDK:
         assert timeout == httpx.Timeout(100.0)
 
     async def test_client_timeout_option(self) -> None:
-        client = AsyncPublicSDK(
+        client = AsyncChannel3(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, timeout=httpx.Timeout(0)
         )
 
@@ -1078,7 +1088,7 @@ class TestAsyncPublicSDK:
     async def test_http_client_timeout_option(self) -> None:
         # custom timeout given to the httpx client should be used
         async with httpx.AsyncClient(timeout=None) as http_client:
-            client = AsyncPublicSDK(
+            client = AsyncChannel3(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1088,7 +1098,7 @@ class TestAsyncPublicSDK:
 
         # no timeout given to the httpx client should not use the httpx default
         async with httpx.AsyncClient() as http_client:
-            client = AsyncPublicSDK(
+            client = AsyncChannel3(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1098,7 +1108,7 @@ class TestAsyncPublicSDK:
 
         # explicitly passing the default timeout currently results in it being ignored
         async with httpx.AsyncClient(timeout=HTTPX_DEFAULT_TIMEOUT) as http_client:
-            client = AsyncPublicSDK(
+            client = AsyncChannel3(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, http_client=http_client
             )
 
@@ -1109,7 +1119,7 @@ class TestAsyncPublicSDK:
     def test_invalid_http_client(self) -> None:
         with pytest.raises(TypeError, match="Invalid `http_client` arg"):
             with httpx.Client() as http_client:
-                AsyncPublicSDK(
+                AsyncChannel3(
                     base_url=base_url,
                     api_key=api_key,
                     _strict_response_validation=True,
@@ -1117,14 +1127,14 @@ class TestAsyncPublicSDK:
                 )
 
     def test_default_headers_option(self) -> None:
-        client = AsyncPublicSDK(
+        client = AsyncChannel3(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_headers={"X-Foo": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-foo") == "bar"
         assert request.headers.get("x-stainless-lang") == "python"
 
-        client2 = AsyncPublicSDK(
+        client2 = AsyncChannel3(
             base_url=base_url,
             api_key=api_key,
             _strict_response_validation=True,
@@ -1138,17 +1148,17 @@ class TestAsyncPublicSDK:
         assert request.headers.get("x-stainless-lang") == "my-overriding-header"
 
     def test_validate_headers(self) -> None:
-        client = AsyncPublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncChannel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
         assert request.headers.get("x-api-key") == api_key
 
-        with pytest.raises(PublicSDKError):
-            with update_env(**{"PUBLIC_SDK_API_KEY": Omit()}):
-                client2 = AsyncPublicSDK(base_url=base_url, api_key=None, _strict_response_validation=True)
+        with pytest.raises(Channel3Error):
+            with update_env(**{"CHANNEL3_API_KEY": Omit()}):
+                client2 = AsyncChannel3(base_url=base_url, api_key=None, _strict_response_validation=True)
             _ = client2
 
     def test_default_query_option(self) -> None:
-        client = AsyncPublicSDK(
+        client = AsyncChannel3(
             base_url=base_url, api_key=api_key, _strict_response_validation=True, default_query={"query_param": "bar"}
         )
         request = client._build_request(FinalRequestOptions(method="get", url="/foo"))
@@ -1262,7 +1272,7 @@ class TestAsyncPublicSDK:
         params = dict(request.url.params)
         assert params == {"foo": "2"}
 
-    def test_multipart_repeating_array(self, async_client: AsyncPublicSDK) -> None:
+    def test_multipart_repeating_array(self, async_client: AsyncChannel3) -> None:
         request = async_client._build_request(
             FinalRequestOptions.construct(
                 method="post",
@@ -1349,7 +1359,7 @@ class TestAsyncPublicSDK:
         assert response.foo == 2
 
     def test_base_url_setter(self) -> None:
-        client = AsyncPublicSDK(
+        client = AsyncChannel3(
             base_url="https://example.com/from_init", api_key=api_key, _strict_response_validation=True
         )
         assert client.base_url == "https://example.com/from_init/"
@@ -1359,17 +1369,27 @@ class TestAsyncPublicSDK:
         assert client.base_url == "https://example.com/from_setter/"
 
     def test_base_url_env(self) -> None:
-        with update_env(PUBLIC_SDK_BASE_URL="http://localhost:5000/from/env"):
-            client = AsyncPublicSDK(api_key=api_key, _strict_response_validation=True)
+        with update_env(CHANNEL3_BASE_URL="http://localhost:5000/from/env"):
+            client = AsyncChannel3(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
+        # explicit environment arg requires explicitness
+        with update_env(CHANNEL3_BASE_URL="http://localhost:5000/from/env"):
+            with pytest.raises(ValueError, match=r"you must pass base_url=None"):
+                AsyncChannel3(api_key=api_key, _strict_response_validation=True, environment="production")
+
+            client = AsyncChannel3(
+                base_url=None, api_key=api_key, _strict_response_validation=True, environment="production"
+            )
+            assert str(client.base_url).startswith("https://api.trychannel3.com")
+
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncPublicSDK(
+            AsyncChannel3(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncPublicSDK(
+            AsyncChannel3(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1378,7 +1398,7 @@ class TestAsyncPublicSDK:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_trailing_slash(self, client: AsyncPublicSDK) -> None:
+    def test_base_url_trailing_slash(self, client: AsyncChannel3) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1391,10 +1411,10 @@ class TestAsyncPublicSDK:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncPublicSDK(
+            AsyncChannel3(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncPublicSDK(
+            AsyncChannel3(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1403,7 +1423,7 @@ class TestAsyncPublicSDK:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_base_url_no_trailing_slash(self, client: AsyncPublicSDK) -> None:
+    def test_base_url_no_trailing_slash(self, client: AsyncChannel3) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1416,10 +1436,10 @@ class TestAsyncPublicSDK:
     @pytest.mark.parametrize(
         "client",
         [
-            AsyncPublicSDK(
+            AsyncChannel3(
                 base_url="http://localhost:5000/custom/path/", api_key=api_key, _strict_response_validation=True
             ),
-            AsyncPublicSDK(
+            AsyncChannel3(
                 base_url="http://localhost:5000/custom/path/",
                 api_key=api_key,
                 _strict_response_validation=True,
@@ -1428,7 +1448,7 @@ class TestAsyncPublicSDK:
         ],
         ids=["standard", "custom http client"],
     )
-    def test_absolute_request_url(self, client: AsyncPublicSDK) -> None:
+    def test_absolute_request_url(self, client: AsyncChannel3) -> None:
         request = client._build_request(
             FinalRequestOptions(
                 method="post",
@@ -1439,7 +1459,7 @@ class TestAsyncPublicSDK:
         assert request.url == "https://myapi.com/foo"
 
     async def test_copied_client_does_not_close_http(self) -> None:
-        client = AsyncPublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncChannel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         assert not client.is_closed()
 
         copied = client.copy()
@@ -1451,7 +1471,7 @@ class TestAsyncPublicSDK:
         assert not client.is_closed()
 
     async def test_client_context_manager(self) -> None:
-        client = AsyncPublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncChannel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
         async with client as c2:
             assert c2 is client
             assert not c2.is_closed()
@@ -1473,7 +1493,7 @@ class TestAsyncPublicSDK:
 
     async def test_client_max_retries_validation(self) -> None:
         with pytest.raises(TypeError, match=r"max_retries cannot be None"):
-            AsyncPublicSDK(
+            AsyncChannel3(
                 base_url=base_url, api_key=api_key, _strict_response_validation=True, max_retries=cast(Any, None)
             )
 
@@ -1485,12 +1505,12 @@ class TestAsyncPublicSDK:
 
         respx_mock.get("/foo").mock(return_value=httpx.Response(200, text="my-custom-format"))
 
-        strict_client = AsyncPublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        strict_client = AsyncChannel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         with pytest.raises(APIResponseValidationError):
             await strict_client.get("/foo", cast_to=Model)
 
-        client = AsyncPublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=False)
+        client = AsyncChannel3(base_url=base_url, api_key=api_key, _strict_response_validation=False)
 
         response = await client.get("/foo", cast_to=Model)
         assert isinstance(response, str)  # type: ignore[unreachable]
@@ -1519,17 +1539,17 @@ class TestAsyncPublicSDK:
     @mock.patch("time.time", mock.MagicMock(return_value=1696004797))
     @pytest.mark.asyncio
     async def test_parse_retry_after_header(self, remaining_retries: int, retry_after: str, timeout: float) -> None:
-        client = AsyncPublicSDK(base_url=base_url, api_key=api_key, _strict_response_validation=True)
+        client = AsyncChannel3(base_url=base_url, api_key=api_key, _strict_response_validation=True)
 
         headers = httpx.Headers({"retry-after": retry_after})
         options = FinalRequestOptions(method="get", url="/foo", max_retries=3)
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("public_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_timeout_errors_doesnt_leak(
-        self, respx_mock: MockRouter, async_client: AsyncPublicSDK
+        self, respx_mock: MockRouter, async_client: AsyncChannel3
     ) -> None:
         respx_mock.post("/v0/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
@@ -1538,10 +1558,10 @@ class TestAsyncPublicSDK:
 
         assert _get_open_connections(self.client) == 0
 
-    @mock.patch("public_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     async def test_retrying_status_errors_doesnt_leak(
-        self, respx_mock: MockRouter, async_client: AsyncPublicSDK
+        self, respx_mock: MockRouter, async_client: AsyncChannel3
     ) -> None:
         respx_mock.post("/v0/search").mock(return_value=httpx.Response(500))
 
@@ -1550,13 +1570,13 @@ class TestAsyncPublicSDK:
         assert _get_open_connections(self.client) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("public_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     @pytest.mark.parametrize("failure_mode", ["status", "exception"])
     async def test_retries_taken(
         self,
-        async_client: AsyncPublicSDK,
+        async_client: AsyncChannel3,
         failures_before_success: int,
         failure_mode: Literal["status", "exception"],
         respx_mock: MockRouter,
@@ -1582,11 +1602,11 @@ class TestAsyncPublicSDK:
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("public_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_omit_retry_count_header(
-        self, async_client: AsyncPublicSDK, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncChannel3, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 
@@ -1606,11 +1626,11 @@ class TestAsyncPublicSDK:
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
-    @mock.patch("public_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
+    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     @pytest.mark.asyncio
     async def test_overwrite_retry_count_header(
-        self, async_client: AsyncPublicSDK, failures_before_success: int, respx_mock: MockRouter
+        self, async_client: AsyncChannel3, failures_before_success: int, respx_mock: MockRouter
     ) -> None:
         client = async_client.with_options(max_retries=4)
 

@@ -6,8 +6,8 @@ import httpx
 import pytest
 import pydantic
 
-from public_sdk import BaseModel, PublicSDK, AsyncPublicSDK
-from public_sdk._response import (
+from channel3_sdk import Channel3, BaseModel, AsyncChannel3
+from channel3_sdk._response import (
     APIResponse,
     BaseAPIResponse,
     AsyncAPIResponse,
@@ -15,8 +15,8 @@ from public_sdk._response import (
     AsyncBinaryAPIResponse,
     extract_response_type,
 )
-from public_sdk._streaming import Stream
-from public_sdk._base_client import FinalRequestOptions
+from channel3_sdk._streaming import Stream
+from channel3_sdk._base_client import FinalRequestOptions
 
 
 class ConcreteBaseAPIResponse(APIResponse[bytes]): ...
@@ -37,7 +37,7 @@ def test_extract_response_type_direct_classes() -> None:
 def test_extract_response_type_direct_class_missing_type_arg() -> None:
     with pytest.raises(
         RuntimeError,
-        match="Expected type <class 'public_sdk._response.AsyncAPIResponse'> to have a type argument at index 0 but it did not",
+        match="Expected type <class 'channel3_sdk._response.AsyncAPIResponse'> to have a type argument at index 0 but it did not",
     ):
         extract_response_type(AsyncAPIResponse)
 
@@ -56,7 +56,7 @@ def test_extract_response_type_binary_response() -> None:
 class PydanticModel(pydantic.BaseModel): ...
 
 
-def test_response_parse_mismatched_basemodel(client: PublicSDK) -> None:
+def test_response_parse_mismatched_basemodel(client: Channel3) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=client,
@@ -68,13 +68,13 @@ def test_response_parse_mismatched_basemodel(client: PublicSDK) -> None:
 
     with pytest.raises(
         TypeError,
-        match="Pydantic models must subclass our base model type, e.g. `from public_sdk import BaseModel`",
+        match="Pydantic models must subclass our base model type, e.g. `from channel3_sdk import BaseModel`",
     ):
         response.parse(to=PydanticModel)
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_mismatched_basemodel(async_client: AsyncPublicSDK) -> None:
+async def test_async_response_parse_mismatched_basemodel(async_client: AsyncChannel3) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=async_client,
@@ -86,12 +86,12 @@ async def test_async_response_parse_mismatched_basemodel(async_client: AsyncPubl
 
     with pytest.raises(
         TypeError,
-        match="Pydantic models must subclass our base model type, e.g. `from public_sdk import BaseModel`",
+        match="Pydantic models must subclass our base model type, e.g. `from channel3_sdk import BaseModel`",
     ):
         await response.parse(to=PydanticModel)
 
 
-def test_response_parse_custom_stream(client: PublicSDK) -> None:
+def test_response_parse_custom_stream(client: Channel3) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=client,
@@ -106,7 +106,7 @@ def test_response_parse_custom_stream(client: PublicSDK) -> None:
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_custom_stream(async_client: AsyncPublicSDK) -> None:
+async def test_async_response_parse_custom_stream(async_client: AsyncChannel3) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo"),
         client=async_client,
@@ -125,7 +125,7 @@ class CustomModel(BaseModel):
     bar: int
 
 
-def test_response_parse_custom_model(client: PublicSDK) -> None:
+def test_response_parse_custom_model(client: Channel3) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=client,
@@ -141,7 +141,7 @@ def test_response_parse_custom_model(client: PublicSDK) -> None:
 
 
 @pytest.mark.asyncio
-async def test_async_response_parse_custom_model(async_client: AsyncPublicSDK) -> None:
+async def test_async_response_parse_custom_model(async_client: AsyncChannel3) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=async_client,
@@ -156,7 +156,7 @@ async def test_async_response_parse_custom_model(async_client: AsyncPublicSDK) -
     assert obj.bar == 2
 
 
-def test_response_parse_annotated_type(client: PublicSDK) -> None:
+def test_response_parse_annotated_type(client: Channel3) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=client,
@@ -173,7 +173,7 @@ def test_response_parse_annotated_type(client: PublicSDK) -> None:
     assert obj.bar == 2
 
 
-async def test_async_response_parse_annotated_type(async_client: AsyncPublicSDK) -> None:
+async def test_async_response_parse_annotated_type(async_client: AsyncChannel3) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=json.dumps({"foo": "hello!", "bar": 2})),
         client=async_client,
@@ -201,7 +201,7 @@ async def test_async_response_parse_annotated_type(async_client: AsyncPublicSDK)
         ("FalSe", False),
     ],
 )
-def test_response_parse_bool(client: PublicSDK, content: str, expected: bool) -> None:
+def test_response_parse_bool(client: Channel3, content: str, expected: bool) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=content),
         client=client,
@@ -226,7 +226,7 @@ def test_response_parse_bool(client: PublicSDK, content: str, expected: bool) ->
         ("FalSe", False),
     ],
 )
-async def test_async_response_parse_bool(client: AsyncPublicSDK, content: str, expected: bool) -> None:
+async def test_async_response_parse_bool(client: AsyncChannel3, content: str, expected: bool) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=content),
         client=client,
@@ -245,7 +245,7 @@ class OtherModel(BaseModel):
 
 
 @pytest.mark.parametrize("client", [False], indirect=True)  # loose validation
-def test_response_parse_expect_model_union_non_json_content(client: PublicSDK) -> None:
+def test_response_parse_expect_model_union_non_json_content(client: Channel3) -> None:
     response = APIResponse(
         raw=httpx.Response(200, content=b"foo", headers={"Content-Type": "application/text"}),
         client=client,
@@ -262,7 +262,7 @@ def test_response_parse_expect_model_union_non_json_content(client: PublicSDK) -
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("async_client", [False], indirect=True)  # loose validation
-async def test_async_response_parse_expect_model_union_non_json_content(async_client: AsyncPublicSDK) -> None:
+async def test_async_response_parse_expect_model_union_non_json_content(async_client: AsyncChannel3) -> None:
     response = AsyncAPIResponse(
         raw=httpx.Response(200, content=b"foo", headers={"Content-Type": "application/text"}),
         client=async_client,
