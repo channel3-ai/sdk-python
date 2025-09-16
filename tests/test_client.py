@@ -560,16 +560,6 @@ class TestChannel3:
             client = Channel3(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
 
-        # explicit environment arg requires explicitness
-        with update_env(CHANNEL3_BASE_URL="http://localhost:5000/from/env"):
-            with pytest.raises(ValueError, match=r"you must pass base_url=None"):
-                Channel3(api_key=api_key, _strict_response_validation=True, environment="production")
-
-            client = Channel3(
-                base_url=None, api_key=api_key, _strict_response_validation=True, environment="production"
-            )
-            assert str(client.base_url).startswith("https://api.trychannel3.com")
-
     @pytest.mark.parametrize(
         "client",
         [
@@ -1372,16 +1362,6 @@ class TestAsyncChannel3:
         with update_env(CHANNEL3_BASE_URL="http://localhost:5000/from/env"):
             client = AsyncChannel3(api_key=api_key, _strict_response_validation=True)
             assert client.base_url == "http://localhost:5000/from/env/"
-
-        # explicit environment arg requires explicitness
-        with update_env(CHANNEL3_BASE_URL="http://localhost:5000/from/env"):
-            with pytest.raises(ValueError, match=r"you must pass base_url=None"):
-                AsyncChannel3(api_key=api_key, _strict_response_validation=True, environment="production")
-
-            client = AsyncChannel3(
-                base_url=None, api_key=api_key, _strict_response_validation=True, environment="production"
-            )
-            assert str(client.base_url).startswith("https://api.trychannel3.com")
 
     @pytest.mark.parametrize(
         "client",
