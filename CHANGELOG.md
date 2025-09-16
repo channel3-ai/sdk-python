@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.1.0 (2025-09-16)
+
+Full Changelog: [v2.0.0...v2.1.0](https://github.com/channel3-ai/sdk-python/compare/v2.0.0...v2.1.0)
+
+### Features
+
+* **api:** api update ([b6dac15](https://github.com/channel3-ai/sdk-python/commit/b6dac1516907c474ecfd919c5fad34943b59b101))
+
 ## 2.0.0 (2025-09-16)
 
 Full Changelog: [v0.0.2...v2.0.0](https://github.com/channel3-ai/sdk-python/compare/v0.0.2...v2.0.0)
