@@ -6,14 +6,15 @@ from . import types
 from ._types import NOT_GIVEN, Omit, NoneType, NotGiven, Transport, ProxiesTypes
 from ._utils import file_from_path
 from ._client import (
+    ENVIRONMENTS,
     Client,
     Stream,
     Timeout,
-    PublicSDK,
+    Channel3,
     Transport,
     AsyncClient,
     AsyncStream,
-    AsyncPublicSDK,
+    AsyncChannel3,
     RequestOptions,
 )
 from ._models import BaseModel
@@ -22,10 +23,10 @@ from ._response import APIResponse as APIResponse, AsyncAPIResponse as AsyncAPIR
 from ._constants import DEFAULT_TIMEOUT, DEFAULT_MAX_RETRIES, DEFAULT_CONNECTION_LIMITS
 from ._exceptions import (
     APIError,
+    Channel3Error,
     ConflictError,
     NotFoundError,
     APIStatusError,
-    PublicSDKError,
     RateLimitError,
     APITimeoutError,
     BadRequestError,
@@ -49,7 +50,7 @@ __all__ = [
     "NotGiven",
     "NOT_GIVEN",
     "Omit",
-    "PublicSDKError",
+    "Channel3Error",
     "APIError",
     "APIStatusError",
     "APITimeoutError",
@@ -69,8 +70,9 @@ __all__ = [
     "AsyncClient",
     "Stream",
     "AsyncStream",
-    "PublicSDK",
-    "AsyncPublicSDK",
+    "Channel3",
+    "AsyncChannel3",
+    "ENVIRONMENTS",
     "file_from_path",
     "BaseModel",
     "DEFAULT_TIMEOUT",
@@ -89,12 +91,12 @@ _setup_logging()
 # Update the __module__ attribute for exported symbols so that
 # error messages point to this module instead of the module
 # it was originally defined in, e.g.
-# public_sdk._exceptions.NotFoundError -> public_sdk.NotFoundError
+# channel3_sdk._exceptions.NotFoundError -> channel3_sdk.NotFoundError
 __locals = locals()
 for __name in __all__:
     if not __name.startswith("__"):
         try:
-            __locals[__name].__module__ = "public_sdk"
+            __locals[__name].__module__ = "channel3_sdk"
         except (TypeError, AttributeError):
             # Some of our exported symbols are builtins which we can't set attributes for.
             pass

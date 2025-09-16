@@ -7,17 +7,17 @@ from ._proxy import LazyProxy
 
 
 class ResourcesProxy(LazyProxy[Any]):
-    """A proxy for the `public_sdk.resources` module.
+    """A proxy for the `channel3_sdk.resources` module.
 
-    This is used so that we can lazily import `public_sdk.resources` only when
-    needed *and* so that users can just import `public_sdk` and reference `public_sdk.resources`
+    This is used so that we can lazily import `channel3_sdk.resources` only when
+    needed *and* so that users can just import `channel3_sdk` and reference `channel3_sdk.resources`
     """
 
     @override
     def __load__(self) -> Any:
         import importlib
 
-        mod = importlib.import_module("public_sdk.resources")
+        mod = importlib.import_module("channel3_sdk.resources")
         return mod
 
 

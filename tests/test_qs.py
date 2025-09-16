@@ -4,7 +4,7 @@ from urllib.parse import unquote
 
 import pytest
 
-from public_sdk._qs import Querystring, stringify
+from channel3_sdk._qs import Querystring, stringify
 
 
 def test_empty() -> None:
