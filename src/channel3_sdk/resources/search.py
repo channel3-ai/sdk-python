@@ -7,7 +7,7 @@ from typing import Optional
 import httpx
 
 from ..types import search_perform_params
-from .._types import NOT_GIVEN, Body, Query, Headers, NotGiven
+from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -46,19 +46,19 @@ class SearchResource(SyncAPIResource):
     def perform(
         self,
         *,
-        base64_image: Optional[str] | NotGiven = NOT_GIVEN,
-        config: search_perform_params.Config | NotGiven = NOT_GIVEN,
-        context: Optional[str] | NotGiven = NOT_GIVEN,
-        filters: search_perform_params.Filters | NotGiven = NOT_GIVEN,
-        image_url: Optional[str] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[str] | NotGiven = NOT_GIVEN,
+        base64_image: Optional[str] | Omit = omit,
+        config: search_perform_params.Config | Omit = omit,
+        context: Optional[str] | Omit = omit,
+        filters: search_perform_params.Filters | Omit = omit,
+        image_url: Optional[str] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        query: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SearchPerformResponse:
         """
         Search for products.
@@ -130,19 +130,19 @@ class AsyncSearchResource(AsyncAPIResource):
     async def perform(
         self,
         *,
-        base64_image: Optional[str] | NotGiven = NOT_GIVEN,
-        config: search_perform_params.Config | NotGiven = NOT_GIVEN,
-        context: Optional[str] | NotGiven = NOT_GIVEN,
-        filters: search_perform_params.Filters | NotGiven = NOT_GIVEN,
-        image_url: Optional[str] | NotGiven = NOT_GIVEN,
-        limit: Optional[int] | NotGiven = NOT_GIVEN,
-        query: Optional[str] | NotGiven = NOT_GIVEN,
+        base64_image: Optional[str] | Omit = omit,
+        config: search_perform_params.Config | Omit = omit,
+        context: Optional[str] | Omit = omit,
+        filters: search_perform_params.Filters | Omit = omit,
+        image_url: Optional[str] | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        query: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = NOT_GIVEN,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SearchPerformResponse:
         """
         Search for products.
