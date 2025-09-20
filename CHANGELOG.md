@@ -1,5 +1,15 @@
 # Changelog
 
+## 2.2.1 (2025-09-20)
+
+Full Changelog: [v2.2.0...v2.2.1](https://github.com/channel3-ai/sdk-python/compare/v2.2.0...v2.2.1)
+
+### Chores
+
+* do not install brew dependencies in ./scripts/bootstrap by default ([4195b56](https://github.com/channel3-ai/sdk-python/commit/4195b56c72109be10c6444cc66b262e405562f02))
+* **internal:** update pydantic dependency ([748c67f](https://github.com/channel3-ai/sdk-python/commit/748c67f3e609d241af1ee9342ef3755589d3534c))
+* **types:** change optional parameter type from NotGiven to Omit ([61aab9b](https://github.com/channel3-ai/sdk-python/commit/61aab9bec310efab0ce7a4b13440f1207bcbef8a))
+
 ## 2.2.0 (2025-09-16)
 
 Full Changelog: [v2.1.0...v2.2.0](https://github.com/channel3-ai/sdk-python/compare/v2.1.0...v2.2.0)
