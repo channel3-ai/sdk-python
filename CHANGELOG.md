@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.2.1 (2025-10-21)
+
+Full Changelog: [v2.2.0...v2.2.1](https://github.com/channel3-ai/sdk-python/compare/v2.2.0...v2.2.1)
+
+### Chores
+
+* bump `httpx-aiohttp` version to 0.1.9 ([9fce17d](https://github.com/channel3-ai/sdk-python/commit/9fce17d430d871ec313c00be59baa4cc674405a6))
+* do not install brew dependencies in ./scripts/bootstrap by default ([4195b56](https://github.com/channel3-ai/sdk-python/commit/4195b56c72109be10c6444cc66b262e405562f02))
+* **internal:** detect missing future annotations with ruff ([ee0fee8](https://github.com/channel3-ai/sdk-python/commit/ee0fee8c45a79bbc7436bbdc9216fed4c4f8549f))
+* **internal:** update pydantic dependency ([748c67f](https://github.com/channel3-ai/sdk-python/commit/748c67f3e609d241af1ee9342ef3755589d3534c))
+* **types:** change optional parameter type from NotGiven to Omit ([61aab9b](https://github.com/channel3-ai/sdk-python/commit/61aab9bec310efab0ce7a4b13440f1207bcbef8a))
+
 ## 2.2.0 (2025-09-16)
 
 Full Changelog: [v2.1.0...v2.2.0](https://github.com/channel3-ai/sdk-python/compare/v2.1.0...v2.2.0)
