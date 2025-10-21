@@ -37,6 +37,9 @@ class SearchPerformParams(TypedDict, total=False):
 class Config(TypedDict, total=False):
     enrich_query: bool
 
+    redirect_mode: Optional[Literal["brand", "price", "commission"]]
+    """Mode for redirecting to a product page"""
+
     semantic_search: bool
 
 
