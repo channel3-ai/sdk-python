@@ -37,6 +37,13 @@ class SearchPerformParams(TypedDict, total=False):
 class Config(TypedDict, total=False):
     enrich_query: bool
 
+    redirect_mode: Optional[Literal["brand", "price", "commission"]]
+    """
+    "price" redirects to the product page with the lowest price "commission"
+    redirects to the product page with the highest commission rate "brand" redirects
+    to the brand's product page
+    """
+
     semantic_search: bool
 
 
