@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.3.1 (2025-10-31)
+
+Full Changelog: [v2.3.0...v2.3.1](https://github.com/channel3-ai/sdk-python/compare/v2.3.0...v2.3.1)
+
+### Bug Fixes
+
+* **client:** close streams without requiring full consumption ([4d44bb1](https://github.com/channel3-ai/sdk-python/commit/4d44bb1d045d7d2447bc305dd8463e27dd170175))
+
+
+### Chores
+
+* **internal/tests:** avoid race condition with implicit client cleanup ([ef7fe91](https://github.com/channel3-ai/sdk-python/commit/ef7fe91e5e5c14e15172642362aee07b96f19b3d))
+
 ## 2.3.0 (2025-10-28)
 
 Full Changelog: [v2.2.1...v2.3.0](https://github.com/channel3-ai/sdk-python/compare/v2.2.1...v2.3.0)
