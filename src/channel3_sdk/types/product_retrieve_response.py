@@ -26,6 +26,8 @@ class ProductRetrieveResponse(BaseModel):
 
     brand_name: Optional[str] = None
 
+    categories: Optional[List[str]] = None
+
     description: Optional[str] = None
 
     gender: Optional[Literal["male", "female", "unisex"]] = None
