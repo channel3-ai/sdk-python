@@ -70,7 +70,8 @@ class SearchResource(SyncAPIResource):
 
           context: Optional customer information to personalize search results
 
-          filters: Optional filters
+          filters: Optional filters. Search will only consider products that match all of the
+              filters.
 
           image_url: Image URL
 
@@ -154,7 +155,8 @@ class AsyncSearchResource(AsyncAPIResource):
 
           context: Optional customer information to personalize search results
 
-          filters: Optional filters
+          filters: Optional filters. Search will only consider products that match all of the
+              filters.
 
           image_url: Image URL
 

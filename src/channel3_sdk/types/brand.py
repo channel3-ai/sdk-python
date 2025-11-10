@@ -12,6 +12,9 @@ class Brand(BaseModel):
 
     name: str
 
+    best_commission_rate: Optional[float] = None
+    """The maximum commission rate for the brand, as a percentage"""
+
     description: Optional[str] = None
 
     logo_url: Optional[str] = None
