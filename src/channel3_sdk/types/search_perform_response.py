@@ -28,6 +28,8 @@ class SearchPerformResponseItem(BaseModel):
 
     url: str
 
+    categories: Optional[List[str]] = None
+
     description: Optional[str] = None
 
     variants: Optional[List[Variant]] = None

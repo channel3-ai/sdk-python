@@ -2,12 +2,10 @@
 
 from __future__ import annotations
 
-from typing import Optional
-
 import httpx
 
 from ..types import brand_list_params
-from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from .._types import Body, Query, Headers, NotGiven, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -19,7 +17,6 @@ from .._response import (
 )
 from ..types.brand import Brand
 from .._base_client import make_request_options
-from ..types.brand_list_response import BrandListResponse
 
 __all__ = ["BrandsResource", "AsyncBrandsResource"]
 
@@ -44,10 +41,10 @@ class BrandsResource(SyncAPIResource):
         """
         return BrandsResourceWithStreamingResponse(self)
 
-    def retrieve(
+    def list(
         self,
-        brand_id: str,
         *,
+        query: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -56,42 +53,7 @@ class BrandsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Brand:
         """
-        Get detailed information for a specific brand by its ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not brand_id:
-            raise ValueError(f"Expected a non-empty value for `brand_id` but received {brand_id!r}")
-        return self._get(
-            f"/v0/brands/{brand_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Brand,
-        )
-
-    def list(
-        self,
-        *,
-        page: int | Omit = omit,
-        query: Optional[str] | Omit = omit,
-        size: int | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandListResponse:
-        """
-        Get all brands that the vendor currently sells.
+        Find a brand by name.
 
         Args:
           extra_headers: Send extra headers
@@ -109,16 +71,9 @@ class BrandsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "page": page,
-                        "query": query,
-                        "size": size,
-                    },
-                    brand_list_params.BrandListParams,
-                ),
+                query=maybe_transform({"query": query}, brand_list_params.BrandListParams),
             ),
-            cast_to=BrandListResponse,
+            cast_to=Brand,
         )
 
 
@@ -142,10 +97,10 @@ class AsyncBrandsResource(AsyncAPIResource):
         """
         return AsyncBrandsResourceWithStreamingResponse(self)
 
-    async def retrieve(
+    async def list(
         self,
-        brand_id: str,
         *,
+        query: str,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -154,42 +109,7 @@ class AsyncBrandsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Brand:
         """
-        Get detailed information for a specific brand by its ID.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        if not brand_id:
-            raise ValueError(f"Expected a non-empty value for `brand_id` but received {brand_id!r}")
-        return await self._get(
-            f"/v0/brands/{brand_id}",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=Brand,
-        )
-
-    async def list(
-        self,
-        *,
-        page: int | Omit = omit,
-        query: Optional[str] | Omit = omit,
-        size: int | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> BrandListResponse:
-        """
-        Get all brands that the vendor currently sells.
+        Find a brand by name.
 
         Args:
           extra_headers: Send extra headers
@@ -207,16 +127,9 @@ class AsyncBrandsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
-                    {
-                        "page": page,
-                        "query": query,
-                        "size": size,
-                    },
-                    brand_list_params.BrandListParams,
-                ),
+                query=await async_maybe_transform({"query": query}, brand_list_params.BrandListParams),
             ),
-            cast_to=BrandListResponse,
+            cast_to=Brand,
         )
 
 
@@ -224,9 +137,6 @@ class BrandsResourceWithRawResponse:
     def __init__(self, brands: BrandsResource) -> None:
         self._brands = brands
 
-        self.retrieve = to_raw_response_wrapper(
-            brands.retrieve,
-        )
         self.list = to_raw_response_wrapper(
             brands.list,
         )
@@ -236,9 +146,6 @@ class AsyncBrandsResourceWithRawResponse:
     def __init__(self, brands: AsyncBrandsResource) -> None:
         self._brands = brands
 
-        self.retrieve = async_to_raw_response_wrapper(
-            brands.retrieve,
-        )
         self.list = async_to_raw_response_wrapper(
             brands.list,
         )
@@ -248,9 +155,6 @@ class BrandsResourceWithStreamingResponse:
     def __init__(self, brands: BrandsResource) -> None:
         self._brands = brands
 
-        self.retrieve = to_streamed_response_wrapper(
-            brands.retrieve,
-        )
         self.list = to_streamed_response_wrapper(
             brands.list,
         )
@@ -260,9 +164,6 @@ class AsyncBrandsResourceWithStreamingResponse:
     def __init__(self, brands: AsyncBrandsResource) -> None:
         self._brands = brands
 
-        self.retrieve = async_to_streamed_response_wrapper(
-            brands.retrieve,
-        )
         self.list = async_to_streamed_response_wrapper(
             brands.list,
         )

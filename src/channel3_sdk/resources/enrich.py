@@ -53,7 +53,8 @@ class EnrichResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> EnrichEnrichURLResponse:
         """
-        Enrich a product URL with additional information.
+        Search by product URL, get back full product information from Channel3’s product
+        database.
 
         Args:
           url: The URL of the product to enrich
@@ -108,7 +109,8 @@ class AsyncEnrichResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> EnrichEnrichURLResponse:
         """
-        Enrich a product URL with additional information.
+        Search by product URL, get back full product information from Channel3’s product
+        database.
 
         Args:
           url: The URL of the product to enrich
