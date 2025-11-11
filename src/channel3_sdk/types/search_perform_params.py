@@ -44,9 +44,6 @@ class Config(TypedDict, total=False):
     brand, and price range from the query.
     """
 
-    monetizable_only: bool
-    """If True, search will only consider products that offer commission."""
-
     redirect_mode: Optional[Literal["brand", "price", "commission"]]
     """
     "price" redirects to the product page with the lowest price "commission"

@@ -30,7 +30,7 @@ from ._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .resources import brands, enrich, search, products
+from .resources import brands, enrich, search, products, websites
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import Channel3Error, APIStatusError
 from ._base_client import (
@@ -56,6 +56,7 @@ class Channel3(SyncAPIClient):
     search: search.SearchResource
     products: products.ProductsResource
     brands: brands.BrandsResource
+    websites: websites.WebsitesResource
     enrich: enrich.EnrichResource
     with_raw_response: Channel3WithRawResponse
     with_streaming_response: Channel3WithStreamedResponse
@@ -117,6 +118,7 @@ class Channel3(SyncAPIClient):
         self.search = search.SearchResource(self)
         self.products = products.ProductsResource(self)
         self.brands = brands.BrandsResource(self)
+        self.websites = websites.WebsitesResource(self)
         self.enrich = enrich.EnrichResource(self)
         self.with_raw_response = Channel3WithRawResponse(self)
         self.with_streaming_response = Channel3WithStreamedResponse(self)
@@ -249,6 +251,7 @@ class AsyncChannel3(AsyncAPIClient):
     search: search.AsyncSearchResource
     products: products.AsyncProductsResource
     brands: brands.AsyncBrandsResource
+    websites: websites.AsyncWebsitesResource
     enrich: enrich.AsyncEnrichResource
     with_raw_response: AsyncChannel3WithRawResponse
     with_streaming_response: AsyncChannel3WithStreamedResponse
@@ -310,6 +313,7 @@ class AsyncChannel3(AsyncAPIClient):
         self.search = search.AsyncSearchResource(self)
         self.products = products.AsyncProductsResource(self)
         self.brands = brands.AsyncBrandsResource(self)
+        self.websites = websites.AsyncWebsitesResource(self)
         self.enrich = enrich.AsyncEnrichResource(self)
         self.with_raw_response = AsyncChannel3WithRawResponse(self)
         self.with_streaming_response = AsyncChannel3WithStreamedResponse(self)
@@ -443,6 +447,7 @@ class Channel3WithRawResponse:
         self.search = search.SearchResourceWithRawResponse(client.search)
         self.products = products.ProductsResourceWithRawResponse(client.products)
         self.brands = brands.BrandsResourceWithRawResponse(client.brands)
+        self.websites = websites.WebsitesResourceWithRawResponse(client.websites)
         self.enrich = enrich.EnrichResourceWithRawResponse(client.enrich)
 
         self.retrieve = to_raw_response_wrapper(
@@ -455,6 +460,7 @@ class AsyncChannel3WithRawResponse:
         self.search = search.AsyncSearchResourceWithRawResponse(client.search)
         self.products = products.AsyncProductsResourceWithRawResponse(client.products)
         self.brands = brands.AsyncBrandsResourceWithRawResponse(client.brands)
+        self.websites = websites.AsyncWebsitesResourceWithRawResponse(client.websites)
         self.enrich = enrich.AsyncEnrichResourceWithRawResponse(client.enrich)
 
         self.retrieve = async_to_raw_response_wrapper(
@@ -467,6 +473,7 @@ class Channel3WithStreamedResponse:
         self.search = search.SearchResourceWithStreamingResponse(client.search)
         self.products = products.ProductsResourceWithStreamingResponse(client.products)
         self.brands = brands.BrandsResourceWithStreamingResponse(client.brands)
+        self.websites = websites.WebsitesResourceWithStreamingResponse(client.websites)
         self.enrich = enrich.EnrichResourceWithStreamingResponse(client.enrich)
 
         self.retrieve = to_streamed_response_wrapper(
@@ -479,6 +486,7 @@ class AsyncChannel3WithStreamedResponse:
         self.search = search.AsyncSearchResourceWithStreamingResponse(client.search)
         self.products = products.AsyncProductsResourceWithStreamingResponse(client.products)
         self.brands = brands.AsyncBrandsResourceWithStreamingResponse(client.brands)
+        self.websites = websites.AsyncWebsitesResourceWithStreamingResponse(client.websites)
         self.enrich = enrich.AsyncEnrichResourceWithStreamingResponse(client.enrich)
 
         self.retrieve = async_to_streamed_response_wrapper(

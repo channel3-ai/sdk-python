@@ -4,8 +4,8 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["BrandListParams"]
+__all__ = ["BrandFindParams"]
 
 
-class BrandListParams(TypedDict, total=False):
+class BrandFindParams(TypedDict, total=False):
     query: Required[str]

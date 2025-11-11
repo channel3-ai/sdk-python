@@ -38,7 +38,19 @@ from channel3_sdk.types import Brand
 
 Methods:
 
-- <code title="get /v0/brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">list</a>(\*\*<a href="src/channel3_sdk/types/brand_list_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
+- <code title="get /v0/brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">find</a>(\*\*<a href="src/channel3_sdk/types/brand_find_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
+
+# Websites
+
+Types:
+
+```python
+from channel3_sdk.types import Website
+```
+
+Methods:
+
+- <code title="get /v0/websites">client.websites.<a href="./src/channel3_sdk/resources/websites.py">find</a>(\*\*<a href="src/channel3_sdk/types/website_find_params.py">params</a>) -> <a href="./src/channel3_sdk/types/website.py">Optional[Website]</a></code>
 
 # Enrich
 
