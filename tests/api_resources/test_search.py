@@ -30,7 +30,6 @@ class TestSearch:
             base64_image="base64_image",
             config={
                 "enrich_query": True,
-                "monetizable_only": True,
                 "redirect_mode": "brand",
             },
             context="context",
@@ -94,7 +93,6 @@ class TestAsyncSearch:
             base64_image="base64_image",
             config={
                 "enrich_query": True,
-                "monetizable_only": True,
                 "redirect_mode": "brand",
             },
             context="context",
