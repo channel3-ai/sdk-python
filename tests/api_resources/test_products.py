@@ -9,7 +9,7 @@ import pytest
 
 from tests.utils import assert_matches_type
 from channel3_sdk import Channel3, AsyncChannel3
-from channel3_sdk.types import ProductRetrieveResponse
+from channel3_sdk.types import ProductDetail
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -23,7 +23,7 @@ class TestProducts:
         product = client.products.retrieve(
             "product_id",
         )
-        assert_matches_type(ProductRetrieveResponse, product, path=["response"])
+        assert_matches_type(ProductDetail, product, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -35,7 +35,7 @@ class TestProducts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         product = response.parse()
-        assert_matches_type(ProductRetrieveResponse, product, path=["response"])
+        assert_matches_type(ProductDetail, product, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -47,7 +47,7 @@ class TestProducts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             product = response.parse()
-            assert_matches_type(ProductRetrieveResponse, product, path=["response"])
+            assert_matches_type(ProductDetail, product, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -71,7 +71,7 @@ class TestAsyncProducts:
         product = await async_client.products.retrieve(
             "product_id",
         )
-        assert_matches_type(ProductRetrieveResponse, product, path=["response"])
+        assert_matches_type(ProductDetail, product, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -83,7 +83,7 @@ class TestAsyncProducts:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         product = await response.parse()
-        assert_matches_type(ProductRetrieveResponse, product, path=["response"])
+        assert_matches_type(ProductDetail, product, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -95,7 +95,7 @@ class TestAsyncProducts:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             product = await response.parse()
-            assert_matches_type(ProductRetrieveResponse, product, path=["response"])
+            assert_matches_type(ProductDetail, product, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

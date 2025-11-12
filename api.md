@@ -9,7 +9,14 @@ Methods:
 Types:
 
 ```python
-from channel3_sdk.types import SearchPerformResponse
+from channel3_sdk.types import (
+    RedirectMode,
+    SearchConfig,
+    SearchFilterPrice,
+    SearchFilters,
+    SearchRequest,
+    SearchPerformResponse,
+)
 ```
 
 Methods:
@@ -21,12 +28,12 @@ Methods:
 Types:
 
 ```python
-from channel3_sdk.types import AvailabilityStatus, Price, Variant, ProductRetrieveResponse
+from channel3_sdk.types import AvailabilityStatus, Price, Product, ProductDetail, Variant
 ```
 
 Methods:
 
-- <code title="get /v0/products/{product_id}">client.products.<a href="./src/channel3_sdk/resources/products.py">retrieve</a>(product_id) -> <a href="./src/channel3_sdk/types/product_retrieve_response.py">ProductRetrieveResponse</a></code>
+- <code title="get /v0/products/{product_id}">client.products.<a href="./src/channel3_sdk/resources/products.py">retrieve</a>(product_id) -> <a href="./src/channel3_sdk/types/product_detail.py">ProductDetail</a></code>
 
 # Brands
 
@@ -57,7 +64,7 @@ Methods:
 Types:
 
 ```python
-from channel3_sdk.types import EnrichEnrichURLResponse
+from channel3_sdk.types import EnrichRequest, EnrichEnrichURLResponse
 ```
 
 Methods:
