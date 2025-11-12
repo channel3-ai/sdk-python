@@ -32,6 +32,14 @@ from .products import (
     ProductsResourceWithStreamingResponse,
     AsyncProductsResourceWithStreamingResponse,
 )
+from .websites import (
+    WebsitesResource,
+    AsyncWebsitesResource,
+    WebsitesResourceWithRawResponse,
+    AsyncWebsitesResourceWithRawResponse,
+    WebsitesResourceWithStreamingResponse,
+    AsyncWebsitesResourceWithStreamingResponse,
+)
 
 __all__ = [
     "SearchResource",
@@ -52,6 +60,12 @@ __all__ = [
     "AsyncBrandsResourceWithRawResponse",
     "BrandsResourceWithStreamingResponse",
     "AsyncBrandsResourceWithStreamingResponse",
+    "WebsitesResource",
+    "AsyncWebsitesResource",
+    "WebsitesResourceWithRawResponse",
+    "AsyncWebsitesResourceWithRawResponse",
+    "WebsitesResourceWithStreamingResponse",
+    "AsyncWebsitesResourceWithStreamingResponse",
     "EnrichResource",
     "AsyncEnrichResource",
     "EnrichResourceWithRawResponse",

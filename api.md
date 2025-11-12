@@ -9,7 +9,14 @@ Methods:
 Types:
 
 ```python
-from channel3_sdk.types import SearchPerformResponse
+from channel3_sdk.types import (
+    RedirectMode,
+    SearchConfig,
+    SearchFilterPrice,
+    SearchFilters,
+    SearchRequest,
+    SearchPerformResponse,
+)
 ```
 
 Methods:
@@ -21,12 +28,12 @@ Methods:
 Types:
 
 ```python
-from channel3_sdk.types import AvailabilityStatus, Price, Variant, ProductRetrieveResponse
+from channel3_sdk.types import AvailabilityStatus, Price, Product, ProductDetail, Variant
 ```
 
 Methods:
 
-- <code title="get /v0/products/{product_id}">client.products.<a href="./src/channel3_sdk/resources/products.py">retrieve</a>(product_id) -> <a href="./src/channel3_sdk/types/product_retrieve_response.py">ProductRetrieveResponse</a></code>
+- <code title="get /v0/products/{product_id}">client.products.<a href="./src/channel3_sdk/resources/products.py">retrieve</a>(product_id) -> <a href="./src/channel3_sdk/types/product_detail.py">ProductDetail</a></code>
 
 # Brands
 
@@ -38,14 +45,26 @@ from channel3_sdk.types import Brand
 
 Methods:
 
-- <code title="get /v0/brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">list</a>(\*\*<a href="src/channel3_sdk/types/brand_list_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
+- <code title="get /v0/brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">find</a>(\*\*<a href="src/channel3_sdk/types/brand_find_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
+
+# Websites
+
+Types:
+
+```python
+from channel3_sdk.types import Website
+```
+
+Methods:
+
+- <code title="get /v0/websites">client.websites.<a href="./src/channel3_sdk/resources/websites.py">find</a>(\*\*<a href="src/channel3_sdk/types/website_find_params.py">params</a>) -> <a href="./src/channel3_sdk/types/website.py">Optional[Website]</a></code>
 
 # Enrich
 
 Types:
 
 ```python
-from channel3_sdk.types import EnrichEnrichURLResponse
+from channel3_sdk.types import EnrichRequest, EnrichEnrichURLResponse
 ```
 
 Methods:

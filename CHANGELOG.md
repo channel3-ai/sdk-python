@@ -1,5 +1,25 @@
 # Changelog
 
+## 2.5.0 (2025-11-12)
+
+Full Changelog: [v2.4.0...v2.5.0](https://github.com/channel3-ai/sdk-python/compare/v2.4.0...v2.5.0)
+
+### Features
+
+* Test: Stainless permissions and docs update ([b210191](https://github.com/channel3-ai/sdk-python/commit/b2101914592aeff02fa684dd6223b9035c574647))
+* Updating config ([67c3535](https://github.com/channel3-ai/sdk-python/commit/67c35353f5fa5958daef94694ddddb4ce091920e))
+
+
+### Bug Fixes
+
+* compat with Python 3.14 ([03cfdff](https://github.com/channel3-ai/sdk-python/commit/03cfdffbd9d1393ffa6119b20808821c7f90d8d8))
+* **compat:** update signatures of `model_dump` and `model_dump_json` for Pydantic v1 ([e866804](https://github.com/channel3-ai/sdk-python/commit/e8668049c83afac33b78f0c6454da37be195491a))
+
+
+### Chores
+
+* **package:** drop Python 3.8 support ([677cd39](https://github.com/channel3-ai/sdk-python/commit/677cd392a32a1037f2445189a15a5500bf0790af))
+
 ## 2.4.0 (2025-11-10)
 
 Full Changelog: [v2.3.0...v2.4.0](https://github.com/channel3-ai/sdk-python/compare/v2.3.0...v2.4.0)

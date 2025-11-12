@@ -3,56 +3,56 @@
 from __future__ import annotations
 
 import os
-from typing import Any, cast
+from typing import Any, Optional, cast
 
 import pytest
 
 from tests.utils import assert_matches_type
 from channel3_sdk import Channel3, AsyncChannel3
-from channel3_sdk.types import Brand
+from channel3_sdk.types import Website
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
-class TestBrands:
+class TestWebsites:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_method_find(self, client: Channel3) -> None:
-        brand = client.brands.find(
+        website = client.websites.find(
             query="query",
         )
-        assert_matches_type(Brand, brand, path=["response"])
+        assert_matches_type(Optional[Website], website, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_raw_response_find(self, client: Channel3) -> None:
-        response = client.brands.with_raw_response.find(
+        response = client.websites.with_raw_response.find(
             query="query",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = response.parse()
-        assert_matches_type(Brand, brand, path=["response"])
+        website = response.parse()
+        assert_matches_type(Optional[Website], website, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     def test_streaming_response_find(self, client: Channel3) -> None:
-        with client.brands.with_streaming_response.find(
+        with client.websites.with_streaming_response.find(
             query="query",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            brand = response.parse()
-            assert_matches_type(Brand, brand, path=["response"])
+            website = response.parse()
+            assert_matches_type(Optional[Website], website, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
 
-class TestAsyncBrands:
+class TestAsyncWebsites:
     parametrize = pytest.mark.parametrize(
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
@@ -60,33 +60,33 @@ class TestAsyncBrands:
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_method_find(self, async_client: AsyncChannel3) -> None:
-        brand = await async_client.brands.find(
+        website = await async_client.websites.find(
             query="query",
         )
-        assert_matches_type(Brand, brand, path=["response"])
+        assert_matches_type(Optional[Website], website, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_raw_response_find(self, async_client: AsyncChannel3) -> None:
-        response = await async_client.brands.with_raw_response.find(
+        response = await async_client.websites.with_raw_response.find(
             query="query",
         )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = await response.parse()
-        assert_matches_type(Brand, brand, path=["response"])
+        website = await response.parse()
+        assert_matches_type(Optional[Website], website, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
     async def test_streaming_response_find(self, async_client: AsyncChannel3) -> None:
-        async with async_client.brands.with_streaming_response.find(
+        async with async_client.websites.with_streaming_response.find(
             query="query",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            brand = await response.parse()
-            assert_matches_type(Brand, brand, path=["response"])
+            website = await response.parse()
+            assert_matches_type(Optional[Website], website, path=["response"])
 
         assert cast(Any, response.is_closed) is True

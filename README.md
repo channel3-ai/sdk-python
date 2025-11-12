@@ -3,7 +3,7 @@
 <!-- prettier-ignore -->
 [![PyPI version](https://img.shields.io/pypi/v/channel3_sdk.svg?label=pypi%20(stable))](https://pypi.org/project/channel3_sdk/)
 
-The Channel3 Python library provides convenient access to the Channel3 REST API from any Python 3.8+
+The Channel3 Python library provides convenient access to the Channel3 REST API from any Python 3.9+
 application. The library includes type definitions for all request params and response fields,
 and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx).
 
@@ -32,7 +32,7 @@ client = Channel3(
     api_key=os.environ.get("CHANNEL3_API_KEY"),  # This is the default and can be omitted
 )
 
-response = client.search.perform()
+products = client.search.perform()
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -55,7 +55,7 @@ client = AsyncChannel3(
 
 
 async def main() -> None:
-    response = await client.search.perform()
+    products = await client.search.perform()
 
 
 asyncio.run(main())
@@ -87,7 +87,7 @@ async def main() -> None:
         api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
-        response = await client.search.perform()
+        products = await client.search.perform()
 
 
 asyncio.run(main())
@@ -111,10 +111,10 @@ from channel3_sdk import Channel3
 
 client = Channel3()
 
-response = client.search.perform(
+products = client.search.perform(
     config={},
 )
-print(response.config)
+print(products.config)
 ```
 
 ## Handling errors
@@ -368,7 +368,7 @@ print(channel3_sdk.__version__)
 
 ## Requirements
 
-Python 3.8 or higher.
+Python 3.9 or higher.
 
 ## Contributing
 

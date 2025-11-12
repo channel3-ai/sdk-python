@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import httpx
 
-from ..types import brand_list_params
+from ..types import brand_find_params
 from .._types import Body, Query, Headers, NotGiven, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -41,7 +41,7 @@ class BrandsResource(SyncAPIResource):
         """
         return BrandsResourceWithStreamingResponse(self)
 
-    def list(
+    def find(
         self,
         *,
         query: str,
@@ -71,7 +71,7 @@ class BrandsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"query": query}, brand_list_params.BrandListParams),
+                query=maybe_transform({"query": query}, brand_find_params.BrandFindParams),
             ),
             cast_to=Brand,
         )
@@ -97,7 +97,7 @@ class AsyncBrandsResource(AsyncAPIResource):
         """
         return AsyncBrandsResourceWithStreamingResponse(self)
 
-    async def list(
+    async def find(
         self,
         *,
         query: str,
@@ -127,7 +127,7 @@ class AsyncBrandsResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform({"query": query}, brand_list_params.BrandListParams),
+                query=await async_maybe_transform({"query": query}, brand_find_params.BrandFindParams),
             ),
             cast_to=Brand,
         )
@@ -137,8 +137,8 @@ class BrandsResourceWithRawResponse:
     def __init__(self, brands: BrandsResource) -> None:
         self._brands = brands
 
-        self.list = to_raw_response_wrapper(
-            brands.list,
+        self.find = to_raw_response_wrapper(
+            brands.find,
         )
 
 
@@ -146,8 +146,8 @@ class AsyncBrandsResourceWithRawResponse:
     def __init__(self, brands: AsyncBrandsResource) -> None:
         self._brands = brands
 
-        self.list = async_to_raw_response_wrapper(
-            brands.list,
+        self.find = async_to_raw_response_wrapper(
+            brands.find,
         )
 
 
@@ -155,8 +155,8 @@ class BrandsResourceWithStreamingResponse:
     def __init__(self, brands: BrandsResource) -> None:
         self._brands = brands
 
-        self.list = to_streamed_response_wrapper(
-            brands.list,
+        self.find = to_streamed_response_wrapper(
+            brands.find,
         )
 
 
@@ -164,6 +164,6 @@ class AsyncBrandsResourceWithStreamingResponse:
     def __init__(self, brands: AsyncBrandsResource) -> None:
         self._brands = brands
 
-        self.list = async_to_streamed_response_wrapper(
-            brands.list,
+        self.find = async_to_streamed_response_wrapper(
+            brands.find,
         )

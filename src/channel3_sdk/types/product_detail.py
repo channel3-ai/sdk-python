@@ -8,10 +8,10 @@ from .variant import Variant
 from .._models import BaseModel
 from .availability_status import AvailabilityStatus
 
-__all__ = ["ProductRetrieveResponse"]
+__all__ = ["ProductDetail"]
 
 
-class ProductRetrieveResponse(BaseModel):
+class ProductDetail(BaseModel):
     id: str
 
     availability: AvailabilityStatus
