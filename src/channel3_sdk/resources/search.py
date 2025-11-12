@@ -18,6 +18,8 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.search_config_param import SearchConfigParam
+from ..types.search_filters_param import SearchFiltersParam
 from ..types.search_perform_response import SearchPerformResponse
 
 __all__ = ["SearchResource", "AsyncSearchResource"]
@@ -47,9 +49,9 @@ class SearchResource(SyncAPIResource):
         self,
         *,
         base64_image: Optional[str] | Omit = omit,
-        config: search_perform_params.Config | Omit = omit,
+        config: SearchConfigParam | Omit = omit,
         context: Optional[str] | Omit = omit,
-        filters: search_perform_params.Filters | Omit = omit,
+        filters: SearchFiltersParam | Omit = omit,
         image_url: Optional[str] | Omit = omit,
         limit: Optional[int] | Omit = omit,
         query: Optional[str] | Omit = omit,
@@ -132,9 +134,9 @@ class AsyncSearchResource(AsyncAPIResource):
         self,
         *,
         base64_image: Optional[str] | Omit = omit,
-        config: search_perform_params.Config | Omit = omit,
+        config: SearchConfigParam | Omit = omit,
         context: Optional[str] | Omit = omit,
-        filters: search_perform_params.Filters | Omit = omit,
+        filters: SearchFiltersParam | Omit = omit,
         image_url: Optional[str] | Omit = omit,
         limit: Optional[int] | Omit = omit,
         query: Optional[str] | Omit = omit,
