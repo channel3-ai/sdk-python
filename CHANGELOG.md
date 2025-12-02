@@ -1,5 +1,13 @@
 # Changelog
 
+## 2.7.0 (2025-12-02)
+
+Full Changelog: [v2.6.0...v2.7.0](https://github.com/channel3-ai/sdk-python/compare/v2.6.0...v2.7.0)
+
+### Features
+
+* fix/trigger workflow ([54cc0fd](https://github.com/channel3-ai/sdk-python/commit/54cc0fd97d869334d2ef33c5da78ca42eade7092))
+
 ## 2.6.0 (2025-12-02)
 
 Full Changelog: [v2.5.1...v2.6.0](https://github.com/channel3-ai/sdk-python/compare/v2.5.1...v2.6.0)
