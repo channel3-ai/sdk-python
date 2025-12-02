@@ -28,7 +28,7 @@ Methods:
 Types:
 
 ```python
-from channel3_sdk.types import AvailabilityStatus, Price, ProductDetail, Variant
+from channel3_sdk.types import AvailabilityStatus, Price, Product, ProductDetail, Variant
 ```
 
 Methods:
