@@ -9,7 +9,7 @@ import pytest
 
 from tests.utils import assert_matches_type
 from channel3_sdk import Channel3, AsyncChannel3
-from channel3_sdk.types import EnrichEnrichURLResponse
+from channel3_sdk.types import ProductDetail
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -23,7 +23,7 @@ class TestEnrich:
         enrich = client.enrich.enrich_url(
             url="url",
         )
-        assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
+        assert_matches_type(ProductDetail, enrich, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -35,7 +35,7 @@ class TestEnrich:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         enrich = response.parse()
-        assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
+        assert_matches_type(ProductDetail, enrich, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -47,7 +47,7 @@ class TestEnrich:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             enrich = response.parse()
-            assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
+            assert_matches_type(ProductDetail, enrich, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -63,7 +63,7 @@ class TestAsyncEnrich:
         enrich = await async_client.enrich.enrich_url(
             url="url",
         )
-        assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
+        assert_matches_type(ProductDetail, enrich, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -75,7 +75,7 @@ class TestAsyncEnrich:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         enrich = await response.parse()
-        assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
+        assert_matches_type(ProductDetail, enrich, path=["response"])
 
     @pytest.mark.skip(reason="Prism tests are disabled")
     @parametrize
@@ -87,6 +87,6 @@ class TestAsyncEnrich:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             enrich = await response.parse()
-            assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
+            assert_matches_type(ProductDetail, enrich, path=["response"])
 
         assert cast(Any, response.is_closed) is True

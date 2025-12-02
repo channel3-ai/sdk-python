@@ -1,5 +1,14 @@
 # Changelog
 
+## 2.6.0 (2025-12-02)
+
+Full Changelog: [v2.5.1...v2.6.0](https://github.com/channel3-ai/sdk-python/compare/v2.5.1...v2.6.0)
+
+### Features
+
+* **api:** manual updates ([9519dd8](https://github.com/channel3-ai/sdk-python/commit/9519dd8921ac035568f8655432d1525d8281e2c5))
+* Use Product-Output schema in Stainless config ([b267853](https://github.com/channel3-ai/sdk-python/commit/b2678538464c4a68a8eee2502d961d5e0d9a929c))
+
 ## 2.5.1 (2025-11-28)
 
 Full Changelog: [v2.5.0...v2.5.1](https://github.com/channel3-ai/sdk-python/compare/v2.5.0...v2.5.1)

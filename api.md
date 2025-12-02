@@ -64,9 +64,9 @@ Methods:
 Types:
 
 ```python
-from channel3_sdk.types import EnrichRequest, EnrichEnrichURLResponse
+from channel3_sdk.types import EnrichRequest
 ```
 
 Methods:
 
-- <code title="post /v0/enrich">client.enrich.<a href="./src/channel3_sdk/resources/enrich.py">enrich_url</a>(\*\*<a href="src/channel3_sdk/types/enrich_enrich_url_params.py">params</a>) -> <a href="./src/channel3_sdk/types/enrich_enrich_url_response.py">EnrichEnrichURLResponse</a></code>
+- <code title="post /v0/enrich">client.enrich.<a href="./src/channel3_sdk/resources/enrich.py">enrich_url</a>(\*\*<a href="src/channel3_sdk/types/enrich_enrich_url_params.py">params</a>) -> <a href="./src/channel3_sdk/types/product_detail.py">ProductDetail</a></code>

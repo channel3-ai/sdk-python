@@ -13,6 +13,9 @@ __all__ = ["SearchFiltersParam"]
 
 
 class SearchFiltersParam(TypedDict, total=False):
+    age: Optional[List[Literal["newborn", "infant", "toddler", "kids", "adult"]]]
+    """Filter by age group. Age-agnostic products are treated as adult products."""
+
     availability: Optional[List[AvailabilityStatus]]
     """If provided, only products with these availability statuses will be returned"""
 
