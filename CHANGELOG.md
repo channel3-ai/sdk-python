@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.5.1 (2025-11-28)
+
+Full Changelog: [v2.5.0...v2.5.1](https://github.com/channel3-ai/sdk-python/compare/v2.5.0...v2.5.1)
+
+### Bug Fixes
+
+* ensure streams are always closed ([bb50c14](https://github.com/channel3-ai/sdk-python/commit/bb50c1480f16250cb9fe58a91cf4032a0091b354))
+
+
+### Chores
+
+* add Python 3.14 classifier and testing ([9af2199](https://github.com/channel3-ai/sdk-python/commit/9af2199a3c6b2f8d08ad4ce19fd2db7c1ec5b794))
+* **deps:** mypy 1.18.1 has a regression, pin to 1.17 ([2f3e065](https://github.com/channel3-ai/sdk-python/commit/2f3e065bafeebac2f1c78cb8d4956b014264c63c))
+
 ## 2.5.0 (2025-11-12)
 
 Full Changelog: [v2.4.0...v2.5.0](https://github.com/channel3-ai/sdk-python/compare/v2.4.0...v2.5.0)
