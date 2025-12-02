@@ -5,7 +5,7 @@ description = "The official Python library for the channel3 API"
 dynamic = ["readme"]
 license = "Apache-2.0"
 authors = [
-{ name = "Channel3", email = "founders@trychannel3.com" },
+{ name = "Channel3", email = "support@trychannel3.com" },
 ]
 dependencies = [
     "httpx>=0.23.0, <1",

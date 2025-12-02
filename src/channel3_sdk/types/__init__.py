@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from .brand import Brand as Brand
 from .price import Price as Price
+from .product import Product as Product
 from .variant import Variant as Variant
 from .website import Website as Website
 from .redirect_mode import RedirectMode as RedirectMode
