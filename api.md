@@ -1,9 +1,3 @@
-# Channel3
-
-Methods:
-
-- <code title="get /">client.<a href="./src/channel3_sdk/_client.py">retrieve</a>() -> object</code>
-
 # Search
 
 Types:

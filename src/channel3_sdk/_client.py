@@ -11,10 +11,7 @@ import httpx
 from . import _exceptions
 from ._qs import Querystring
 from ._types import (
-    Body,
     Omit,
-    Query,
-    Headers,
     Timeout,
     NotGiven,
     Transport,
@@ -24,12 +21,6 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from ._response import (
-    to_raw_response_wrapper,
-    to_streamed_response_wrapper,
-    async_to_raw_response_wrapper,
-    async_to_streamed_response_wrapper,
-)
 from .resources import brands, enrich, search, products, websites
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import Channel3Error, APIStatusError
@@ -37,7 +28,6 @@ from ._base_client import (
     DEFAULT_MAX_RETRIES,
     SyncAPIClient,
     AsyncAPIClient,
-    make_request_options,
 )
 
 __all__ = [
@@ -193,25 +183,6 @@ class Channel3(SyncAPIClient):
     # Alias for `copy` for nicer inline usage, e.g.
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
-
-    def retrieve(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """Root"""
-        return self.get(
-            "/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
-        )
 
     @override
     def _make_status_error(
@@ -389,25 +360,6 @@ class AsyncChannel3(AsyncAPIClient):
     # client.with_options(timeout=10).foo.create(...)
     with_options = copy
 
-    async def retrieve(
-        self,
-        *,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> object:
-        """Root"""
-        return await self.get(
-            "/",
-            options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
-            ),
-            cast_to=object,
-        )
-
     @override
     def _make_status_error(
         self,
@@ -450,10 +402,6 @@ class Channel3WithRawResponse:
         self.websites = websites.WebsitesResourceWithRawResponse(client.websites)
         self.enrich = enrich.EnrichResourceWithRawResponse(client.enrich)
 
-        self.retrieve = to_raw_response_wrapper(
-            client.retrieve,
-        )
-
 
 class AsyncChannel3WithRawResponse:
     def __init__(self, client: AsyncChannel3) -> None:
@@ -462,10 +410,6 @@ class AsyncChannel3WithRawResponse:
         self.brands = brands.AsyncBrandsResourceWithRawResponse(client.brands)
         self.websites = websites.AsyncWebsitesResourceWithRawResponse(client.websites)
         self.enrich = enrich.AsyncEnrichResourceWithRawResponse(client.enrich)
-
-        self.retrieve = async_to_raw_response_wrapper(
-            client.retrieve,
-        )
 
 
 class Channel3WithStreamedResponse:
@@ -476,10 +420,6 @@ class Channel3WithStreamedResponse:
         self.websites = websites.WebsitesResourceWithStreamingResponse(client.websites)
         self.enrich = enrich.EnrichResourceWithStreamingResponse(client.enrich)
 
-        self.retrieve = to_streamed_response_wrapper(
-            client.retrieve,
-        )
-
 
 class AsyncChannel3WithStreamedResponse:
     def __init__(self, client: AsyncChannel3) -> None:
@@ -488,10 +428,6 @@ class AsyncChannel3WithStreamedResponse:
         self.brands = brands.AsyncBrandsResourceWithStreamingResponse(client.brands)
         self.websites = websites.AsyncWebsitesResourceWithStreamingResponse(client.websites)
         self.enrich = enrich.AsyncEnrichResourceWithStreamingResponse(client.enrich)
-
-        self.retrieve = async_to_streamed_response_wrapper(
-            client.retrieve,
-        )
 
 
 Client = Channel3
