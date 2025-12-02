@@ -32,7 +32,7 @@ client = Channel3(
     api_key=os.environ.get("CHANNEL3_API_KEY"),  # This is the default and can be omitted
 )
 
-products = client.search.perform()
+response = client.search.perform()
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -55,7 +55,7 @@ client = AsyncChannel3(
 
 
 async def main() -> None:
-    products = await client.search.perform()
+    response = await client.search.perform()
 
 
 asyncio.run(main())
@@ -87,7 +87,7 @@ async def main() -> None:
         api_key="My API Key",
         http_client=DefaultAioHttpClient(),
     ) as client:
-        products = await client.search.perform()
+        response = await client.search.perform()
 
 
 asyncio.run(main())
@@ -111,10 +111,10 @@ from channel3_sdk import Channel3
 
 client = Channel3()
 
-products = client.search.perform(
+response = client.search.perform(
     config={},
 )
-print(products.config)
+print(response.config)
 ```
 
 ## Handling errors

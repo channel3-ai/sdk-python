@@ -16,7 +16,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.enrich_enrich_url_response import EnrichEnrichURLResponse
+from ..types.product_detail import ProductDetail
 
 __all__ = ["EnrichResource", "AsyncEnrichResource"]
 
@@ -51,7 +51,7 @@ class EnrichResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> EnrichEnrichURLResponse:
+    ) -> ProductDetail:
         """
         Search by product URL, get back full product information from Channel3’s product
         database.
@@ -73,7 +73,7 @@ class EnrichResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EnrichEnrichURLResponse,
+            cast_to=ProductDetail,
         )
 
 
@@ -107,7 +107,7 @@ class AsyncEnrichResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> EnrichEnrichURLResponse:
+    ) -> ProductDetail:
         """
         Search by product URL, get back full product information from Channel3’s product
         database.
@@ -129,7 +129,7 @@ class AsyncEnrichResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=EnrichEnrichURLResponse,
+            cast_to=ProductDetail,
         )
 
 
