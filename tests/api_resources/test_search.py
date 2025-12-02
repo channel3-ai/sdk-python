@@ -34,6 +34,7 @@ class TestSearch:
             },
             context="context",
             filters={
+                "age": ["newborn"],
                 "availability": ["InStock"],
                 "brand_ids": ["string"],
                 "category_ids": ["string"],
@@ -97,6 +98,7 @@ class TestAsyncSearch:
             },
             context="context",
             filters={
+                "age": ["newborn"],
                 "availability": ["InStock"],
                 "brand_ids": ["string"],
                 "category_ids": ["string"],
