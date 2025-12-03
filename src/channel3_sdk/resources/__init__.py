@@ -40,6 +40,14 @@ from .websites import (
     WebsitesResourceWithStreamingResponse,
     AsyncWebsitesResourceWithStreamingResponse,
 )
+from .price_tracking import (
+    PriceTrackingResource,
+    AsyncPriceTrackingResource,
+    PriceTrackingResourceWithRawResponse,
+    AsyncPriceTrackingResourceWithRawResponse,
+    PriceTrackingResourceWithStreamingResponse,
+    AsyncPriceTrackingResourceWithStreamingResponse,
+)
 
 __all__ = [
     "SearchResource",
@@ -72,4 +80,10 @@ __all__ = [
     "AsyncEnrichResourceWithRawResponse",
     "EnrichResourceWithStreamingResponse",
     "AsyncEnrichResourceWithStreamingResponse",
+    "PriceTrackingResource",
+    "AsyncPriceTrackingResource",
+    "PriceTrackingResourceWithRawResponse",
+    "AsyncPriceTrackingResourceWithRawResponse",
+    "PriceTrackingResourceWithStreamingResponse",
+    "AsyncPriceTrackingResourceWithStreamingResponse",
 ]

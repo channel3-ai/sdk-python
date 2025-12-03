@@ -21,7 +21,7 @@ from ._types import (
 )
 from ._utils import is_given, get_async_library
 from ._version import __version__
-from .resources import brands, enrich, search, products, websites
+from .resources import brands, enrich, search, products, websites, price_tracking
 from ._streaming import Stream as Stream, AsyncStream as AsyncStream
 from ._exceptions import Channel3Error, APIStatusError
 from ._base_client import (
@@ -48,6 +48,7 @@ class Channel3(SyncAPIClient):
     brands: brands.BrandsResource
     websites: websites.WebsitesResource
     enrich: enrich.EnrichResource
+    price_tracking: price_tracking.PriceTrackingResource
     with_raw_response: Channel3WithRawResponse
     with_streaming_response: Channel3WithStreamedResponse
 
@@ -110,6 +111,7 @@ class Channel3(SyncAPIClient):
         self.brands = brands.BrandsResource(self)
         self.websites = websites.WebsitesResource(self)
         self.enrich = enrich.EnrichResource(self)
+        self.price_tracking = price_tracking.PriceTrackingResource(self)
         self.with_raw_response = Channel3WithRawResponse(self)
         self.with_streaming_response = Channel3WithStreamedResponse(self)
 
@@ -224,6 +226,7 @@ class AsyncChannel3(AsyncAPIClient):
     brands: brands.AsyncBrandsResource
     websites: websites.AsyncWebsitesResource
     enrich: enrich.AsyncEnrichResource
+    price_tracking: price_tracking.AsyncPriceTrackingResource
     with_raw_response: AsyncChannel3WithRawResponse
     with_streaming_response: AsyncChannel3WithStreamedResponse
 
@@ -286,6 +289,7 @@ class AsyncChannel3(AsyncAPIClient):
         self.brands = brands.AsyncBrandsResource(self)
         self.websites = websites.AsyncWebsitesResource(self)
         self.enrich = enrich.AsyncEnrichResource(self)
+        self.price_tracking = price_tracking.AsyncPriceTrackingResource(self)
         self.with_raw_response = AsyncChannel3WithRawResponse(self)
         self.with_streaming_response = AsyncChannel3WithStreamedResponse(self)
 
@@ -401,6 +405,7 @@ class Channel3WithRawResponse:
         self.brands = brands.BrandsResourceWithRawResponse(client.brands)
         self.websites = websites.WebsitesResourceWithRawResponse(client.websites)
         self.enrich = enrich.EnrichResourceWithRawResponse(client.enrich)
+        self.price_tracking = price_tracking.PriceTrackingResourceWithRawResponse(client.price_tracking)
 
 
 class AsyncChannel3WithRawResponse:
@@ -410,6 +415,7 @@ class AsyncChannel3WithRawResponse:
         self.brands = brands.AsyncBrandsResourceWithRawResponse(client.brands)
         self.websites = websites.AsyncWebsitesResourceWithRawResponse(client.websites)
         self.enrich = enrich.AsyncEnrichResourceWithRawResponse(client.enrich)
+        self.price_tracking = price_tracking.AsyncPriceTrackingResourceWithRawResponse(client.price_tracking)
 
 
 class Channel3WithStreamedResponse:
@@ -419,6 +425,7 @@ class Channel3WithStreamedResponse:
         self.brands = brands.BrandsResourceWithStreamingResponse(client.brands)
         self.websites = websites.WebsitesResourceWithStreamingResponse(client.websites)
         self.enrich = enrich.EnrichResourceWithStreamingResponse(client.enrich)
+        self.price_tracking = price_tracking.PriceTrackingResourceWithStreamingResponse(client.price_tracking)
 
 
 class AsyncChannel3WithStreamedResponse:
@@ -428,6 +435,7 @@ class AsyncChannel3WithStreamedResponse:
         self.brands = brands.AsyncBrandsResourceWithStreamingResponse(client.brands)
         self.websites = websites.AsyncWebsitesResourceWithStreamingResponse(client.websites)
         self.enrich = enrich.AsyncEnrichResourceWithStreamingResponse(client.enrich)
+        self.price_tracking = price_tracking.AsyncPriceTrackingResourceWithStreamingResponse(client.price_tracking)
 
 
 Client = Channel3
