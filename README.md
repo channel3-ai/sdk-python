@@ -77,6 +77,7 @@ pip install channel3_sdk[aiohttp]
 Then you can enable it by instantiating the client with `http_client=DefaultAioHttpClient()`:
 
 ```python
+import os
 import asyncio
 from channel3_sdk import DefaultAioHttpClient
 from channel3_sdk import AsyncChannel3
@@ -84,7 +85,7 @@ from channel3_sdk import AsyncChannel3
 
 async def main() -> None:
     async with AsyncChannel3(
-        api_key="My API Key",
+        api_key=os.environ.get("CHANNEL3_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
         products = await client.search.perform()
