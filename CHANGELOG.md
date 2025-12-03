@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.8.0 (2025-12-03)
+
+Full Changelog: [v2.7.0...v2.8.0](https://github.com/channel3-ai/sdk-python/compare/v2.7.0...v2.8.0)
+
+### Features
+
+* Price tracking SDK updates ([161449c](https://github.com/channel3-ai/sdk-python/commit/161449c11589fd9864e2e807d27eff4d5b2733a7))
+
+
+### Chores
+
+* **docs:** use environment variables for authentication in code snippets ([3ea2677](https://github.com/channel3-ai/sdk-python/commit/3ea26776a44c824251c45994ec9e1ef46f4f6c04))
+* update lockfile ([267bf19](https://github.com/channel3-ai/sdk-python/commit/267bf190fbb7599fc4b2b43486f0a31afe851c5c))
+
 ## 2.7.0 (2025-12-02)
 
 Full Changelog: [v2.6.0...v2.7.0](https://github.com/channel3-ai/sdk-python/compare/v2.6.0...v2.7.0)
