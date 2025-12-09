@@ -11,6 +11,8 @@ __all__ = ["SearchConfigParam"]
 
 
 class SearchConfigParam(TypedDict, total=False):
+    """Configuration for a search request"""
+
     enrich_query: bool
     """
     If True, search will use AI to enrich the query, for example pulling the gender,
