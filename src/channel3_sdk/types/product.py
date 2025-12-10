@@ -12,6 +12,8 @@ __all__ = ["Product", "Image"]
 
 
 class Image(BaseModel):
+    """Product image with metadata"""
+
     url: str
 
     alt_text: Optional[str] = None
@@ -48,6 +50,8 @@ class Image(BaseModel):
 
 
 class Product(BaseModel):
+    """A search result that includes product details and a relevance score."""
+
     id: str
 
     availability: AvailabilityStatus

@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.8.1 (2025-12-09)
+
+Full Changelog: [v2.8.0...v2.8.1](https://github.com/channel3-ai/sdk-python/compare/v2.8.0...v2.8.1)
+
+### Bug Fixes
+
+* **types:** allow pyright to infer TypedDict types within SequenceNotStr ([bafc16c](https://github.com/channel3-ai/sdk-python/commit/bafc16c10755709a14a70a996295da9caccc7710))
+
+
+### Chores
+
+* add missing docstrings ([790100a](https://github.com/channel3-ai/sdk-python/commit/790100af3c6af2100e2912d325313610867cd9f5))
+
 ## 2.8.0 (2025-12-03)
 
 Full Changelog: [v2.7.0...v2.8.0](https://github.com/channel3-ai/sdk-python/compare/v2.7.0...v2.8.0)
