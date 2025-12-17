@@ -1,5 +1,19 @@
 # Changelog
 
+## 2.9.0 (2025-12-17)
+
+Full Changelog: [v2.8.1...v2.9.0](https://github.com/channel3-ai/sdk-python/compare/v2.8.1...v2.9.0)
+
+### Features
+
+* Trigger Stainless ([0b86375](https://github.com/channel3-ai/sdk-python/commit/0b863751cbea99224afe33351f561267c70b01f6))
+
+
+### Chores
+
+* **internal:** add missing files argument to base client ([ef52cf7](https://github.com/channel3-ai/sdk-python/commit/ef52cf74da95e28c758f99f5529272ebad076234))
+* speedup initial import ([6e4728d](https://github.com/channel3-ai/sdk-python/commit/6e4728dea2d8191c3e6b042ec0a247eb2a62fc9f))
+
 ## 2.8.1 (2025-12-09)
 
 Full Changelog: [v2.8.0...v2.8.1](https://github.com/channel3-ai/sdk-python/compare/v2.8.0...v2.8.1)
