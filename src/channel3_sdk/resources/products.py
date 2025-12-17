@@ -2,9 +2,13 @@
 
 from __future__ import annotations
 
+from typing import Optional
+
 import httpx
 
-from .._types import Body, Query, Headers, NotGiven, not_given
+from ..types import RedirectMode, product_retrieve_params
+from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
+from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -14,6 +18,7 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.redirect_mode import RedirectMode
 from ..types.product_detail import ProductDetail
 
 __all__ = ["ProductsResource", "AsyncProductsResource"]
@@ -43,6 +48,8 @@ class ProductsResource(SyncAPIResource):
         self,
         product_id: str,
         *,
+        redirect_mode: Optional[RedirectMode] | Omit = omit,
+        website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -53,7 +60,24 @@ class ProductsResource(SyncAPIResource):
         """
         Get detailed information about a specific product by its ID.
 
+        You can optionally pass variant dimension query parameters to select a specific
+        variant configuration. For example:
+        `/products/ABC123?dim-color-id=Red&dim-size-id=M`
+
+        The response includes `variant_info` with:
+
+        - `dimensions`: All dimensions this product family varies on
+        - `selected`: Current selection state (from the product or query params)
+        - `available`: What values are still available given current selection
+
         Args:
+          redirect_mode: "price" redirects to the product page with the lowest price "commission"
+              redirects to the product page with the highest commission rate "brand" redirects
+              to the brand's product page
+
+          website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
+              merchants exist
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -67,7 +91,17 @@ class ProductsResource(SyncAPIResource):
         return self._get(
             f"/v0/products/{product_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {
+                        "redirect_mode": redirect_mode,
+                        "website_ids": website_ids,
+                    },
+                    product_retrieve_params.ProductRetrieveParams,
+                ),
             ),
             cast_to=ProductDetail,
         )
@@ -97,6 +131,8 @@ class AsyncProductsResource(AsyncAPIResource):
         self,
         product_id: str,
         *,
+        redirect_mode: Optional[RedirectMode] | Omit = omit,
+        website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -107,7 +143,24 @@ class AsyncProductsResource(AsyncAPIResource):
         """
         Get detailed information about a specific product by its ID.
 
+        You can optionally pass variant dimension query parameters to select a specific
+        variant configuration. For example:
+        `/products/ABC123?dim-color-id=Red&dim-size-id=M`
+
+        The response includes `variant_info` with:
+
+        - `dimensions`: All dimensions this product family varies on
+        - `selected`: Current selection state (from the product or query params)
+        - `available`: What values are still available given current selection
+
         Args:
+          redirect_mode: "price" redirects to the product page with the lowest price "commission"
+              redirects to the product page with the highest commission rate "brand" redirects
+              to the brand's product page
+
+          website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
+              merchants exist
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -121,7 +174,17 @@ class AsyncProductsResource(AsyncAPIResource):
         return await self._get(
             f"/v0/products/{product_id}",
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {
+                        "redirect_mode": redirect_mode,
+                        "website_ids": website_ids,
+                    },
+                    product_retrieve_params.ProductRetrieveParams,
+                ),
             ),
             cast_to=ProductDetail,
         )

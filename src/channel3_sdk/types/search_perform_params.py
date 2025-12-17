@@ -31,7 +31,7 @@ class SearchPerformParams(TypedDict, total=False):
     """Image URL"""
 
     limit: Optional[int]
-    """Optional limit on the number of results"""
+    """Optional limit on the number of results. Default is 20, max is 30."""
 
     query: Optional[str]
     """Search query"""

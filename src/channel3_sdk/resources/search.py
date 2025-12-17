@@ -77,7 +77,7 @@ class SearchResource(SyncAPIResource):
 
           image_url: Image URL
 
-          limit: Optional limit on the number of results
+          limit: Optional limit on the number of results. Default is 20, max is 30.
 
           query: Search query
 
@@ -162,7 +162,7 @@ class AsyncSearchResource(AsyncAPIResource):
 
           image_url: Image URL
 
-          limit: Optional limit on the number of results
+          limit: Optional limit on the number of results. Default is 20, max is 30.
 
           query: Search query
 

@@ -27,7 +27,7 @@ from channel3_sdk.types import AvailabilityStatus, Price, Product, ProductDetail
 
 Methods:
 
-- <code title="get /v0/products/{product_id}">client.products.<a href="./src/channel3_sdk/resources/products.py">retrieve</a>(product_id) -> <a href="./src/channel3_sdk/types/product_detail.py">ProductDetail</a></code>
+- <code title="get /v0/products/{product_id}">client.products.<a href="./src/channel3_sdk/resources/products.py">retrieve</a>(product_id, \*\*<a href="src/channel3_sdk/types/product_retrieve_params.py">params</a>) -> <a href="./src/channel3_sdk/types/product_detail.py">ProductDetail</a></code>
 
 # Brands
 
