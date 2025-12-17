@@ -29,7 +29,7 @@ class TestSearch:
         search = client.search.perform(
             base64_image="base64_image",
             config={
-                "enrich_query": True,
+                "keyword_search_only": True,
                 "redirect_mode": "brand",
             },
             context="context",
@@ -48,7 +48,7 @@ class TestSearch:
                 "website_ids": ["string"],
             },
             image_url="image_url",
-            limit=0,
+            limit=1,
             query="query",
         )
         assert_matches_type(SearchPerformResponse, search, path=["response"])
@@ -93,7 +93,7 @@ class TestAsyncSearch:
         search = await async_client.search.perform(
             base64_image="base64_image",
             config={
-                "enrich_query": True,
+                "keyword_search_only": True,
                 "redirect_mode": "brand",
             },
             context="context",
@@ -112,7 +112,7 @@ class TestAsyncSearch:
                 "website_ids": ["string"],
             },
             image_url="image_url",
-            limit=0,
+            limit=1,
             query="query",
         )
         assert_matches_type(SearchPerformResponse, search, path=["response"])

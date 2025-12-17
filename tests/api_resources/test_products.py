@@ -21,7 +21,17 @@ class TestProducts:
     @parametrize
     def test_method_retrieve(self, client: Channel3) -> None:
         product = client.products.retrieve(
-            "product_id",
+            product_id="product_id",
+        )
+        assert_matches_type(ProductDetail, product, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    def test_method_retrieve_with_all_params(self, client: Channel3) -> None:
+        product = client.products.retrieve(
+            product_id="product_id",
+            redirect_mode="brand",
+            website_ids=["string"],
         )
         assert_matches_type(ProductDetail, product, path=["response"])
 
@@ -29,7 +39,7 @@ class TestProducts:
     @parametrize
     def test_raw_response_retrieve(self, client: Channel3) -> None:
         response = client.products.with_raw_response.retrieve(
-            "product_id",
+            product_id="product_id",
         )
 
         assert response.is_closed is True
@@ -41,7 +51,7 @@ class TestProducts:
     @parametrize
     def test_streaming_response_retrieve(self, client: Channel3) -> None:
         with client.products.with_streaming_response.retrieve(
-            "product_id",
+            product_id="product_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -56,7 +66,7 @@ class TestProducts:
     def test_path_params_retrieve(self, client: Channel3) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `product_id` but received ''"):
             client.products.with_raw_response.retrieve(
-                "",
+                product_id="",
             )
 
 
@@ -69,7 +79,17 @@ class TestAsyncProducts:
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncChannel3) -> None:
         product = await async_client.products.retrieve(
-            "product_id",
+            product_id="product_id",
+        )
+        assert_matches_type(ProductDetail, product, path=["response"])
+
+    @pytest.mark.skip(reason="Prism tests are disabled")
+    @parametrize
+    async def test_method_retrieve_with_all_params(self, async_client: AsyncChannel3) -> None:
+        product = await async_client.products.retrieve(
+            product_id="product_id",
+            redirect_mode="brand",
+            website_ids=["string"],
         )
         assert_matches_type(ProductDetail, product, path=["response"])
 
@@ -77,7 +97,7 @@ class TestAsyncProducts:
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncChannel3) -> None:
         response = await async_client.products.with_raw_response.retrieve(
-            "product_id",
+            product_id="product_id",
         )
 
         assert response.is_closed is True
@@ -89,7 +109,7 @@ class TestAsyncProducts:
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncChannel3) -> None:
         async with async_client.products.with_streaming_response.retrieve(
-            "product_id",
+            product_id="product_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -104,5 +124,5 @@ class TestAsyncProducts:
     async def test_path_params_retrieve(self, async_client: AsyncChannel3) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `product_id` but received ''"):
             await async_client.products.with_raw_response.retrieve(
-                "",
+                product_id="",
             )
