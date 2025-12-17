@@ -18,6 +18,7 @@ from .website_find_params import WebsiteFindParams as WebsiteFindParams
 from .search_filters_param import SearchFiltersParam as SearchFiltersParam
 from .search_perform_params import SearchPerformParams as SearchPerformParams
 from .paginated_subscriptions import PaginatedSubscriptions as PaginatedSubscriptions
+from .product_retrieve_params import ProductRetrieveParams as ProductRetrieveParams
 from .search_perform_response import SearchPerformResponse as SearchPerformResponse
 from .enrich_enrich_url_params import EnrichEnrichURLParams as EnrichEnrichURLParams
 from .search_filter_price_param import SearchFilterPriceParam as SearchFilterPriceParam
