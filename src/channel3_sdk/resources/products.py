@@ -60,16 +60,6 @@ class ProductsResource(SyncAPIResource):
         """
         Get detailed information about a specific product by its ID.
 
-        You can optionally pass variant dimension query parameters to select a specific
-        variant configuration. For example:
-        `/products/ABC123?dim-color-id=Red&dim-size-id=M`
-
-        The response includes `variant_info` with:
-
-        - `dimensions`: All dimensions this product family varies on
-        - `selected`: Current selection state (from the product or query params)
-        - `available`: What values are still available given current selection
-
         Args:
           redirect_mode: "price" redirects to the product page with the lowest price "commission"
               redirects to the product page with the highest commission rate "brand" redirects
@@ -142,16 +132,6 @@ class AsyncProductsResource(AsyncAPIResource):
     ) -> ProductDetail:
         """
         Get detailed information about a specific product by its ID.
-
-        You can optionally pass variant dimension query parameters to select a specific
-        variant configuration. For example:
-        `/products/ABC123?dim-color-id=Red&dim-size-id=M`
-
-        The response includes `variant_info` with:
-
-        - `dimensions`: All dimensions this product family varies on
-        - `selected`: Current selection state (from the product or query params)
-        - `available`: What values are still available given current selection
 
         Args:
           redirect_mode: "price" redirects to the product page with the lowest price "commission"

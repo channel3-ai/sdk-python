@@ -1,5 +1,24 @@
 # Changelog
 
+## 2.10.0 (2026-01-13)
+
+Full Changelog: [v2.9.0...v2.10.0](https://github.com/channel3-ai/sdk-python/compare/v2.9.0...v2.10.0)
+
+### Features
+
+* **api:** api update ([29a6189](https://github.com/channel3-ai/sdk-python/commit/29a6189480d2309b6a1a5f6e550d480d1f25810a))
+
+
+### Bug Fixes
+
+* use async_to_httpx_files in patch method ([5c20116](https://github.com/channel3-ai/sdk-python/commit/5c2011615306bad52cffae90fabda6b5c7fb01f4))
+
+
+### Chores
+
+* **internal:** add `--fix` argument to lint script ([161aa3e](https://github.com/channel3-ai/sdk-python/commit/161aa3e3547c9d3fda58e0efdf994abdb628b781))
+* **internal:** codegen related update ([ad889be](https://github.com/channel3-ai/sdk-python/commit/ad889be80b7856defc49ae529591f74fa5debd4b))
+
 ## 2.9.0 (2025-12-17)
 
 Full Changelog: [v2.8.1...v2.9.0](https://github.com/channel3-ai/sdk-python/compare/v2.8.1...v2.9.0)
