@@ -87,4 +87,3 @@ class Product(BaseModel):
     materials: Optional[List[str]] = None
 
     variants: Optional[List[Variant]] = None
-    """Simple variant list (deprecated, use variant_info for full variant details)"""
