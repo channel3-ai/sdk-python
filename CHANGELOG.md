@@ -1,5 +1,18 @@
 # Changelog
 
+## 2.12.0 (2026-01-17)
+
+Full Changelog: [v2.11.0...v2.12.0](https://github.com/channel3-ai/sdk-python/compare/v2.11.0...v2.12.0)
+
+### Features
+
+* **client:** add support for binary request streaming ([802672e](https://github.com/channel3-ai/sdk-python/commit/802672ec5513c17b426487fe9be1f91367c38e42))
+
+
+### Chores
+
+* **internal:** update `actions/checkout` version ([935e91e](https://github.com/channel3-ai/sdk-python/commit/935e91e61aaaeaa722721f3533944ebcac30103a))
+
 ## 2.11.0 (2026-01-14)
 
 Full Changelog: [v2.10.0...v2.11.0](https://github.com/channel3-ai/sdk-python/compare/v2.10.0...v2.11.0)
