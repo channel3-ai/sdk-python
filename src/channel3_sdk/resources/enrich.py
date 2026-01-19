@@ -53,8 +53,12 @@ class EnrichResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ProductDetail:
         """
-        Search by product URL, get back full product information from Channel3’s product
+        Search by product URL, get back full product information from Channel3's product
         database.
+
+        If the product is not found in the database, the endpoint will attempt real-time
+        retrieval from the product page. This fallback returns basic product information
+        (price, images, title) without full enrichment.
 
         Args:
           url: The URL of the product to enrich
@@ -109,8 +113,12 @@ class AsyncEnrichResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ProductDetail:
         """
-        Search by product URL, get back full product information from Channel3’s product
+        Search by product URL, get back full product information from Channel3's product
         database.
+
+        If the product is not found in the database, the endpoint will attempt real-time
+        retrieval from the product page. This fallback returns basic product information
+        (price, images, title) without full enrichment.
 
         Args:
           url: The URL of the product to enrich
