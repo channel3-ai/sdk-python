@@ -12,6 +12,7 @@ from .price_history import PriceHistory as PriceHistory
 from .redirect_mode import RedirectMode as RedirectMode
 from .product_detail import ProductDetail as ProductDetail
 from .brand_find_params import BrandFindParams as BrandFindParams
+from .brand_list_params import BrandListParams as BrandListParams
 from .availability_status import AvailabilityStatus as AvailabilityStatus
 from .search_config_param import SearchConfigParam as SearchConfigParam
 from .website_find_params import WebsiteFindParams as WebsiteFindParams
@@ -24,6 +25,7 @@ from .enrich_enrich_url_params import EnrichEnrichURLParams as EnrichEnrichURLPa
 from .search_filter_price_param import SearchFilterPriceParam as SearchFilterPriceParam
 from .price_tracking_stop_params import PriceTrackingStopParams as PriceTrackingStopParams
 from .price_tracking_start_params import PriceTrackingStartParams as PriceTrackingStartParams
+from .paginated_list_brands_response import PaginatedListBrandsResponse as PaginatedListBrandsResponse
 from .price_tracking_get_history_params import PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams
 from .price_tracking_list_subscriptions_params import (
     PriceTrackingListSubscriptionsParams as PriceTrackingListSubscriptionsParams,

@@ -34,11 +34,12 @@ Methods:
 Types:
 
 ```python
-from channel3_sdk.types import Brand
+from channel3_sdk.types import Brand, PaginatedListBrandsResponse
 ```
 
 Methods:
 
+- <code title="get /v0/list-brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">list</a>(\*\*<a href="src/channel3_sdk/types/brand_list_params.py">params</a>) -> <a href="./src/channel3_sdk/types/paginated_list_brands_response.py">PaginatedListBrandsResponse</a></code>
 - <code title="get /v0/brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">find</a>(\*\*<a href="src/channel3_sdk/types/brand_find_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
 
 # Websites
