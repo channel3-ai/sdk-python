@@ -61,9 +61,7 @@ class ProductsResource(SyncAPIResource):
         Get detailed information about a specific product by its ID.
 
         Args:
-          redirect_mode: "price" redirects to the product page with the lowest price "commission"
-              redirects to the product page with the highest commission rate "brand" redirects
-              to the brand's product page
+          redirect_mode: Optional redirect mode
 
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
               merchants exist
@@ -134,9 +132,7 @@ class AsyncProductsResource(AsyncAPIResource):
         Get detailed information about a specific product by its ID.
 
         Args:
-          redirect_mode: "price" redirects to the product page with the lowest price "commission"
-              redirects to the product page with the highest commission rate "brand" redirects
-              to the brand's product page
+          redirect_mode: Optional redirect mode
 
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
               merchants exist
