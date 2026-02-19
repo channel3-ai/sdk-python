@@ -32,6 +32,12 @@ class SearchFiltersParam(TypedDict, total=False):
     data will be included in all condition filter results.
     """
 
+    exclude_category_ids: Optional[SequenceNotStr[str]]
+    """
+    If provided, products in these categories (or their descendants) will be
+    excluded from the results
+    """
+
     exclude_product_ids: Optional[SequenceNotStr[str]]
     """If provided, products with these IDs will be excluded from the results"""
 
