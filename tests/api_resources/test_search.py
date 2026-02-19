@@ -39,6 +39,7 @@ class TestSearch:
                 "brand_ids": ["string"],
                 "category_ids": ["string"],
                 "condition": "new",
+                "exclude_category_ids": ["string"],
                 "exclude_product_ids": ["string"],
                 "gender": "male",
                 "price": {
@@ -103,6 +104,7 @@ class TestAsyncSearch:
                 "brand_ids": ["string"],
                 "category_ids": ["string"],
                 "condition": "new",
+                "exclude_category_ids": ["string"],
                 "exclude_product_ids": ["string"],
                 "gender": "male",
                 "price": {
