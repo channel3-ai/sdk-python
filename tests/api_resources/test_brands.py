@@ -17,13 +17,13 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestBrands:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list(self, client: Channel3) -> None:
         brand = client.brands.list()
         assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Channel3) -> None:
         brand = client.brands.list(
@@ -32,7 +32,7 @@ class TestBrands:
         )
         assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list(self, client: Channel3) -> None:
         response = client.brands.with_raw_response.list()
@@ -42,7 +42,7 @@ class TestBrands:
         brand = response.parse()
         assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list(self, client: Channel3) -> None:
         with client.brands.with_streaming_response.list() as response:
@@ -54,7 +54,7 @@ class TestBrands:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_find(self, client: Channel3) -> None:
         brand = client.brands.find(
@@ -62,7 +62,7 @@ class TestBrands:
         )
         assert_matches_type(Brand, brand, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_find(self, client: Channel3) -> None:
         response = client.brands.with_raw_response.find(
@@ -74,7 +74,7 @@ class TestBrands:
         brand = response.parse()
         assert_matches_type(Brand, brand, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_find(self, client: Channel3) -> None:
         with client.brands.with_streaming_response.find(
@@ -94,13 +94,13 @@ class TestAsyncBrands:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list(self, async_client: AsyncChannel3) -> None:
         brand = await async_client.brands.list()
         assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncChannel3) -> None:
         brand = await async_client.brands.list(
@@ -109,7 +109,7 @@ class TestAsyncBrands:
         )
         assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list(self, async_client: AsyncChannel3) -> None:
         response = await async_client.brands.with_raw_response.list()
@@ -119,7 +119,7 @@ class TestAsyncBrands:
         brand = await response.parse()
         assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list(self, async_client: AsyncChannel3) -> None:
         async with async_client.brands.with_streaming_response.list() as response:
@@ -131,7 +131,7 @@ class TestAsyncBrands:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_find(self, async_client: AsyncChannel3) -> None:
         brand = await async_client.brands.find(
@@ -139,7 +139,7 @@ class TestAsyncBrands:
         )
         assert_matches_type(Brand, brand, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_find(self, async_client: AsyncChannel3) -> None:
         response = await async_client.brands.with_raw_response.find(
@@ -151,7 +151,7 @@ class TestAsyncBrands:
         brand = await response.parse()
         assert_matches_type(Brand, brand, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_find(self, async_client: AsyncChannel3) -> None:
         async with async_client.brands.with_streaming_response.find(

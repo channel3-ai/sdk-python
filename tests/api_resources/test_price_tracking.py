@@ -21,7 +21,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestPriceTracking:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_history(self, client: Channel3) -> None:
         price_tracking = client.price_tracking.get_history(
@@ -29,7 +29,7 @@ class TestPriceTracking:
         )
         assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_history_with_all_params(self, client: Channel3) -> None:
         price_tracking = client.price_tracking.get_history(
@@ -38,7 +38,7 @@ class TestPriceTracking:
         )
         assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get_history(self, client: Channel3) -> None:
         response = client.price_tracking.with_raw_response.get_history(
@@ -50,7 +50,7 @@ class TestPriceTracking:
         price_tracking = response.parse()
         assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get_history(self, client: Channel3) -> None:
         with client.price_tracking.with_streaming_response.get_history(
@@ -64,7 +64,7 @@ class TestPriceTracking:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get_history(self, client: Channel3) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `canonical_product_id` but received ''"):
@@ -72,13 +72,13 @@ class TestPriceTracking:
                 canonical_product_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_subscriptions(self, client: Channel3) -> None:
         price_tracking = client.price_tracking.list_subscriptions()
         assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_subscriptions_with_all_params(self, client: Channel3) -> None:
         price_tracking = client.price_tracking.list_subscriptions(
@@ -87,7 +87,7 @@ class TestPriceTracking:
         )
         assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_list_subscriptions(self, client: Channel3) -> None:
         response = client.price_tracking.with_raw_response.list_subscriptions()
@@ -97,7 +97,7 @@ class TestPriceTracking:
         price_tracking = response.parse()
         assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_list_subscriptions(self, client: Channel3) -> None:
         with client.price_tracking.with_streaming_response.list_subscriptions() as response:
@@ -109,7 +109,7 @@ class TestPriceTracking:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_start(self, client: Channel3) -> None:
         price_tracking = client.price_tracking.start(
@@ -117,7 +117,7 @@ class TestPriceTracking:
         )
         assert_matches_type(Subscription, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_start(self, client: Channel3) -> None:
         response = client.price_tracking.with_raw_response.start(
@@ -129,7 +129,7 @@ class TestPriceTracking:
         price_tracking = response.parse()
         assert_matches_type(Subscription, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_start(self, client: Channel3) -> None:
         with client.price_tracking.with_streaming_response.start(
@@ -143,7 +143,7 @@ class TestPriceTracking:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_stop(self, client: Channel3) -> None:
         price_tracking = client.price_tracking.stop(
@@ -151,7 +151,7 @@ class TestPriceTracking:
         )
         assert_matches_type(Subscription, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_stop(self, client: Channel3) -> None:
         response = client.price_tracking.with_raw_response.stop(
@@ -163,7 +163,7 @@ class TestPriceTracking:
         price_tracking = response.parse()
         assert_matches_type(Subscription, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_stop(self, client: Channel3) -> None:
         with client.price_tracking.with_streaming_response.stop(
@@ -183,7 +183,7 @@ class TestAsyncPriceTracking:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_history(self, async_client: AsyncChannel3) -> None:
         price_tracking = await async_client.price_tracking.get_history(
@@ -191,7 +191,7 @@ class TestAsyncPriceTracking:
         )
         assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_history_with_all_params(self, async_client: AsyncChannel3) -> None:
         price_tracking = await async_client.price_tracking.get_history(
@@ -200,7 +200,7 @@ class TestAsyncPriceTracking:
         )
         assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get_history(self, async_client: AsyncChannel3) -> None:
         response = await async_client.price_tracking.with_raw_response.get_history(
@@ -212,7 +212,7 @@ class TestAsyncPriceTracking:
         price_tracking = await response.parse()
         assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get_history(self, async_client: AsyncChannel3) -> None:
         async with async_client.price_tracking.with_streaming_response.get_history(
@@ -226,7 +226,7 @@ class TestAsyncPriceTracking:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get_history(self, async_client: AsyncChannel3) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `canonical_product_id` but received ''"):
@@ -234,13 +234,13 @@ class TestAsyncPriceTracking:
                 canonical_product_id="",
             )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_subscriptions(self, async_client: AsyncChannel3) -> None:
         price_tracking = await async_client.price_tracking.list_subscriptions()
         assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_subscriptions_with_all_params(self, async_client: AsyncChannel3) -> None:
         price_tracking = await async_client.price_tracking.list_subscriptions(
@@ -249,7 +249,7 @@ class TestAsyncPriceTracking:
         )
         assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_list_subscriptions(self, async_client: AsyncChannel3) -> None:
         response = await async_client.price_tracking.with_raw_response.list_subscriptions()
@@ -259,7 +259,7 @@ class TestAsyncPriceTracking:
         price_tracking = await response.parse()
         assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_list_subscriptions(self, async_client: AsyncChannel3) -> None:
         async with async_client.price_tracking.with_streaming_response.list_subscriptions() as response:
@@ -271,7 +271,7 @@ class TestAsyncPriceTracking:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_start(self, async_client: AsyncChannel3) -> None:
         price_tracking = await async_client.price_tracking.start(
@@ -279,7 +279,7 @@ class TestAsyncPriceTracking:
         )
         assert_matches_type(Subscription, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_start(self, async_client: AsyncChannel3) -> None:
         response = await async_client.price_tracking.with_raw_response.start(
@@ -291,7 +291,7 @@ class TestAsyncPriceTracking:
         price_tracking = await response.parse()
         assert_matches_type(Subscription, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_start(self, async_client: AsyncChannel3) -> None:
         async with async_client.price_tracking.with_streaming_response.start(
@@ -305,7 +305,7 @@ class TestAsyncPriceTracking:
 
         assert cast(Any, response.is_closed) is True
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_stop(self, async_client: AsyncChannel3) -> None:
         price_tracking = await async_client.price_tracking.stop(
@@ -313,7 +313,7 @@ class TestAsyncPriceTracking:
         )
         assert_matches_type(Subscription, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_stop(self, async_client: AsyncChannel3) -> None:
         response = await async_client.price_tracking.with_raw_response.stop(
@@ -325,7 +325,7 @@ class TestAsyncPriceTracking:
         price_tracking = await response.parse()
         assert_matches_type(Subscription, price_tracking, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_stop(self, async_client: AsyncChannel3) -> None:
         async with async_client.price_tracking.with_streaming_response.stop(
