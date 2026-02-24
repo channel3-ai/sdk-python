@@ -8,13 +8,7 @@ from .variant import Variant
 from .._models import BaseModel
 from .availability_status import AvailabilityStatus
 
-__all__ = ["ProductDetail", "Brand", "Image"]
-
-
-class Brand(BaseModel):
-    id: str
-
-    name: Optional[str] = None
+__all__ = ["ProductDetail", "Image"]
 
 
 class Image(BaseModel):
@@ -71,9 +65,6 @@ class ProductDetail(BaseModel):
     brand_id: Optional[str] = None
 
     brand_name: Optional[str] = None
-
-    brands: Optional[List[Brand]] = None
-    """Ordered list of brands."""
 
     categories: Optional[List[str]] = None
 
