@@ -12,8 +12,8 @@ from channel3_sdk import Channel3, AsyncChannel3
 from channel3_sdk.types import (
     PriceHistory,
     Subscription,
-    PaginatedSubscriptions,
 )
+from channel3_sdk.pagination import SyncCursorPage, AsyncCursorPage
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -76,16 +76,16 @@ class TestPriceTracking:
     @parametrize
     def test_method_list_subscriptions(self, client: Channel3) -> None:
         price_tracking = client.price_tracking.list_subscriptions()
-        assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
+        assert_matches_type(SyncCursorPage[Subscription], price_tracking, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_subscriptions_with_all_params(self, client: Channel3) -> None:
         price_tracking = client.price_tracking.list_subscriptions(
+            cursor="cursor",
             limit=1,
-            page_token="page_token",
         )
-        assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
+        assert_matches_type(SyncCursorPage[Subscription], price_tracking, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -95,7 +95,7 @@ class TestPriceTracking:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         price_tracking = response.parse()
-        assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
+        assert_matches_type(SyncCursorPage[Subscription], price_tracking, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -105,7 +105,7 @@ class TestPriceTracking:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             price_tracking = response.parse()
-            assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
+            assert_matches_type(SyncCursorPage[Subscription], price_tracking, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -238,16 +238,16 @@ class TestAsyncPriceTracking:
     @parametrize
     async def test_method_list_subscriptions(self, async_client: AsyncChannel3) -> None:
         price_tracking = await async_client.price_tracking.list_subscriptions()
-        assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
+        assert_matches_type(AsyncCursorPage[Subscription], price_tracking, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_subscriptions_with_all_params(self, async_client: AsyncChannel3) -> None:
         price_tracking = await async_client.price_tracking.list_subscriptions(
+            cursor="cursor",
             limit=1,
-            page_token="page_token",
         )
-        assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
+        assert_matches_type(AsyncCursorPage[Subscription], price_tracking, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -257,7 +257,7 @@ class TestAsyncPriceTracking:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         price_tracking = await response.parse()
-        assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
+        assert_matches_type(AsyncCursorPage[Subscription], price_tracking, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -267,7 +267,7 @@ class TestAsyncPriceTracking:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             price_tracking = await response.parse()
-            assert_matches_type(PaginatedSubscriptions, price_tracking, path=["response"])
+            assert_matches_type(AsyncCursorPage[Subscription], price_tracking, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

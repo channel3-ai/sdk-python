@@ -13,7 +13,7 @@ __all__ = ["ProductRetrieveParams"]
 
 class ProductRetrieveParams(TypedDict, total=False):
     redirect_mode: Optional[RedirectMode]
-    """Optional redirect mode"""
+    """Deprecated and ignored. Each offer now contains its own merchant URL."""
 
     website_ids: Optional[SequenceNotStr[str]]
     """
