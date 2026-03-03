@@ -32,6 +32,9 @@ class SearchFiltersParam(TypedDict, total=False):
     data will be included in all condition filter results.
     """
 
+    exclude_brand_ids: Optional[SequenceNotStr[str]]
+    """If provided, products from these brands will be excluded from the results"""
+
     exclude_category_ids: Optional[SequenceNotStr[str]]
     """
     If provided, products in these categories (or their descendants) will be
@@ -39,7 +42,13 @@ class SearchFiltersParam(TypedDict, total=False):
     """
 
     exclude_product_ids: Optional[SequenceNotStr[str]]
-    """If provided, products with these IDs will be excluded from the results"""
+    """Deprecated: this field is accepted but ignored.
+
+    It has no effect on search results.
+    """
+
+    exclude_website_ids: Optional[SequenceNotStr[str]]
+    """If provided, products from these websites will be excluded from the results"""
 
     gender: Optional[Literal["male", "female", "unisex"]]
 

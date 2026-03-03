@@ -9,7 +9,8 @@ import pytest
 
 from tests.utils import assert_matches_type
 from channel3_sdk import Channel3, AsyncChannel3
-from channel3_sdk.types import Brand, PaginatedListBrandsResponse
+from channel3_sdk.types import Brand
+from channel3_sdk.pagination import SyncCursorPage, AsyncCursorPage
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -21,16 +22,16 @@ class TestBrands:
     @parametrize
     def test_method_list(self, client: Channel3) -> None:
         brand = client.brands.list()
-        assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
+        assert_matches_type(SyncCursorPage[Brand], brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_list_with_all_params(self, client: Channel3) -> None:
         brand = client.brands.list(
+            cursor="cursor",
             limit=1,
-            paging_token="paging_token",
         )
-        assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
+        assert_matches_type(SyncCursorPage[Brand], brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -40,7 +41,7 @@ class TestBrands:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         brand = response.parse()
-        assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
+        assert_matches_type(SyncCursorPage[Brand], brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -50,7 +51,7 @@ class TestBrands:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             brand = response.parse()
-            assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
+            assert_matches_type(SyncCursorPage[Brand], brand, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -98,16 +99,16 @@ class TestAsyncBrands:
     @parametrize
     async def test_method_list(self, async_client: AsyncChannel3) -> None:
         brand = await async_client.brands.list()
-        assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
+        assert_matches_type(AsyncCursorPage[Brand], brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncChannel3) -> None:
         brand = await async_client.brands.list(
+            cursor="cursor",
             limit=1,
-            paging_token="paging_token",
         )
-        assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
+        assert_matches_type(AsyncCursorPage[Brand], brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -117,7 +118,7 @@ class TestAsyncBrands:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         brand = await response.parse()
-        assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
+        assert_matches_type(AsyncCursorPage[Brand], brand, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -127,7 +128,7 @@ class TestAsyncBrands:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             brand = await response.parse()
-            assert_matches_type(PaginatedListBrandsResponse, brand, path=["response"])
+            assert_matches_type(AsyncCursorPage[Brand], brand, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

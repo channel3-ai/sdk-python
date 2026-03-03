@@ -61,7 +61,7 @@ class ProductsResource(SyncAPIResource):
         Get detailed information about a specific product by its ID.
 
         Args:
-          redirect_mode: Optional redirect mode
+          redirect_mode: Deprecated and ignored. Each offer now contains its own merchant URL.
 
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
               merchants exist
@@ -132,7 +132,7 @@ class AsyncProductsResource(AsyncAPIResource):
         Get detailed information about a specific product by its ID.
 
         Args:
-          redirect_mode: Optional redirect mode
+          redirect_mode: Deprecated and ignored. Each offer now contains its own merchant URL.
 
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
               merchants exist

@@ -39,8 +39,10 @@ class TestSearch:
                 "brand_ids": ["string"],
                 "category_ids": ["string"],
                 "condition": "new",
+                "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
                 "exclude_product_ids": ["string"],
+                "exclude_website_ids": ["string"],
                 "gender": "male",
                 "price": {
                     "max_price": 0,
@@ -104,8 +106,10 @@ class TestAsyncSearch:
                 "brand_ids": ["string"],
                 "category_ids": ["string"],
                 "condition": "new",
+                "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
                 "exclude_product_ids": ["string"],
+                "exclude_website_ids": ["string"],
                 "gender": "male",
                 "price": {
                     "max_price": 0,

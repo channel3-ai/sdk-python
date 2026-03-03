@@ -9,6 +9,8 @@ __all__ = ["PriceTrackingListSubscriptionsParams"]
 
 
 class PriceTrackingListSubscriptionsParams(TypedDict, total=False):
-    limit: int
+    cursor: Optional[str]
+    """Pagination cursor"""
 
-    page_token: Optional[str]
+    limit: int
+    """Max results (1-100)"""
