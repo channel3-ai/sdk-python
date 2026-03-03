@@ -17,7 +17,7 @@ base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 class TestEnrich:
     parametrize = pytest.mark.parametrize("client", [False, True], indirect=True, ids=["loose", "strict"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_enrich_url(self, client: Channel3) -> None:
         enrich = client.enrich.enrich_url(
@@ -25,7 +25,7 @@ class TestEnrich:
         )
         assert_matches_type(ProductDetail, enrich, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_enrich_url(self, client: Channel3) -> None:
         response = client.enrich.with_raw_response.enrich_url(
@@ -37,7 +37,7 @@ class TestEnrich:
         enrich = response.parse()
         assert_matches_type(ProductDetail, enrich, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_enrich_url(self, client: Channel3) -> None:
         with client.enrich.with_streaming_response.enrich_url(
@@ -57,7 +57,7 @@ class TestAsyncEnrich:
         "async_client", [False, True, {"http_client": "aiohttp"}], indirect=True, ids=["loose", "strict", "aiohttp"]
     )
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_enrich_url(self, async_client: AsyncChannel3) -> None:
         enrich = await async_client.enrich.enrich_url(
@@ -65,7 +65,7 @@ class TestAsyncEnrich:
         )
         assert_matches_type(ProductDetail, enrich, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_enrich_url(self, async_client: AsyncChannel3) -> None:
         response = await async_client.enrich.with_raw_response.enrich_url(
@@ -77,7 +77,7 @@ class TestAsyncEnrich:
         enrich = await response.parse()
         assert_matches_type(ProductDetail, enrich, path=["response"])
 
-    @pytest.mark.skip(reason="Prism tests are disabled")
+    @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_enrich_url(self, async_client: AsyncChannel3) -> None:
         async with async_client.enrich.with_streaming_response.enrich_url(

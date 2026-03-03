@@ -17,9 +17,9 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
+from ..pagination import SyncCursorPage, AsyncCursorPage
 from ..types.brand import Brand
-from .._base_client import make_request_options
-from ..types.paginated_list_brands_response import PaginatedListBrandsResponse
+from .._base_client import AsyncPaginator, make_request_options
 
 __all__ = ["BrandsResource", "AsyncBrandsResource"]
 
@@ -47,24 +47,24 @@ class BrandsResource(SyncAPIResource):
     def list(
         self,
         *,
+        cursor: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
-        paging_token: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PaginatedListBrandsResponse:
+    ) -> SyncCursorPage[Brand]:
         """Lists all brands, sorted alphabetically.
 
-        Supports infinite scrolling with the
-        paging_token parameter.
+        Supports pagination with the cursor
+        parameter.
 
         Args:
-          limit: Max results (1-100)
+          cursor: Pagination cursor
 
-          paging_token: Pagination cursor
+          limit: Max results (1-100)
 
           extra_headers: Send extra headers
 
@@ -74,8 +74,9 @@ class BrandsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v0/list-brands",
+            page=SyncCursorPage[Brand],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -83,13 +84,13 @@ class BrandsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "cursor": cursor,
                         "limit": limit,
-                        "paging_token": paging_token,
                     },
                     brand_list_params.BrandListParams,
                 ),
             ),
-            cast_to=PaginatedListBrandsResponse,
+            model=Brand,
         )
 
     def find(
@@ -148,27 +149,27 @@ class AsyncBrandsResource(AsyncAPIResource):
         """
         return AsyncBrandsResourceWithStreamingResponse(self)
 
-    async def list(
+    def list(
         self,
         *,
+        cursor: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
-        paging_token: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PaginatedListBrandsResponse:
+    ) -> AsyncPaginator[Brand, AsyncCursorPage[Brand]]:
         """Lists all brands, sorted alphabetically.
 
-        Supports infinite scrolling with the
-        paging_token parameter.
+        Supports pagination with the cursor
+        parameter.
 
         Args:
-          limit: Max results (1-100)
+          cursor: Pagination cursor
 
-          paging_token: Pagination cursor
+          limit: Max results (1-100)
 
           extra_headers: Send extra headers
 
@@ -178,22 +179,23 @@ class AsyncBrandsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v0/list-brands",
+            page=AsyncCursorPage[Brand],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
+                        "cursor": cursor,
                         "limit": limit,
-                        "paging_token": paging_token,
                     },
                     brand_list_params.BrandListParams,
                 ),
             ),
-            cast_to=PaginatedListBrandsResponse,
+            model=Brand,
         )
 
     async def find(

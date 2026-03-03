@@ -1,5 +1,38 @@
 # Changelog
 
+## 2.13.0 (2026-03-03)
+
+Full Changelog: [v2.12.0...v2.13.0](https://github.com/channel3-ai/sdk-python/compare/v2.12.0...v2.13.0)
+
+### Features
+
+* alex/search service v2 ([8486f73](https://github.com/channel3-ai/sdk-python/commit/8486f7313f00f972d7758b9a1cebf00ac03bb0b5))
+* **api:** api update ([e2755dd](https://github.com/channel3-ai/sdk-python/commit/e2755dd9294ba12ffe5f8b2c62c1e64914d93121))
+* **api:** api update ([cb66c03](https://github.com/channel3-ai/sdk-python/commit/cb66c03f515270e47d38666f8397801483000b1b))
+* **api:** api update ([098accf](https://github.com/channel3-ai/sdk-python/commit/098accfe3a6eef493499e08b5046cee6905d25bd))
+* **api:** api update ([f5d9453](https://github.com/channel3-ai/sdk-python/commit/f5d9453220ee02bf364811a670978606802c1712))
+* **api:** api update ([81ba404](https://github.com/channel3-ai/sdk-python/commit/81ba404732c2ffb0d18d3575837086ddfa51263f))
+* **api:** api update ([4f305a8](https://github.com/channel3-ai/sdk-python/commit/4f305a83069bc9708d11c313d6e28287bbbcf3e1))
+* **api:** api update ([4c60169](https://github.com/channel3-ai/sdk-python/commit/4c60169f5a370a852034ae624b88f7735bd6e75b))
+* **api:** api update ([4d4bbb7](https://github.com/channel3-ai/sdk-python/commit/4d4bbb77214a4bfb163b105b64e95a4610742a14))
+* **api:** api update ([9c74e0d](https://github.com/channel3-ai/sdk-python/commit/9c74e0d394a55f2be54efb732dfd1f4844e05637))
+* **api:** api update ([961e4af](https://github.com/channel3-ai/sdk-python/commit/961e4af5916a57d4d67709a54e1a61d2431d1b78))
+* **client:** add custom JSON encoder for extended type support ([6fe4750](https://github.com/channel3-ai/sdk-python/commit/6fe475076cb06b028dd7cc8d25f63fd8ee9bd2d9))
+
+
+### Chores
+
+* **api:** minor updates ([266f237](https://github.com/channel3-ai/sdk-python/commit/266f237d7728b96765d22f00b54b62dd2a392e1f))
+* **ci:** upgrade `actions/github-script` ([dcbddbb](https://github.com/channel3-ai/sdk-python/commit/dcbddbb15ef2cfbbcfcbc29c1bdc63c8d2cd4d28))
+* format all `api.md` files ([bdca2f5](https://github.com/channel3-ai/sdk-python/commit/bdca2f5b8613e1fc025d957cf8594d9bbc3118f9))
+* **internal:** add request options to SSE classes ([5df3a17](https://github.com/channel3-ai/sdk-python/commit/5df3a171f1c833b310f5840dd7e8a29b45703222))
+* **internal:** bump dependencies ([fff2ad6](https://github.com/channel3-ai/sdk-python/commit/fff2ad666c916ee30d2ca66279403e19ccb08d88))
+* **internal:** fix lint error on Python 3.14 ([c4f458b](https://github.com/channel3-ai/sdk-python/commit/c4f458b30f591db2f85426ce36be5638a47a72a0))
+* **internal:** make `test_proxy_environment_variables` more resilient ([3adff67](https://github.com/channel3-ai/sdk-python/commit/3adff67315303407585831ae4addba0dace23133))
+* **internal:** make `test_proxy_environment_variables` more resilient to env ([21ed820](https://github.com/channel3-ai/sdk-python/commit/21ed820c8adca148059255e5f749da3a0a0c67c0))
+* **internal:** remove mock server code ([f201aa0](https://github.com/channel3-ai/sdk-python/commit/f201aa035286a05659f760d307b075b47c2c1a5d))
+* update mock server docs ([1402663](https://github.com/channel3-ai/sdk-python/commit/1402663c72bceb8edffaf1c20311b94c48176a99))
+
 ## 2.12.0 (2026-01-19)
 
 Full Changelog: [v2.11.0...v2.12.0](https://github.com/channel3-ai/sdk-python/compare/v2.11.0...v2.12.0)

@@ -13,11 +13,7 @@ __all__ = ["ProductRetrieveParams"]
 
 class ProductRetrieveParams(TypedDict, total=False):
     redirect_mode: Optional[RedirectMode]
-    """
-    "price" redirects to the product page with the lowest price "commission"
-    redirects to the product page with the highest commission rate "brand" redirects
-    to the brand's product page
-    """
+    """Deprecated and ignored. Each offer now contains its own merchant URL."""
 
     website_ids: Optional[SequenceNotStr[str]]
     """

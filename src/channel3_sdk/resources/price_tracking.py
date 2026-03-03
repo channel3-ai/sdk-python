@@ -22,10 +22,10 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
+from ..pagination import SyncCursorPage, AsyncCursorPage
+from .._base_client import AsyncPaginator, make_request_options
 from ..types.subscription import Subscription
 from ..types.price_history import PriceHistory
-from ..types.paginated_subscriptions import PaginatedSubscriptions
 
 __all__ = ["PriceTrackingResource", "AsyncPriceTrackingResource"]
 
@@ -95,19 +95,23 @@ class PriceTrackingResource(SyncAPIResource):
     def list_subscriptions(
         self,
         *,
+        cursor: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
-        page_token: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PaginatedSubscriptions:
+    ) -> SyncCursorPage[Subscription]:
         """
         List your active price tracking subscriptions.
 
         Args:
+          cursor: Pagination cursor
+
+          limit: Max results (1-100)
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -116,8 +120,9 @@ class PriceTrackingResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return self._get(
+        return self._get_api_list(
             "/v0/price-tracking/subscriptions",
+            page=SyncCursorPage[Subscription],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -125,13 +130,13 @@ class PriceTrackingResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "cursor": cursor,
                         "limit": limit,
-                        "page_token": page_token,
                     },
                     price_tracking_list_subscriptions_params.PriceTrackingListSubscriptionsParams,
                 ),
             ),
-            cast_to=PaginatedSubscriptions,
+            model=Subscription,
         )
 
     def start(
@@ -267,22 +272,26 @@ class AsyncPriceTrackingResource(AsyncAPIResource):
             cast_to=PriceHistory,
         )
 
-    async def list_subscriptions(
+    def list_subscriptions(
         self,
         *,
+        cursor: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
-        page_token: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PaginatedSubscriptions:
+    ) -> AsyncPaginator[Subscription, AsyncCursorPage[Subscription]]:
         """
         List your active price tracking subscriptions.
 
         Args:
+          cursor: Pagination cursor
+
+          limit: Max results (1-100)
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -291,22 +300,23 @@ class AsyncPriceTrackingResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self._get(
+        return self._get_api_list(
             "/v0/price-tracking/subscriptions",
+            page=AsyncCursorPage[Subscription],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform(
+                query=maybe_transform(
                     {
+                        "cursor": cursor,
                         "limit": limit,
-                        "page_token": page_token,
                     },
                     price_tracking_list_subscriptions_params.PriceTrackingListSubscriptionsParams,
                 ),
             ),
-            cast_to=PaginatedSubscriptions,
+            model=Subscription,
         )
 
     async def start(
