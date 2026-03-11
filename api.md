@@ -4,18 +4,17 @@ Types:
 
 ```python
 from channel3_sdk.types import (
-    RedirectMode,
     SearchConfig,
     SearchFilterPrice,
     SearchFilters,
     SearchRequest,
-    SearchPerformResponse,
+    SearchResponse,
 )
 ```
 
 Methods:
 
-- <code title="post /v0/search">client.search.<a href="./src/channel3_sdk/resources/search.py">perform</a>(\*\*<a href="src/channel3_sdk/types/search_perform_params.py">params</a>) -> <a href="./src/channel3_sdk/types/search_perform_response.py">SearchPerformResponse</a></code>
+- <code title="post /v1/search">client.search.<a href="./src/channel3_sdk/resources/search.py">perform</a>(\*\*<a href="src/channel3_sdk/types/search_perform_params.py">params</a>) -> <a href="./src/channel3_sdk/types/search_response.py">SearchResponse</a></code>
 
 # Products
 
@@ -48,6 +47,7 @@ from channel3_sdk.types import Brand
 
 Methods:
 
+- <code title="get /v0/brands/{brand_id}">client.brands.<a href="./src/channel3_sdk/resources/brands.py">retrieve</a>(brand_id) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
 - <code title="get /v0/list-brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">list</a>(\*\*<a href="src/channel3_sdk/types/brand_list_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">SyncCursorPage[Brand]</a></code>
 - <code title="get /v0/brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">find</a>(\*\*<a href="src/channel3_sdk/types/brand_find_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
 

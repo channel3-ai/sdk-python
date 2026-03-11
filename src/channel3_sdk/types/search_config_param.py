@@ -2,26 +2,16 @@
 
 from __future__ import annotations
 
-from typing import Optional
 from typing_extensions import TypedDict
-
-from .redirect_mode import RedirectMode
 
 __all__ = ["SearchConfigParam"]
 
 
 class SearchConfigParam(TypedDict, total=False):
-    """Configuration for a search request"""
+    """Search configuration for the search API."""
 
     keyword_search_only: bool
     """If True, search will only use keyword search and not vector search.
 
     Keyword-only search is not supported with image input.
-    """
-
-    redirect_mode: Optional[RedirectMode]
-    """
-    "price" redirects to the product page with the lowest price "commission"
-    redirects to the product page with the highest commission rate "brand" redirects
-    to the brand's product page
     """
