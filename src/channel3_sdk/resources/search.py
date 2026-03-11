@@ -18,9 +18,9 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
+from ..types.search_response import SearchResponse
 from ..types.search_config_param import SearchConfigParam
 from ..types.search_filters_param import SearchFiltersParam
-from ..types.search_perform_response import SearchPerformResponse
 
 __all__ = ["SearchResource", "AsyncSearchResource"]
 
@@ -50,10 +50,10 @@ class SearchResource(SyncAPIResource):
         *,
         base64_image: Optional[str] | Omit = omit,
         config: SearchConfigParam | Omit = omit,
-        context: Optional[str] | Omit = omit,
         filters: SearchFiltersParam | Omit = omit,
         image_url: Optional[str] | Omit = omit,
         limit: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
         query: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -61,16 +61,14 @@ class SearchResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SearchPerformResponse:
+    ) -> SearchResponse:
         """
-        Search for products.
+        Search for products with pagination support.
 
         Args:
           base64_image: Base64 encoded image
 
           config: Optional configuration
-
-          context: Optional customer information to personalize search results
 
           filters: Optional filters. Search will only consider products that match all of the
               filters.
@@ -78,6 +76,8 @@ class SearchResource(SyncAPIResource):
           image_url: Image URL
 
           limit: Optional limit on the number of results. Default is 20, max is 30.
+
+          page_token: Opaque token from a previous search response to fetch the next page of results.
 
           query: Search query
 
@@ -90,15 +90,15 @@ class SearchResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._post(
-            "/v0/search",
+            "/v1/search",
             body=maybe_transform(
                 {
                     "base64_image": base64_image,
                     "config": config,
-                    "context": context,
                     "filters": filters,
                     "image_url": image_url,
                     "limit": limit,
+                    "page_token": page_token,
                     "query": query,
                 },
                 search_perform_params.SearchPerformParams,
@@ -106,7 +106,7 @@ class SearchResource(SyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SearchPerformResponse,
+            cast_to=SearchResponse,
         )
 
 
@@ -135,10 +135,10 @@ class AsyncSearchResource(AsyncAPIResource):
         *,
         base64_image: Optional[str] | Omit = omit,
         config: SearchConfigParam | Omit = omit,
-        context: Optional[str] | Omit = omit,
         filters: SearchFiltersParam | Omit = omit,
         image_url: Optional[str] | Omit = omit,
         limit: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
         query: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -146,16 +146,14 @@ class AsyncSearchResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SearchPerformResponse:
+    ) -> SearchResponse:
         """
-        Search for products.
+        Search for products with pagination support.
 
         Args:
           base64_image: Base64 encoded image
 
           config: Optional configuration
-
-          context: Optional customer information to personalize search results
 
           filters: Optional filters. Search will only consider products that match all of the
               filters.
@@ -163,6 +161,8 @@ class AsyncSearchResource(AsyncAPIResource):
           image_url: Image URL
 
           limit: Optional limit on the number of results. Default is 20, max is 30.
+
+          page_token: Opaque token from a previous search response to fetch the next page of results.
 
           query: Search query
 
@@ -175,15 +175,15 @@ class AsyncSearchResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._post(
-            "/v0/search",
+            "/v1/search",
             body=await async_maybe_transform(
                 {
                     "base64_image": base64_image,
                     "config": config,
-                    "context": context,
                     "filters": filters,
                     "image_url": image_url,
                     "limit": limit,
+                    "page_token": page_token,
                     "query": query,
                 },
                 search_perform_params.SearchPerformParams,
@@ -191,7 +191,7 @@ class AsyncSearchResource(AsyncAPIResource):
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=SearchPerformResponse,
+            cast_to=SearchResponse,
         )
 
 

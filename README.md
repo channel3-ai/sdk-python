@@ -32,7 +32,8 @@ client = Channel3(
     api_key=os.environ.get("CHANNEL3_API_KEY"),  # This is the default and can be omitted
 )
 
-products = client.search.perform()
+search_response = client.search.perform()
+print(search_response.products)
 ```
 
 While you can provide an `api_key` keyword argument,
@@ -55,7 +56,8 @@ client = AsyncChannel3(
 
 
 async def main() -> None:
-    products = await client.search.perform()
+    search_response = await client.search.perform()
+    print(search_response.products)
 
 
 asyncio.run(main())
@@ -88,7 +90,8 @@ async def main() -> None:
         api_key=os.environ.get("CHANNEL3_API_KEY"),  # This is the default and can be omitted
         http_client=DefaultAioHttpClient(),
     ) as client:
-        products = await client.search.perform()
+        search_response = await client.search.perform()
+        print(search_response.products)
 
 
 asyncio.run(main())
@@ -175,10 +178,10 @@ from channel3_sdk import Channel3
 
 client = Channel3()
 
-products = client.search.perform(
+search_response = client.search.perform(
     config={},
 )
-print(products.config)
+print(search_response.config)
 ```
 
 ## Handling errors
@@ -308,7 +311,7 @@ response = client.search.with_raw_response.perform()
 print(response.headers.get('X-My-Header'))
 
 search = response.parse()  # get the object that `search.perform()` would have returned
-print(search)
+print(search.products)
 ```
 
 These methods return an [`APIResponse`](https://github.com/channel3-ai/sdk-python/tree/main/src/channel3_sdk/_response.py) object.

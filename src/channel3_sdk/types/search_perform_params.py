@@ -18,9 +18,6 @@ class SearchPerformParams(TypedDict, total=False):
     config: SearchConfigParam
     """Optional configuration"""
 
-    context: Optional[str]
-    """Optional customer information to personalize search results"""
-
     filters: SearchFiltersParam
     """Optional filters.
 
@@ -32,6 +29,9 @@ class SearchPerformParams(TypedDict, total=False):
 
     limit: Optional[int]
     """Optional limit on the number of results. Default is 20, max is 30."""
+
+    page_token: Optional[str]
+    """Opaque token from a previous search response to fetch the next page of results."""
 
     query: Optional[str]
     """Search query"""

@@ -14,7 +14,7 @@ __all__ = ["ProductDetail"]
 
 
 class ProductDetail(BaseModel):
-    """A product with detailed information"""
+    """v0 product detail with deprecated fields."""
 
     id: str
 
@@ -55,3 +55,4 @@ class ProductDetail(BaseModel):
     """All merchant offers for this product in the requested locale."""
 
     variants: Optional[List[Variant]] = None
+    """Legacy variant list, always empty. Use v1 API for variant dimensions."""

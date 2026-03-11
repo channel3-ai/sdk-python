@@ -13,6 +13,8 @@ __all__ = ["SearchFiltersParam"]
 
 
 class SearchFiltersParam(TypedDict, total=False):
+    """Search filters for the search API."""
+
     age: Optional[List[Literal["newborn", "infant", "toddler", "kids", "adult"]]]
     """Filter by age group. Age-agnostic products are treated as adult products."""
 
@@ -41,19 +43,13 @@ class SearchFiltersParam(TypedDict, total=False):
     excluded from the results
     """
 
-    exclude_product_ids: Optional[SequenceNotStr[str]]
-    """Deprecated: this field is accepted but ignored.
-
-    It has no effect on search results.
-    """
-
     exclude_website_ids: Optional[SequenceNotStr[str]]
     """If provided, products from these websites will be excluded from the results"""
 
     gender: Optional[Literal["male", "female", "unisex"]]
 
     price: Optional[SearchFilterPriceParam]
-    """Price filter. Values are inclusive."""
+    """Price filter for search. Values are inclusive."""
 
     website_ids: Optional[SequenceNotStr[str]]
     """If provided, only products from these websites will be returned"""

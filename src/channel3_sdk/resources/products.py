@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 from typing import Optional
+from typing_extensions import Literal
 
 import httpx
 
-from ..types import RedirectMode, product_retrieve_params
+from ..types import product_retrieve_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -18,7 +19,6 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.redirect_mode import RedirectMode
 from ..types.product_detail import ProductDetail
 
 __all__ = ["ProductsResource", "AsyncProductsResource"]
@@ -48,7 +48,7 @@ class ProductsResource(SyncAPIResource):
         self,
         product_id: str,
         *,
-        redirect_mode: Optional[RedirectMode] | Omit = omit,
+        redirect_mode: Optional[Literal["brand", "price", "commission"]] | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -119,7 +119,7 @@ class AsyncProductsResource(AsyncAPIResource):
         self,
         product_id: str,
         *,
-        redirect_mode: Optional[RedirectMode] | Omit = omit,
+        redirect_mode: Optional[Literal["brand", "price", "commission"]] | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.

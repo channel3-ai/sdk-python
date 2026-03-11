@@ -9,7 +9,7 @@ import pytest
 
 from tests.utils import assert_matches_type
 from channel3_sdk import Channel3, AsyncChannel3
-from channel3_sdk.types import SearchPerformResponse
+from channel3_sdk.types import SearchResponse
 
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
@@ -21,18 +21,14 @@ class TestSearch:
     @parametrize
     def test_method_perform(self, client: Channel3) -> None:
         search = client.search.perform()
-        assert_matches_type(SearchPerformResponse, search, path=["response"])
+        assert_matches_type(SearchResponse, search, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_perform_with_all_params(self, client: Channel3) -> None:
         search = client.search.perform(
             base64_image="base64_image",
-            config={
-                "keyword_search_only": True,
-                "redirect_mode": "brand",
-            },
-            context="context",
+            config={"keyword_search_only": True},
             filters={
                 "age": ["newborn"],
                 "availability": ["InStock"],
@@ -41,7 +37,6 @@ class TestSearch:
                 "condition": "new",
                 "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
-                "exclude_product_ids": ["string"],
                 "exclude_website_ids": ["string"],
                 "gender": "male",
                 "price": {
@@ -52,9 +47,10 @@ class TestSearch:
             },
             image_url="image_url",
             limit=1,
+            page_token="page_token",
             query="query",
         )
-        assert_matches_type(SearchPerformResponse, search, path=["response"])
+        assert_matches_type(SearchResponse, search, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -64,7 +60,7 @@ class TestSearch:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         search = response.parse()
-        assert_matches_type(SearchPerformResponse, search, path=["response"])
+        assert_matches_type(SearchResponse, search, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -74,7 +70,7 @@ class TestSearch:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             search = response.parse()
-            assert_matches_type(SearchPerformResponse, search, path=["response"])
+            assert_matches_type(SearchResponse, search, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -88,18 +84,14 @@ class TestAsyncSearch:
     @parametrize
     async def test_method_perform(self, async_client: AsyncChannel3) -> None:
         search = await async_client.search.perform()
-        assert_matches_type(SearchPerformResponse, search, path=["response"])
+        assert_matches_type(SearchResponse, search, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_perform_with_all_params(self, async_client: AsyncChannel3) -> None:
         search = await async_client.search.perform(
             base64_image="base64_image",
-            config={
-                "keyword_search_only": True,
-                "redirect_mode": "brand",
-            },
-            context="context",
+            config={"keyword_search_only": True},
             filters={
                 "age": ["newborn"],
                 "availability": ["InStock"],
@@ -108,7 +100,6 @@ class TestAsyncSearch:
                 "condition": "new",
                 "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
-                "exclude_product_ids": ["string"],
                 "exclude_website_ids": ["string"],
                 "gender": "male",
                 "price": {
@@ -119,9 +110,10 @@ class TestAsyncSearch:
             },
             image_url="image_url",
             limit=1,
+            page_token="page_token",
             query="query",
         )
-        assert_matches_type(SearchPerformResponse, search, path=["response"])
+        assert_matches_type(SearchResponse, search, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -131,7 +123,7 @@ class TestAsyncSearch:
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
         search = await response.parse()
-        assert_matches_type(SearchPerformResponse, search, path=["response"])
+        assert_matches_type(SearchResponse, search, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -141,6 +133,6 @@ class TestAsyncSearch:
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
             search = await response.parse()
-            assert_matches_type(SearchPerformResponse, search, path=["response"])
+            assert_matches_type(SearchResponse, search, path=["response"])
 
         assert cast(Any, response.is_closed) is True

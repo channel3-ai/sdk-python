@@ -851,7 +851,7 @@ class TestChannel3:
     @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Channel3) -> None:
-        respx_mock.post("/v0/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             client.search.with_streaming_response.perform().__enter__()
@@ -861,7 +861,7 @@ class TestChannel3:
     @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
     def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Channel3) -> None:
-        respx_mock.post("/v0/search").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/search").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             client.search.with_streaming_response.perform().__enter__()
@@ -891,7 +891,7 @@ class TestChannel3:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v0/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = client.search.with_raw_response.perform()
 
@@ -915,7 +915,7 @@ class TestChannel3:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v0/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = client.search.with_raw_response.perform(extra_headers={"x-stainless-retry-count": Omit()})
 
@@ -938,7 +938,7 @@ class TestChannel3:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v0/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = client.search.with_raw_response.perform(extra_headers={"x-stainless-retry-count": "42"})
 
@@ -1759,7 +1759,7 @@ class TestAsyncChannel3:
     async def test_retrying_timeout_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncChannel3
     ) -> None:
-        respx_mock.post("/v0/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
+        respx_mock.post("/v1/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
 
         with pytest.raises(APITimeoutError):
             await async_client.search.with_streaming_response.perform().__aenter__()
@@ -1771,7 +1771,7 @@ class TestAsyncChannel3:
     async def test_retrying_status_errors_doesnt_leak(
         self, respx_mock: MockRouter, async_client: AsyncChannel3
     ) -> None:
-        respx_mock.post("/v0/search").mock(return_value=httpx.Response(500))
+        respx_mock.post("/v1/search").mock(return_value=httpx.Response(500))
 
         with pytest.raises(APIStatusError):
             await async_client.search.with_streaming_response.perform().__aenter__()
@@ -1801,7 +1801,7 @@ class TestAsyncChannel3:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v0/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = await client.search.with_raw_response.perform()
 
@@ -1825,7 +1825,7 @@ class TestAsyncChannel3:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v0/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = await client.search.with_raw_response.perform(extra_headers={"x-stainless-retry-count": Omit()})
 
@@ -1848,7 +1848,7 @@ class TestAsyncChannel3:
                 return httpx.Response(500)
             return httpx.Response(200)
 
-        respx_mock.post("/v0/search").mock(side_effect=retry_handler)
+        respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
         response = await client.search.with_raw_response.perform(extra_headers={"x-stainless-retry-count": "42"})
 
