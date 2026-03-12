@@ -9,16 +9,13 @@ __all__ = ["ProductImage"]
 
 
 class ProductImage(BaseModel):
-    """v0 product image with deprecated photo_quality field."""
+    """Product image with metadata."""
 
     url: str
 
     alt_text: Optional[str] = None
 
     is_main_image: Optional[bool] = None
-
-    photo_quality: Optional[Literal["professional", "ugc", "poor"]] = None
-    """Photo quality classification for API responses."""
 
     shot_type: Optional[
         Literal[

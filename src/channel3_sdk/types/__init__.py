@@ -4,7 +4,6 @@ from __future__ import annotations
 
 from .brand import Brand as Brand
 from .price import Price as Price
-from .variant import Variant as Variant
 from .website import Website as Website
 from .subscription import Subscription as Subscription
 from .price_history import PriceHistory as PriceHistory
@@ -23,6 +22,7 @@ from .search_perform_params import SearchPerformParams as SearchPerformParams
 from .product_retrieve_params import ProductRetrieveParams as ProductRetrieveParams
 from .enrich_enrich_url_params import EnrichEnrichURLParams as EnrichEnrichURLParams
 from .search_filter_price_param import SearchFilterPriceParam as SearchFilterPriceParam
+from .enrich_enrich_url_response import EnrichEnrichURLResponse as EnrichEnrichURLResponse
 from .price_tracking_stop_params import PriceTrackingStopParams as PriceTrackingStopParams
 from .price_tracking_start_params import PriceTrackingStartParams as PriceTrackingStartParams
 from .price_tracking_get_history_params import PriceTrackingGetHistoryParams as PriceTrackingGetHistoryParams
