@@ -30,7 +30,6 @@ class TestProducts:
     def test_method_retrieve_with_all_params(self, client: Channel3) -> None:
         product = client.products.retrieve(
             product_id="product_id",
-            redirect_mode="brand",
             website_ids=["string"],
         )
         assert_matches_type(ProductDetail, product, path=["response"])
@@ -88,7 +87,6 @@ class TestAsyncProducts:
     async def test_method_retrieve_with_all_params(self, async_client: AsyncChannel3) -> None:
         product = await async_client.products.retrieve(
             product_id="product_id",
-            redirect_mode="brand",
             website_ids=["string"],
         )
         assert_matches_type(ProductDetail, product, path=["response"])
