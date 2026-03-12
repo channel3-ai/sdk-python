@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.0.0 (2026-03-12)
+
+Full Changelog: [v2.13.0...v3.0.0](https://github.com/channel3-ai/sdk-python/compare/v2.13.0...v3.0.0)
+
+### Features
+
+* **api:** add brands.retrieve, search pagination, remove deprecated product/search fields ([5afe2dc](https://github.com/channel3-ai/sdk-python/commit/5afe2dc447cd5b43dd7999cf67792be472fc2940))
+* v1 product API ([63c4d55](https://github.com/channel3-ai/sdk-python/commit/63c4d5597e3fd933daa6914f7bb91fd93b5387cc))
+
+
+### Chores
+
+* **ci:** skip uploading artifacts on stainless-internal branches ([74dd426](https://github.com/channel3-ai/sdk-python/commit/74dd4266d73d1e839ae558aeb7901aacc5933172))
+
 ## 2.13.0 (2026-03-03)
 
 Full Changelog: [v2.12.0...v2.13.0](https://github.com/channel3-ai/sdk-python/compare/v2.12.0...v2.13.0)
