@@ -6,7 +6,7 @@ from typing import Optional
 
 import httpx
 
-from ..types import RedirectMode, product_retrieve_params
+from ..types import product_retrieve_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -18,7 +18,6 @@ from .._response import (
     async_to_streamed_response_wrapper,
 )
 from .._base_client import make_request_options
-from ..types.redirect_mode import RedirectMode
 from ..types.product_detail import ProductDetail
 
 __all__ = ["ProductsResource", "AsyncProductsResource"]
@@ -48,7 +47,6 @@ class ProductsResource(SyncAPIResource):
         self,
         product_id: str,
         *,
-        redirect_mode: Optional[RedirectMode] | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -61,8 +59,6 @@ class ProductsResource(SyncAPIResource):
         Get detailed information about a specific product by its ID.
 
         Args:
-          redirect_mode: Deprecated and ignored. Each offer now contains its own merchant URL.
-
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
               merchants exist
 
@@ -77,19 +73,13 @@ class ProductsResource(SyncAPIResource):
         if not product_id:
             raise ValueError(f"Expected a non-empty value for `product_id` but received {product_id!r}")
         return self._get(
-            f"/v0/products/{product_id}",
+            f"/v1/products/{product_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform(
-                    {
-                        "redirect_mode": redirect_mode,
-                        "website_ids": website_ids,
-                    },
-                    product_retrieve_params.ProductRetrieveParams,
-                ),
+                query=maybe_transform({"website_ids": website_ids}, product_retrieve_params.ProductRetrieveParams),
             ),
             cast_to=ProductDetail,
         )
@@ -119,7 +109,6 @@ class AsyncProductsResource(AsyncAPIResource):
         self,
         product_id: str,
         *,
-        redirect_mode: Optional[RedirectMode] | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -132,8 +121,6 @@ class AsyncProductsResource(AsyncAPIResource):
         Get detailed information about a specific product by its ID.
 
         Args:
-          redirect_mode: Deprecated and ignored. Each offer now contains its own merchant URL.
-
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
               merchants exist
 
@@ -148,18 +135,14 @@ class AsyncProductsResource(AsyncAPIResource):
         if not product_id:
             raise ValueError(f"Expected a non-empty value for `product_id` but received {product_id!r}")
         return await self._get(
-            f"/v0/products/{product_id}",
+            f"/v1/products/{product_id}",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {
-                        "redirect_mode": redirect_mode,
-                        "website_ids": website_ids,
-                    },
-                    product_retrieve_params.ProductRetrieveParams,
+                    {"website_ids": website_ids}, product_retrieve_params.ProductRetrieveParams
                 ),
             ),
             cast_to=ProductDetail,

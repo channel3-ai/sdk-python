@@ -4,30 +4,62 @@ from typing import List, Optional
 from typing_extensions import Literal
 
 from .price import Price
-from .variant import Variant
 from .._models import BaseModel
 from .product_brand import ProductBrand
-from .product_image import ProductImage
 from .product_offer import ProductOffer
 
-__all__ = ["Product"]
+__all__ = ["EnrichEnrichURLResponse", "Image", "Variant"]
 
 
-class Product(BaseModel):
-    """A search result that includes product details and a relevance score."""
+class Image(BaseModel):
+    """v0 product image with deprecated photo_quality field."""
+
+    url: str
+
+    alt_text: Optional[str] = None
+
+    is_main_image: Optional[bool] = None
+
+    photo_quality: Optional[Literal["professional", "ugc", "poor"]] = None
+    """Photo quality classification for API responses."""
+
+    shot_type: Optional[
+        Literal[
+            "hero",
+            "lifestyle",
+            "on_model",
+            "detail",
+            "scale_reference",
+            "angle_view",
+            "flat_lay",
+            "in_use",
+            "packaging",
+            "size_chart",
+            "product_information",
+            "merchant_information",
+        ]
+    ] = None
+    """Product image type classification for API responses."""
+
+
+class Variant(BaseModel):
+    image_url: str
+
+    product_id: str
+
+    title: str
+
+
+class EnrichEnrichURLResponse(BaseModel):
+    """v0 product detail with deprecated fields."""
 
     id: str
 
     availability: Literal["InStock", "OutOfStock"]
     """Deprecated, use offers field"""
 
-    image_url: str
-    """Main product image (deprecated, use images field)"""
-
     price: Price
     """Deprecated, use offers field"""
-
-    score: int
 
     title: str
 
@@ -50,7 +82,7 @@ class Product(BaseModel):
     image_urls: Optional[List[str]] = None
     """List of image URLs (deprecated, use images field)"""
 
-    images: Optional[List[ProductImage]] = None
+    images: Optional[List[Image]] = None
 
     key_features: Optional[List[str]] = None
 
@@ -60,3 +92,4 @@ class Product(BaseModel):
     """All merchant offers for this product in the requested locale."""
 
     variants: Optional[List[Variant]] = None
+    """Legacy variant list, always empty. Use v1 API for variant dimensions."""

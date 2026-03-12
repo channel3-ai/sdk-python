@@ -9,7 +9,7 @@ __all__ = ["SearchFilterPriceParam"]
 
 
 class SearchFilterPriceParam(TypedDict, total=False):
-    """Price filter. Values are inclusive."""
+    """Price filter for search. Values are inclusive."""
 
     max_price: Optional[float]
     """Maximum price, in dollars and cents"""
