@@ -8,7 +8,7 @@ import httpx
 
 from ..types import product_retrieve_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from .._utils import maybe_transform, async_maybe_transform
+from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -73,7 +73,7 @@ class ProductsResource(SyncAPIResource):
         if not product_id:
             raise ValueError(f"Expected a non-empty value for `product_id` but received {product_id!r}")
         return self._get(
-            f"/v1/products/{product_id}",
+            path_template("/v1/products/{product_id}", product_id=product_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -135,7 +135,7 @@ class AsyncProductsResource(AsyncAPIResource):
         if not product_id:
             raise ValueError(f"Expected a non-empty value for `product_id` but received {product_id!r}")
         return await self._get(
-            f"/v1/products/{product_id}",
+            path_template("/v1/products/{product_id}", product_id=product_id),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
