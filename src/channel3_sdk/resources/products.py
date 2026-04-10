@@ -6,7 +6,7 @@ from typing import Optional
 
 import httpx
 
-from ..types import product_retrieve_params
+from ..types import product_lookup_params, product_retrieve_params
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
 from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -19,6 +19,7 @@ from .._response import (
 )
 from .._base_client import make_request_options
 from ..types.product_detail import ProductDetail
+from ..types.lookup_response import LookupResponse
 
 __all__ = ["ProductsResource", "AsyncProductsResource"]
 
@@ -82,6 +83,53 @@ class ProductsResource(SyncAPIResource):
                 query=maybe_transform({"website_ids": website_ids}, product_retrieve_params.ProductRetrieveParams),
             ),
             cast_to=ProductDetail,
+        )
+
+    def lookup(
+        self,
+        *,
+        url: str,
+        max_staleness_hours: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> LookupResponse:
+        """
+        Retrieve product information for any supported product URL.
+
+        Returns the same Product model as GET /v1/products/{product_id}. The product_id
+        in the response can be used with the Product Detail endpoint.
+
+        Args:
+          url: The URL of the product to look up
+
+          max_staleness_hours: Maximum age (in hours) of cached product data before forcing a fresh lookup.
+              Defaults to 3 hours.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/lookup",
+            body=maybe_transform(
+                {
+                    "url": url,
+                    "max_staleness_hours": max_staleness_hours,
+                },
+                product_lookup_params.ProductLookupParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=LookupResponse,
         )
 
 
@@ -148,6 +196,53 @@ class AsyncProductsResource(AsyncAPIResource):
             cast_to=ProductDetail,
         )
 
+    async def lookup(
+        self,
+        *,
+        url: str,
+        max_staleness_hours: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> LookupResponse:
+        """
+        Retrieve product information for any supported product URL.
+
+        Returns the same Product model as GET /v1/products/{product_id}. The product_id
+        in the response can be used with the Product Detail endpoint.
+
+        Args:
+          url: The URL of the product to look up
+
+          max_staleness_hours: Maximum age (in hours) of cached product data before forcing a fresh lookup.
+              Defaults to 3 hours.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/lookup",
+            body=await async_maybe_transform(
+                {
+                    "url": url,
+                    "max_staleness_hours": max_staleness_hours,
+                },
+                product_lookup_params.ProductLookupParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=LookupResponse,
+        )
+
 
 class ProductsResourceWithRawResponse:
     def __init__(self, products: ProductsResource) -> None:
@@ -155,6 +250,9 @@ class ProductsResourceWithRawResponse:
 
         self.retrieve = to_raw_response_wrapper(
             products.retrieve,
+        )
+        self.lookup = to_raw_response_wrapper(
+            products.lookup,
         )
 
 
@@ -165,6 +263,9 @@ class AsyncProductsResourceWithRawResponse:
         self.retrieve = async_to_raw_response_wrapper(
             products.retrieve,
         )
+        self.lookup = async_to_raw_response_wrapper(
+            products.lookup,
+        )
 
 
 class ProductsResourceWithStreamingResponse:
@@ -174,6 +275,9 @@ class ProductsResourceWithStreamingResponse:
         self.retrieve = to_streamed_response_wrapper(
             products.retrieve,
         )
+        self.lookup = to_streamed_response_wrapper(
+            products.lookup,
+        )
 
 
 class AsyncProductsResourceWithStreamingResponse:
@@ -182,4 +286,7 @@ class AsyncProductsResourceWithStreamingResponse:
 
         self.retrieve = async_to_streamed_response_wrapper(
             products.retrieve,
+        )
+        self.lookup = async_to_streamed_response_wrapper(
+            products.lookup,
         )

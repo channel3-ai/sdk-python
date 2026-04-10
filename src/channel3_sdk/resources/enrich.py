@@ -53,6 +53,8 @@ class EnrichResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> EnrichEnrichURLResponse:
         """
+        **Deprecated** — use POST /v1/lookup instead.
+
         Search by product URL, get back full product information from Channel3's product
         database.
 
@@ -113,6 +115,8 @@ class AsyncEnrichResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> EnrichEnrichURLResponse:
         """
+        **Deprecated** — use POST /v1/lookup instead.
+
         Search by product URL, get back full product information from Channel3's product
         database.
 
