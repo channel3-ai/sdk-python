@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import TypedDict
+from typing_extensions import Annotated, TypedDict
+
+from .._utils import PropertyInfo
 
 __all__ = ["SearchFilterPriceParam"]
 
@@ -16,3 +18,5 @@ class SearchFilterPriceParam(TypedDict, total=False):
 
     min_price: Optional[float]
     """Minimum price, in dollars and cents"""
+
+    min_price_floor: Annotated[float, PropertyInfo(alias="MIN_PRICE_FLOOR")]
