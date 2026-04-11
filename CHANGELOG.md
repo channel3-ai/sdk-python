@@ -1,5 +1,30 @@
 # Changelog
 
+## 3.1.0 (2026-04-11)
+
+Full Changelog: [v3.0.0...v3.1.0](https://github.com/channel3-ai/sdk-python/compare/v3.0.0...v3.1.0)
+
+### Features
+
+* **internal:** implement indices array format for query and form serialization ([6f3939f](https://github.com/channel3-ai/sdk-python/commit/6f3939f32bf84be9fede95722fbb7e9069f7d9ae))
+
+
+### Bug Fixes
+
+* **client:** preserve hardcoded query params when merging with user params ([bacdcf6](https://github.com/channel3-ai/sdk-python/commit/bacdcf6ed1ea42ec02eca4e6cc15932bb9b7b385))
+* **deps:** bump minimum typing-extensions version ([5b28167](https://github.com/channel3-ai/sdk-python/commit/5b28167fe19f3b23e68a884606cd8af697232e5a))
+* ensure file data are only sent as 1 parameter ([d125163](https://github.com/channel3-ai/sdk-python/commit/d1251632501a6ad1f7b5fad8b67c80047922dbf4))
+* **pydantic:** do not pass `by_alias` unless set ([69cadfa](https://github.com/channel3-ai/sdk-python/commit/69cadfae31dd5fef784e2df113bfe920484da900))
+* sanitize endpoint path params ([e046b15](https://github.com/channel3-ai/sdk-python/commit/e046b15f775d2f404671a3f61666446f9a973c77))
+
+
+### Chores
+
+* **ci:** skip lint on metadata-only changes ([b89a32e](https://github.com/channel3-ai/sdk-python/commit/b89a32efbbfe6faa2ccd3197e077c4ba99dbf649))
+* **internal:** codegen related update ([81248c9](https://github.com/channel3-ai/sdk-python/commit/81248c91f02c04b00309b38e4999939d77755135))
+* **internal:** regenerate SDK with no functional changes ([bfcf383](https://github.com/channel3-ai/sdk-python/commit/bfcf383a46425b81cc33fc25f554366f674f7b33))
+* **internal:** update gitignore ([454a84d](https://github.com/channel3-ai/sdk-python/commit/454a84d04655595316911366b19d983461b12b1c))
+
 ## 3.0.0 (2026-03-12)
 
 Full Changelog: [v2.13.0...v3.0.0](https://github.com/channel3-ai/sdk-python/compare/v2.13.0...v3.0.0)
