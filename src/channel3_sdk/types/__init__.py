@@ -11,6 +11,7 @@ from .product_brand import ProductBrand as ProductBrand
 from .product_image import ProductImage as ProductImage
 from .product_offer import ProductOffer as ProductOffer
 from .product_detail import ProductDetail as ProductDetail
+from .lookup_response import LookupResponse as LookupResponse
 from .search_response import SearchResponse as SearchResponse
 from .brand_find_params import BrandFindParams as BrandFindParams
 from .brand_list_params import BrandListParams as BrandListParams
@@ -18,6 +19,7 @@ from .availability_status import AvailabilityStatus as AvailabilityStatus
 from .search_config_param import SearchConfigParam as SearchConfigParam
 from .website_find_params import WebsiteFindParams as WebsiteFindParams
 from .search_filters_param import SearchFiltersParam as SearchFiltersParam
+from .product_lookup_params import ProductLookupParams as ProductLookupParams
 from .search_perform_params import SearchPerformParams as SearchPerformParams
 from .product_retrieve_params import ProductRetrieveParams as ProductRetrieveParams
 from .enrich_enrich_url_params import EnrichEnrichURLParams as EnrichEnrichURLParams

@@ -13,7 +13,7 @@ from ..types import (
     price_tracking_list_subscriptions_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from .._utils import maybe_transform, async_maybe_transform
+from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -81,7 +81,9 @@ class PriceTrackingResource(SyncAPIResource):
                 f"Expected a non-empty value for `canonical_product_id` but received {canonical_product_id!r}"
             )
         return self._get(
-            f"/v0/price-tracking/history/{canonical_product_id}",
+            path_template(
+                "/v0/price-tracking/history/{canonical_product_id}", canonical_product_id=canonical_product_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -259,7 +261,9 @@ class AsyncPriceTrackingResource(AsyncAPIResource):
                 f"Expected a non-empty value for `canonical_product_id` but received {canonical_product_id!r}"
             )
         return await self._get(
-            f"/v0/price-tracking/history/{canonical_product_id}",
+            path_template(
+                "/v0/price-tracking/history/{canonical_product_id}", canonical_product_id=canonical_product_id
+            ),
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
