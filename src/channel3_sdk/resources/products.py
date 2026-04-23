@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from typing import Optional
+from typing_extensions import Literal
 
 import httpx
 
@@ -48,6 +49,14 @@ class ProductsResource(SyncAPIResource):
         self,
         product_id: str,
         *,
+        country: Optional[
+            Literal[
+                "US", "GB", "EU", "AU", "CA", "IE", "DE", "AT", "FR", "BE", "IT", "ES", "NL", "SE", "FI", "PT", "CZ"
+            ]
+        ]
+        | Omit = omit,
+        currency: Optional[Literal["USD", "CAD", "AUD", "GBP", "EUR", "SEK", "CZK"]] | Omit = omit,
+        language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs"]] | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -60,6 +69,15 @@ class ProductsResource(SyncAPIResource):
         Get detailed information about a specific product by its ID.
 
         Args:
+          country: ISO 3166-1 alpha-2 country code. Matches any country when unset; defaults to
+              'US' only when language and currency are also unset.
+
+          currency: ISO 4217 currency code. When unset, inferred from `country` (e.g. GB -> GBP);
+              falls back to 'USD' only when all three locale fields are unset.
+
+          language: ISO 639-1 language code. Matches any language when unset; defaults to 'en' only
+              when country and currency are also unset.
+
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
               merchants exist
 
@@ -80,7 +98,15 @@ class ProductsResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"website_ids": website_ids}, product_retrieve_params.ProductRetrieveParams),
+                query=maybe_transform(
+                    {
+                        "country": country,
+                        "currency": currency,
+                        "language": language,
+                        "website_ids": website_ids,
+                    },
+                    product_retrieve_params.ProductRetrieveParams,
+                ),
             ),
             cast_to=ProductDetail,
         )
@@ -157,6 +183,14 @@ class AsyncProductsResource(AsyncAPIResource):
         self,
         product_id: str,
         *,
+        country: Optional[
+            Literal[
+                "US", "GB", "EU", "AU", "CA", "IE", "DE", "AT", "FR", "BE", "IT", "ES", "NL", "SE", "FI", "PT", "CZ"
+            ]
+        ]
+        | Omit = omit,
+        currency: Optional[Literal["USD", "CAD", "AUD", "GBP", "EUR", "SEK", "CZK"]] | Omit = omit,
+        language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs"]] | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -169,6 +203,15 @@ class AsyncProductsResource(AsyncAPIResource):
         Get detailed information about a specific product by its ID.
 
         Args:
+          country: ISO 3166-1 alpha-2 country code. Matches any country when unset; defaults to
+              'US' only when language and currency are also unset.
+
+          currency: ISO 4217 currency code. When unset, inferred from `country` (e.g. GB -> GBP);
+              falls back to 'USD' only when all three locale fields are unset.
+
+          language: ISO 639-1 language code. Matches any language when unset; defaults to 'en' only
+              when country and currency are also unset.
+
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
               merchants exist
 
@@ -190,7 +233,13 @@ class AsyncProductsResource(AsyncAPIResource):
                 extra_body=extra_body,
                 timeout=timeout,
                 query=await async_maybe_transform(
-                    {"website_ids": website_ids}, product_retrieve_params.ProductRetrieveParams
+                    {
+                        "country": country,
+                        "currency": currency,
+                        "language": language,
+                        "website_ids": website_ids,
+                    },
+                    product_retrieve_params.ProductRetrieveParams,
                 ),
             ),
             cast_to=ProductDetail,
