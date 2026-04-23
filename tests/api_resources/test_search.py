@@ -28,7 +28,12 @@ class TestSearch:
     def test_method_perform_with_all_params(self, client: Channel3) -> None:
         search = client.search.perform(
             base64_image="base64_image",
-            config={"keyword_search_only": True},
+            config={
+                "country": "US",
+                "currency": "USD",
+                "keyword_search_only": True,
+                "language": "en",
+            },
             filters={
                 "age": ["newborn"],
                 "availability": ["InStock"],
@@ -92,7 +97,12 @@ class TestAsyncSearch:
     async def test_method_perform_with_all_params(self, async_client: AsyncChannel3) -> None:
         search = await async_client.search.perform(
             base64_image="base64_image",
-            config={"keyword_search_only": True},
+            config={
+                "country": "US",
+                "currency": "USD",
+                "keyword_search_only": True,
+                "language": "en",
+            },
             filters={
                 "age": ["newborn"],
                 "availability": ["InStock"],
