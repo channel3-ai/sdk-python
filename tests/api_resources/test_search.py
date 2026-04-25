@@ -47,7 +47,6 @@ class TestSearch:
                 "price": {
                     "max_price": 0,
                     "min_price": 0,
-                    "min_price_floor": 0,
                 },
                 "website_ids": ["string"],
             },
@@ -116,7 +115,6 @@ class TestAsyncSearch:
                 "price": {
                     "max_price": 0,
                     "min_price": 0,
-                    "min_price_floor": 0,
                 },
                 "website_ids": ["string"],
             },
