@@ -58,11 +58,17 @@ __all__ = [
 class Channel3(SyncAPIClient):
     # client options
     api_key: str
+    language: str | None
+    country: str | None
+    currency: str | None
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
+        language: str | None = None,
+        country: str | None = None,
+        currency: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -84,7 +90,11 @@ class Channel3(SyncAPIClient):
     ) -> None:
         """Construct a new synchronous Channel3 client instance.
 
-        This automatically infers the `api_key` argument from the `CHANNEL3_API_KEY` environment variable if it is not provided.
+        This automatically infers the following arguments from their corresponding environment variables if they are not provided:
+        - `api_key` from `CHANNEL3_API_KEY`
+        - `language` from `CHANNEL3_LANGUAGE`
+        - `country` from `CHANNEL3_COUNTRY`
+        - `currency` from `CHANNEL3_CURRENCY`
         """
         if api_key is None:
             api_key = os.environ.get("CHANNEL3_API_KEY")
@@ -93,6 +103,18 @@ class Channel3(SyncAPIClient):
                 "The api_key client option must be set either by passing api_key to the client or by setting the CHANNEL3_API_KEY environment variable"
             )
         self.api_key = api_key
+
+        if language is None:
+            language = os.environ.get("CHANNEL3_LANGUAGE")
+        self.language = language
+
+        if country is None:
+            country = os.environ.get("CHANNEL3_COUNTRY")
+        self.country = country
+
+        if currency is None:
+            currency = os.environ.get("CHANNEL3_CURRENCY")
+        self.currency = currency
 
         if base_url is None:
             base_url = os.environ.get("CHANNEL3_BASE_URL")
@@ -180,6 +202,9 @@ class Channel3(SyncAPIClient):
         return {
             **super().default_headers,
             "X-Stainless-Async": "false",
+            "X-Channel3-Language": self.language if self.language is not None else Omit(),
+            "X-Channel3-Country": self.country if self.country is not None else Omit(),
+            "X-Channel3-Currency": self.currency if self.currency is not None else Omit(),
             **self._custom_headers,
         }
 
@@ -187,6 +212,9 @@ class Channel3(SyncAPIClient):
         self,
         *,
         api_key: str | None = None,
+        language: str | None = None,
+        country: str | None = None,
+        currency: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.Client | None = None,
@@ -221,6 +249,9 @@ class Channel3(SyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             api_key=api_key or self.api_key,
+            language=language or self.language,
+            country=country or self.country,
+            currency=currency or self.currency,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -271,11 +302,17 @@ class Channel3(SyncAPIClient):
 class AsyncChannel3(AsyncAPIClient):
     # client options
     api_key: str
+    language: str | None
+    country: str | None
+    currency: str | None
 
     def __init__(
         self,
         *,
         api_key: str | None = None,
+        language: str | None = None,
+        country: str | None = None,
+        currency: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -297,7 +334,11 @@ class AsyncChannel3(AsyncAPIClient):
     ) -> None:
         """Construct a new async AsyncChannel3 client instance.
 
-        This automatically infers the `api_key` argument from the `CHANNEL3_API_KEY` environment variable if it is not provided.
+        This automatically infers the following arguments from their corresponding environment variables if they are not provided:
+        - `api_key` from `CHANNEL3_API_KEY`
+        - `language` from `CHANNEL3_LANGUAGE`
+        - `country` from `CHANNEL3_COUNTRY`
+        - `currency` from `CHANNEL3_CURRENCY`
         """
         if api_key is None:
             api_key = os.environ.get("CHANNEL3_API_KEY")
@@ -306,6 +347,18 @@ class AsyncChannel3(AsyncAPIClient):
                 "The api_key client option must be set either by passing api_key to the client or by setting the CHANNEL3_API_KEY environment variable"
             )
         self.api_key = api_key
+
+        if language is None:
+            language = os.environ.get("CHANNEL3_LANGUAGE")
+        self.language = language
+
+        if country is None:
+            country = os.environ.get("CHANNEL3_COUNTRY")
+        self.country = country
+
+        if currency is None:
+            currency = os.environ.get("CHANNEL3_CURRENCY")
+        self.currency = currency
 
         if base_url is None:
             base_url = os.environ.get("CHANNEL3_BASE_URL")
@@ -393,6 +446,9 @@ class AsyncChannel3(AsyncAPIClient):
         return {
             **super().default_headers,
             "X-Stainless-Async": f"async:{get_async_library()}",
+            "X-Channel3-Language": self.language if self.language is not None else Omit(),
+            "X-Channel3-Country": self.country if self.country is not None else Omit(),
+            "X-Channel3-Currency": self.currency if self.currency is not None else Omit(),
             **self._custom_headers,
         }
 
@@ -400,6 +456,9 @@ class AsyncChannel3(AsyncAPIClient):
         self,
         *,
         api_key: str | None = None,
+        language: str | None = None,
+        country: str | None = None,
+        currency: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.AsyncClient | None = None,
@@ -434,6 +493,9 @@ class AsyncChannel3(AsyncAPIClient):
         http_client = http_client or self._client
         return self.__class__(
             api_key=api_key or self.api_key,
+            language=language or self.language,
+            country=country or self.country,
+            currency=currency or self.currency,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
