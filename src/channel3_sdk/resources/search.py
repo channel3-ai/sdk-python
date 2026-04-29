@@ -65,21 +65,27 @@ class SearchResource(SyncAPIResource):
         """
         Search for products with pagination support.
 
+        At least one of `query`, `image_url`, or `base64_image` must be provided;
+        requests with none of these will return 422.
+
         Args:
-          base64_image: Base64 encoded image
+          base64_image: Base64 encoded image. At least one of `query`, `image_url`, or `base64_image`
+              must be provided.
 
           config: Optional configuration
 
           filters: Optional filters. Search will only consider products that match all of the
               filters.
 
-          image_url: Image URL
+          image_url: Image URL. At least one of `query`, `image_url`, or `base64_image` must be
+              provided.
 
           limit: Optional limit on the number of results. Default is 20, max is 30.
 
           page_token: Opaque token from a previous search response to fetch the next page of results.
 
-          query: Search query
+          query: Search query. At least one of `query`, `image_url`, or `base64_image` must be
+              provided.
 
           extra_headers: Send extra headers
 
@@ -150,21 +156,27 @@ class AsyncSearchResource(AsyncAPIResource):
         """
         Search for products with pagination support.
 
+        At least one of `query`, `image_url`, or `base64_image` must be provided;
+        requests with none of these will return 422.
+
         Args:
-          base64_image: Base64 encoded image
+          base64_image: Base64 encoded image. At least one of `query`, `image_url`, or `base64_image`
+              must be provided.
 
           config: Optional configuration
 
           filters: Optional filters. Search will only consider products that match all of the
               filters.
 
-          image_url: Image URL
+          image_url: Image URL. At least one of `query`, `image_url`, or `base64_image` must be
+              provided.
 
           limit: Optional limit on the number of results. Default is 20, max is 30.
 
           page_token: Opaque token from a previous search response to fetch the next page of results.
 
-          query: Search query
+          query: Search query. At least one of `query`, `image_url`, or `base64_image` must be
+              provided.
 
           extra_headers: Send extra headers
 
