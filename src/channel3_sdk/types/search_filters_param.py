@@ -25,7 +25,10 @@ class SearchFiltersParam(TypedDict, total=False):
     """If provided, only products from these brands will be returned"""
 
     category_ids: Optional[SequenceNotStr[str]]
-    """If provided, only products from these categories will be returned"""
+    """If provided, only products from these categories will be returned.
+
+    Accepts category slugs.
+    """
 
     condition: Optional[Literal["new", "refurbished", "used"]]
     """Filter by product condition.
@@ -40,7 +43,7 @@ class SearchFiltersParam(TypedDict, total=False):
     exclude_category_ids: Optional[SequenceNotStr[str]]
     """
     If provided, products in these categories (or their descendants) will be
-    excluded from the results
+    excluded from the results. Accepts category slugs.
     """
 
     exclude_website_ids: Optional[SequenceNotStr[str]]
