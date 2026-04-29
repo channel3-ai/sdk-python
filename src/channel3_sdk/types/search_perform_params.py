@@ -13,7 +13,10 @@ __all__ = ["SearchPerformParams"]
 
 class SearchPerformParams(TypedDict, total=False):
     base64_image: Optional[str]
-    """Base64 encoded image"""
+    """Base64 encoded image.
+
+    At least one of `query`, `image_url`, or `base64_image` must be provided.
+    """
 
     config: SearchConfigParam
     """Optional configuration"""
@@ -25,7 +28,10 @@ class SearchPerformParams(TypedDict, total=False):
     """
 
     image_url: Optional[str]
-    """Image URL"""
+    """Image URL.
+
+    At least one of `query`, `image_url`, or `base64_image` must be provided.
+    """
 
     limit: Optional[int]
     """Optional limit on the number of results. Default is 20, max is 30."""
@@ -34,4 +40,7 @@ class SearchPerformParams(TypedDict, total=False):
     """Opaque token from a previous search response to fetch the next page of results."""
 
     query: Optional[str]
-    """Search query"""
+    """Search query.
+
+    At least one of `query`, `image_url`, or `base64_image` must be provided.
+    """
