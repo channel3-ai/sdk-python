@@ -9,11 +9,7 @@ __all__ = ["SearchConfigParam"]
 
 
 class SearchConfigParam(TypedDict, total=False):
-    """Search and locale options for a search request.
-
-    Locale fields are optional; the server infers missing values. Details are
-    on ``language``, ``country``, and ``currency`` below.
-    """
+    """Search and locale options for a search request."""
 
     country: Optional[
         Literal["US", "GB", "EU", "AU", "CA", "IE", "DE", "AT", "FR", "BE", "IT", "ES", "NL", "SE", "FI", "PT", "CZ"]
