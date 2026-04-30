@@ -23,7 +23,7 @@ from channel3_sdk import Channel3, AsyncChannel3, APIResponseValidationError
 from channel3_sdk._types import Omit
 from channel3_sdk._utils import asyncify
 from channel3_sdk._models import BaseModel, FinalRequestOptions
-from channel3_sdk._exceptions import Channel3Error, APIStatusError, APITimeoutError, APIResponseValidationError
+from channel3_sdk._exceptions import Channel3Error, APIStatusError, APIResponseValidationError
 from channel3_sdk._base_client import (
     DEFAULT_TIMEOUT,
     HTTPX_DEFAULT_TIMEOUT,
@@ -101,14 +101,6 @@ async def _make_async_iterator(iterable: Iterable[T], counter: Optional[Counter]
         if counter:
             counter.value += 1
         yield item
-
-
-def _get_open_connections(client: Channel3 | AsyncChannel3) -> int:
-    transport = client._client._transport
-    assert isinstance(transport, httpx.HTTPTransport) or isinstance(transport, httpx.AsyncHTTPTransport)
-
-    pool = transport._pool
-    return len(pool._requests)
 
 
 class TestChannel3:
@@ -872,25 +864,6 @@ class TestChannel3:
         calculated = client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
-    def test_retrying_timeout_errors_doesnt_leak(self, respx_mock: MockRouter, client: Channel3) -> None:
-        respx_mock.post("/v1/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
-
-        with pytest.raises(APITimeoutError):
-            client.search.with_streaming_response.perform().__enter__()
-
-        assert _get_open_connections(client) == 0
-
-    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
-    def test_retrying_status_errors_doesnt_leak(self, respx_mock: MockRouter, client: Channel3) -> None:
-        respx_mock.post("/v1/search").mock(return_value=httpx.Response(500))
-
-        with pytest.raises(APIStatusError):
-            client.search.with_streaming_response.perform().__enter__()
-        assert _get_open_connections(client) == 0
-
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
@@ -917,7 +890,7 @@ class TestChannel3:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = client.search.with_raw_response.perform()
+        response = client.products.with_raw_response.search()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -941,7 +914,7 @@ class TestChannel3:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = client.search.with_raw_response.perform(extra_headers={"x-stainless-retry-count": Omit()})
+        response = client.products.with_raw_response.search(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -964,7 +937,7 @@ class TestChannel3:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = client.search.with_raw_response.perform(extra_headers={"x-stainless-retry-count": "42"})
+        response = client.products.with_raw_response.search(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 
@@ -1802,29 +1775,6 @@ class TestAsyncChannel3:
         calculated = async_client._calculate_retry_timeout(remaining_retries, options, headers)
         assert calculated == pytest.approx(timeout, 0.5 * 0.875)  # pyright: ignore[reportUnknownMemberType]
 
-    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_timeout_errors_doesnt_leak(
-        self, respx_mock: MockRouter, async_client: AsyncChannel3
-    ) -> None:
-        respx_mock.post("/v1/search").mock(side_effect=httpx.TimeoutException("Test timeout error"))
-
-        with pytest.raises(APITimeoutError):
-            await async_client.search.with_streaming_response.perform().__aenter__()
-
-        assert _get_open_connections(async_client) == 0
-
-    @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
-    @pytest.mark.respx(base_url=base_url)
-    async def test_retrying_status_errors_doesnt_leak(
-        self, respx_mock: MockRouter, async_client: AsyncChannel3
-    ) -> None:
-        respx_mock.post("/v1/search").mock(return_value=httpx.Response(500))
-
-        with pytest.raises(APIStatusError):
-            await async_client.search.with_streaming_response.perform().__aenter__()
-        assert _get_open_connections(async_client) == 0
-
     @pytest.mark.parametrize("failures_before_success", [0, 2, 4])
     @mock.patch("channel3_sdk._base_client.BaseClient._calculate_retry_timeout", _low_retry_timeout)
     @pytest.mark.respx(base_url=base_url)
@@ -1851,7 +1801,7 @@ class TestAsyncChannel3:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = await client.search.with_raw_response.perform()
+        response = await client.products.with_raw_response.search()
 
         assert response.retries_taken == failures_before_success
         assert int(response.http_request.headers.get("x-stainless-retry-count")) == failures_before_success
@@ -1875,7 +1825,7 @@ class TestAsyncChannel3:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = await client.search.with_raw_response.perform(extra_headers={"x-stainless-retry-count": Omit()})
+        response = await client.products.with_raw_response.search(extra_headers={"x-stainless-retry-count": Omit()})
 
         assert len(response.http_request.headers.get_list("x-stainless-retry-count")) == 0
 
@@ -1898,7 +1848,7 @@ class TestAsyncChannel3:
 
         respx_mock.post("/v1/search").mock(side_effect=retry_handler)
 
-        response = await client.search.with_raw_response.perform(extra_headers={"x-stainless-retry-count": "42"})
+        response = await client.products.with_raw_response.search(extra_headers={"x-stainless-retry-count": "42"})
 
         assert response.http_request.headers.get("x-stainless-retry-count") == "42"
 

@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import typing_extensions
 from typing import Optional
 
 import httpx
@@ -9,7 +10,7 @@ import httpx
 from ..types import (
     price_tracking_stop_params,
     price_tracking_start_params,
-    price_tracking_get_history_params,
+    price_tracking_retrieve_history_params,
     price_tracking_list_subscriptions_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
@@ -50,6 +51,7 @@ class PriceTrackingResource(SyncAPIResource):
         """
         return PriceTrackingResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("use `retrieve_history` instead; will be removed in the next major version")
     def get_history(
         self,
         canonical_product_id: str,
@@ -76,22 +78,13 @@ class PriceTrackingResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not canonical_product_id:
-            raise ValueError(
-                f"Expected a non-empty value for `canonical_product_id` but received {canonical_product_id!r}"
-            )
-        return self._get(
-            path_template(
-                "/v0/price-tracking/history/{canonical_product_id}", canonical_product_id=canonical_product_id
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"days": days}, price_tracking_get_history_params.PriceTrackingGetHistoryParams),
-            ),
-            cast_to=PriceHistory,
+        return self.retrieve_history(
+            canonical_product_id=canonical_product_id,
+            days=days,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+            timeout=timeout,
         )
 
     def list_subscriptions(
@@ -139,6 +132,52 @@ class PriceTrackingResource(SyncAPIResource):
                 ),
             ),
             model=Subscription,
+        )
+
+    def retrieve_history(
+        self,
+        canonical_product_id: str,
+        *,
+        days: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PriceHistory:
+        """
+        Get price history for a canonical product.
+
+        Args:
+          days: Number of days of history to fetch (max 30)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not canonical_product_id:
+            raise ValueError(
+                f"Expected a non-empty value for `canonical_product_id` but received {canonical_product_id!r}"
+            )
+        return self._get(
+            path_template(
+                "/v0/price-tracking/history/{canonical_product_id}", canonical_product_id=canonical_product_id
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform(
+                    {"days": days}, price_tracking_retrieve_history_params.PriceTrackingRetrieveHistoryParams
+                ),
+            ),
+            cast_to=PriceHistory,
         )
 
     def start(
@@ -230,6 +269,7 @@ class AsyncPriceTrackingResource(AsyncAPIResource):
         """
         return AsyncPriceTrackingResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("use `retrieve_history` instead; will be removed in the next major version")
     async def get_history(
         self,
         canonical_product_id: str,
@@ -256,24 +296,13 @@ class AsyncPriceTrackingResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not canonical_product_id:
-            raise ValueError(
-                f"Expected a non-empty value for `canonical_product_id` but received {canonical_product_id!r}"
-            )
-        return await self._get(
-            path_template(
-                "/v0/price-tracking/history/{canonical_product_id}", canonical_product_id=canonical_product_id
-            ),
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform(
-                    {"days": days}, price_tracking_get_history_params.PriceTrackingGetHistoryParams
-                ),
-            ),
-            cast_to=PriceHistory,
+        return await self.retrieve_history(
+            canonical_product_id=canonical_product_id,
+            days=days,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+            timeout=timeout,
         )
 
     def list_subscriptions(
@@ -321,6 +350,52 @@ class AsyncPriceTrackingResource(AsyncAPIResource):
                 ),
             ),
             model=Subscription,
+        )
+
+    async def retrieve_history(
+        self,
+        canonical_product_id: str,
+        *,
+        days: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PriceHistory:
+        """
+        Get price history for a canonical product.
+
+        Args:
+          days: Number of days of history to fetch (max 30)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        if not canonical_product_id:
+            raise ValueError(
+                f"Expected a non-empty value for `canonical_product_id` but received {canonical_product_id!r}"
+            )
+        return await self._get(
+            path_template(
+                "/v0/price-tracking/history/{canonical_product_id}", canonical_product_id=canonical_product_id
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform(
+                    {"days": days}, price_tracking_retrieve_history_params.PriceTrackingRetrieveHistoryParams
+                ),
+            ),
+            cast_to=PriceHistory,
         )
 
     async def start(
@@ -396,11 +471,16 @@ class PriceTrackingResourceWithRawResponse:
     def __init__(self, price_tracking: PriceTrackingResource) -> None:
         self._price_tracking = price_tracking
 
-        self.get_history = to_raw_response_wrapper(
-            price_tracking.get_history,
+        self.get_history = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.list_subscriptions = to_raw_response_wrapper(
             price_tracking.list_subscriptions,
+        )
+        self.retrieve_history = to_raw_response_wrapper(
+            price_tracking.retrieve_history,
         )
         self.start = to_raw_response_wrapper(
             price_tracking.start,
@@ -414,11 +494,16 @@ class AsyncPriceTrackingResourceWithRawResponse:
     def __init__(self, price_tracking: AsyncPriceTrackingResource) -> None:
         self._price_tracking = price_tracking
 
-        self.get_history = async_to_raw_response_wrapper(
-            price_tracking.get_history,
+        self.get_history = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.list_subscriptions = async_to_raw_response_wrapper(
             price_tracking.list_subscriptions,
+        )
+        self.retrieve_history = async_to_raw_response_wrapper(
+            price_tracking.retrieve_history,
         )
         self.start = async_to_raw_response_wrapper(
             price_tracking.start,
@@ -432,11 +517,16 @@ class PriceTrackingResourceWithStreamingResponse:
     def __init__(self, price_tracking: PriceTrackingResource) -> None:
         self._price_tracking = price_tracking
 
-        self.get_history = to_streamed_response_wrapper(
-            price_tracking.get_history,
+        self.get_history = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.list_subscriptions = to_streamed_response_wrapper(
             price_tracking.list_subscriptions,
+        )
+        self.retrieve_history = to_streamed_response_wrapper(
+            price_tracking.retrieve_history,
         )
         self.start = to_streamed_response_wrapper(
             price_tracking.start,
@@ -450,11 +540,16 @@ class AsyncPriceTrackingResourceWithStreamingResponse:
     def __init__(self, price_tracking: AsyncPriceTrackingResource) -> None:
         self._price_tracking = price_tracking
 
-        self.get_history = async_to_streamed_response_wrapper(
-            price_tracking.get_history,
+        self.get_history = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
+            )
         )
         self.list_subscriptions = async_to_streamed_response_wrapper(
             price_tracking.list_subscriptions,
+        )
+        self.retrieve_history = async_to_streamed_response_wrapper(
+            price_tracking.retrieve_history,
         )
         self.start = async_to_streamed_response_wrapper(
             price_tracking.start,

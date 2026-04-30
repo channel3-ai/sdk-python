@@ -2,11 +2,12 @@
 
 from __future__ import annotations
 
+import typing_extensions
 from typing import Optional
 
 import httpx
 
-from ..types import website_find_params
+from ..types import website_retrieve_params
 from .._types import Body, Query, Headers, NotGiven, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -43,7 +44,7 @@ class WebsitesResource(SyncAPIResource):
         """
         return WebsitesResourceWithStreamingResponse(self)
 
-    def find(
+    def retrieve(
         self,
         *,
         query: str,
@@ -73,9 +74,37 @@ class WebsitesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"query": query}, website_find_params.WebsiteFindParams),
+                query=maybe_transform({"query": query}, website_retrieve_params.WebsiteRetrieveParams),
             ),
             cast_to=Website,
+        )
+
+    @typing_extensions.deprecated("use `retrieve` instead; will be removed in the next major version")
+    def find(
+        self,
+        *,
+        query: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Optional[Website]:
+        """
+        Find a website by URL.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self.retrieve(
+            query=query, extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
         )
 
 
@@ -99,7 +128,7 @@ class AsyncWebsitesResource(AsyncAPIResource):
         """
         return AsyncWebsitesResourceWithStreamingResponse(self)
 
-    async def find(
+    async def retrieve(
         self,
         *,
         query: str,
@@ -129,9 +158,37 @@ class AsyncWebsitesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform({"query": query}, website_find_params.WebsiteFindParams),
+                query=await async_maybe_transform({"query": query}, website_retrieve_params.WebsiteRetrieveParams),
             ),
             cast_to=Website,
+        )
+
+    @typing_extensions.deprecated("use `retrieve` instead; will be removed in the next major version")
+    async def find(
+        self,
+        *,
+        query: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> Optional[Website]:
+        """
+        Find a website by URL.
+
+        Args:
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self.retrieve(
+            query=query, extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
         )
 
 
@@ -139,8 +196,13 @@ class WebsitesResourceWithRawResponse:
     def __init__(self, websites: WebsitesResource) -> None:
         self._websites = websites
 
-        self.find = to_raw_response_wrapper(
-            websites.find,
+        self.retrieve = to_raw_response_wrapper(
+            websites.retrieve,
+        )
+        self.find = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                websites.find,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -148,8 +210,13 @@ class AsyncWebsitesResourceWithRawResponse:
     def __init__(self, websites: AsyncWebsitesResource) -> None:
         self._websites = websites
 
-        self.find = async_to_raw_response_wrapper(
-            websites.find,
+        self.retrieve = async_to_raw_response_wrapper(
+            websites.retrieve,
+        )
+        self.find = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                websites.find,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -157,8 +224,13 @@ class WebsitesResourceWithStreamingResponse:
     def __init__(self, websites: WebsitesResource) -> None:
         self._websites = websites
 
-        self.find = to_streamed_response_wrapper(
-            websites.find,
+        self.retrieve = to_streamed_response_wrapper(
+            websites.retrieve,
+        )
+        self.find = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                websites.find,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -166,6 +238,11 @@ class AsyncWebsitesResourceWithStreamingResponse:
     def __init__(self, websites: AsyncWebsitesResource) -> None:
         self._websites = websites
 
-        self.find = async_to_streamed_response_wrapper(
-            websites.find,
+        self.retrieve = async_to_streamed_response_wrapper(
+            websites.retrieve,
+        )
+        self.find = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                websites.find,  # pyright: ignore[reportDeprecated],
+            )
         )

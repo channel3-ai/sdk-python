@@ -2,12 +2,9 @@
 
 from __future__ import annotations
 
-import typing_extensions
-from typing import Optional
-
 import httpx
 
-from ..types import brand_find_params, brand_list_params, brand_search_params
+from ..types import category_list_params, category_search_params
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -18,37 +15,38 @@ from .._response import (
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from ..pagination import SyncCursorPage, AsyncCursorPage
-from ..types.brand import Brand
+from ..pagination import SyncCategoryPage, AsyncCategoryPage
 from .._base_client import AsyncPaginator, make_request_options
-from ..types.search_brands_response import SearchBrandsResponse
+from ..types.category import Category
+from ..types.category_summary import CategorySummary
+from ..types.search_categories_response import SearchCategoriesResponse
 
-__all__ = ["BrandsResource", "AsyncBrandsResource"]
+__all__ = ["CategoriesResource", "AsyncCategoriesResource"]
 
 
-class BrandsResource(SyncAPIResource):
+class CategoriesResource(SyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> BrandsResourceWithRawResponse:
+    def with_raw_response(self) -> CategoriesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/channel3-ai/sdk-python#accessing-raw-response-data-eg-headers
         """
-        return BrandsResourceWithRawResponse(self)
+        return CategoriesResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> BrandsResourceWithStreamingResponse:
+    def with_streaming_response(self) -> CategoriesResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/channel3-ai/sdk-python#with_streaming_response
         """
-        return BrandsResourceWithStreamingResponse(self)
+        return CategoriesResourceWithStreamingResponse(self)
 
     def retrieve(
         self,
-        brand_id: str,
+        slug: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -56,9 +54,9 @@ class BrandsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Brand:
+    ) -> Category:
         """
-        Get detailed information about a specific brand by its ID.
+        Look up a category by slug.
 
         Args:
           extra_headers: Send extra headers
@@ -69,35 +67,38 @@ class BrandsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not brand_id:
-            raise ValueError(f"Expected a non-empty value for `brand_id` but received {brand_id!r}")
+        if not slug:
+            raise ValueError(f"Expected a non-empty value for `slug` but received {slug!r}")
         return self._get(
-            path_template("/v1/brands/{brand_id}", brand_id=brand_id),
+            path_template("/v1/categories/{slug}", slug=slug),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Brand,
+            cast_to=Category,
         )
 
     def list(
         self,
         *,
-        cursor: Optional[str] | Omit = omit,
-        limit: int | Omit = omit,
+        page: int | Omit = omit,
+        page_size: int | Omit = omit,
+        roots_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SyncCursorPage[Brand]:
+    ) -> SyncCategoryPage[CategorySummary]:
         """
-        Paginated list of brands.
+        Paginated list of all categories.
 
         Args:
-          cursor: Pagination cursor returned by a prior call. Omit for the first page.
+          page: 1-indexed page number.
 
-          limit: Max items per page (1-100).
+          page_size: Items per page.
+
+          roots_only: If true, return only top-level (root) categories.
 
           extra_headers: Send extra headers
 
@@ -108,8 +109,8 @@ class BrandsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get_api_list(
-            "/v1/brands",
-            page=SyncCursorPage[Brand],
+            "/v1/categories",
+            page=SyncCategoryPage[CategorySummary],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -117,49 +118,14 @@ class BrandsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "cursor": cursor,
-                        "limit": limit,
+                        "page": page,
+                        "page_size": page_size,
+                        "roots_only": roots_only,
                     },
-                    brand_list_params.BrandListParams,
+                    category_list_params.CategoryListParams,
                 ),
             ),
-            model=Brand,
-        )
-
-    @typing_extensions.deprecated("use `search` (returns a list) instead; will be removed in the next major version")
-    def find(
-        self,
-        *,
-        query: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Brand:
-        """
-        Find a brand by name.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self._get(
-            "/v0/brands",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=maybe_transform({"query": query}, brand_find_params.BrandFindParams),
-            ),
-            cast_to=Brand,
+            model=CategorySummary,
         )
 
     def search(
@@ -173,15 +139,15 @@ class BrandsResource(SyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SearchBrandsResponse:
-        """Search brands by free-text query.
+    ) -> SearchCategoriesResponse:
+        """Search categories by free-text query.
 
         Args:
           query: Free-text query (e.g.
 
-        'Nike', 'lululemon').
+        'sofas', 'yoga mats').
 
-          limit: Maximum number of brands to return.
+          limit: Maximum number of categories to return.
 
           extra_headers: Send extra headers
 
@@ -192,7 +158,7 @@ class BrandsResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get(
-            "/v1/brands/search",
+            "/v1/categories/search",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -203,36 +169,36 @@ class BrandsResource(SyncAPIResource):
                         "query": query,
                         "limit": limit,
                     },
-                    brand_search_params.BrandSearchParams,
+                    category_search_params.CategorySearchParams,
                 ),
             ),
-            cast_to=SearchBrandsResponse,
+            cast_to=SearchCategoriesResponse,
         )
 
 
-class AsyncBrandsResource(AsyncAPIResource):
+class AsyncCategoriesResource(AsyncAPIResource):
     @cached_property
-    def with_raw_response(self) -> AsyncBrandsResourceWithRawResponse:
+    def with_raw_response(self) -> AsyncCategoriesResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
         the raw response object instead of the parsed content.
 
         For more information, see https://www.github.com/channel3-ai/sdk-python#accessing-raw-response-data-eg-headers
         """
-        return AsyncBrandsResourceWithRawResponse(self)
+        return AsyncCategoriesResourceWithRawResponse(self)
 
     @cached_property
-    def with_streaming_response(self) -> AsyncBrandsResourceWithStreamingResponse:
+    def with_streaming_response(self) -> AsyncCategoriesResourceWithStreamingResponse:
         """
         An alternative to `.with_raw_response` that doesn't eagerly read the response body.
 
         For more information, see https://www.github.com/channel3-ai/sdk-python#with_streaming_response
         """
-        return AsyncBrandsResourceWithStreamingResponse(self)
+        return AsyncCategoriesResourceWithStreamingResponse(self)
 
     async def retrieve(
         self,
-        brand_id: str,
+        slug: str,
         *,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -240,9 +206,9 @@ class AsyncBrandsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Brand:
+    ) -> Category:
         """
-        Get detailed information about a specific brand by its ID.
+        Look up a category by slug.
 
         Args:
           extra_headers: Send extra headers
@@ -253,35 +219,38 @@ class AsyncBrandsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        if not brand_id:
-            raise ValueError(f"Expected a non-empty value for `brand_id` but received {brand_id!r}")
+        if not slug:
+            raise ValueError(f"Expected a non-empty value for `slug` but received {slug!r}")
         return await self._get(
-            path_template("/v1/brands/{brand_id}", brand_id=brand_id),
+            path_template("/v1/categories/{slug}", slug=slug),
             options=make_request_options(
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
-            cast_to=Brand,
+            cast_to=Category,
         )
 
     def list(
         self,
         *,
-        cursor: Optional[str] | Omit = omit,
-        limit: int | Omit = omit,
+        page: int | Omit = omit,
+        page_size: int | Omit = omit,
+        roots_only: bool | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> AsyncPaginator[Brand, AsyncCursorPage[Brand]]:
+    ) -> AsyncPaginator[CategorySummary, AsyncCategoryPage[CategorySummary]]:
         """
-        Paginated list of brands.
+        Paginated list of all categories.
 
         Args:
-          cursor: Pagination cursor returned by a prior call. Omit for the first page.
+          page: 1-indexed page number.
 
-          limit: Max items per page (1-100).
+          page_size: Items per page.
+
+          roots_only: If true, return only top-level (root) categories.
 
           extra_headers: Send extra headers
 
@@ -292,8 +261,8 @@ class AsyncBrandsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self._get_api_list(
-            "/v1/brands",
-            page=AsyncCursorPage[Brand],
+            "/v1/categories",
+            page=AsyncCategoryPage[CategorySummary],
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -301,49 +270,14 @@ class AsyncBrandsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
-                        "cursor": cursor,
-                        "limit": limit,
+                        "page": page,
+                        "page_size": page_size,
+                        "roots_only": roots_only,
                     },
-                    brand_list_params.BrandListParams,
+                    category_list_params.CategoryListParams,
                 ),
             ),
-            model=Brand,
-        )
-
-    @typing_extensions.deprecated("use `search` (returns a list) instead; will be removed in the next major version")
-    async def find(
-        self,
-        *,
-        query: str,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> Brand:
-        """
-        Find a brand by name.
-
-        Args:
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return await self._get(
-            "/v0/brands",
-            options=make_request_options(
-                extra_headers=extra_headers,
-                extra_query=extra_query,
-                extra_body=extra_body,
-                timeout=timeout,
-                query=await async_maybe_transform({"query": query}, brand_find_params.BrandFindParams),
-            ),
-            cast_to=Brand,
+            model=CategorySummary,
         )
 
     async def search(
@@ -357,15 +291,15 @@ class AsyncBrandsResource(AsyncAPIResource):
         extra_query: Query | None = None,
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> SearchBrandsResponse:
-        """Search brands by free-text query.
+    ) -> SearchCategoriesResponse:
+        """Search categories by free-text query.
 
         Args:
           query: Free-text query (e.g.
 
-        'Nike', 'lululemon').
+        'sofas', 'yoga mats').
 
-          limit: Maximum number of brands to return.
+          limit: Maximum number of categories to return.
 
           extra_headers: Send extra headers
 
@@ -376,7 +310,7 @@ class AsyncBrandsResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self._get(
-            "/v1/brands/search",
+            "/v1/categories/search",
             options=make_request_options(
                 extra_headers=extra_headers,
                 extra_query=extra_query,
@@ -387,88 +321,68 @@ class AsyncBrandsResource(AsyncAPIResource):
                         "query": query,
                         "limit": limit,
                     },
-                    brand_search_params.BrandSearchParams,
+                    category_search_params.CategorySearchParams,
                 ),
             ),
-            cast_to=SearchBrandsResponse,
+            cast_to=SearchCategoriesResponse,
         )
 
 
-class BrandsResourceWithRawResponse:
-    def __init__(self, brands: BrandsResource) -> None:
-        self._brands = brands
+class CategoriesResourceWithRawResponse:
+    def __init__(self, categories: CategoriesResource) -> None:
+        self._categories = categories
 
         self.retrieve = to_raw_response_wrapper(
-            brands.retrieve,
+            categories.retrieve,
         )
         self.list = to_raw_response_wrapper(
-            brands.list,
-        )
-        self.find = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                brands.find,  # pyright: ignore[reportDeprecated],
-            )
+            categories.list,
         )
         self.search = to_raw_response_wrapper(
-            brands.search,
+            categories.search,
         )
 
 
-class AsyncBrandsResourceWithRawResponse:
-    def __init__(self, brands: AsyncBrandsResource) -> None:
-        self._brands = brands
+class AsyncCategoriesResourceWithRawResponse:
+    def __init__(self, categories: AsyncCategoriesResource) -> None:
+        self._categories = categories
 
         self.retrieve = async_to_raw_response_wrapper(
-            brands.retrieve,
+            categories.retrieve,
         )
         self.list = async_to_raw_response_wrapper(
-            brands.list,
-        )
-        self.find = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                brands.find,  # pyright: ignore[reportDeprecated],
-            )
+            categories.list,
         )
         self.search = async_to_raw_response_wrapper(
-            brands.search,
+            categories.search,
         )
 
 
-class BrandsResourceWithStreamingResponse:
-    def __init__(self, brands: BrandsResource) -> None:
-        self._brands = brands
+class CategoriesResourceWithStreamingResponse:
+    def __init__(self, categories: CategoriesResource) -> None:
+        self._categories = categories
 
         self.retrieve = to_streamed_response_wrapper(
-            brands.retrieve,
+            categories.retrieve,
         )
         self.list = to_streamed_response_wrapper(
-            brands.list,
-        )
-        self.find = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                brands.find,  # pyright: ignore[reportDeprecated],
-            )
+            categories.list,
         )
         self.search = to_streamed_response_wrapper(
-            brands.search,
+            categories.search,
         )
 
 
-class AsyncBrandsResourceWithStreamingResponse:
-    def __init__(self, brands: AsyncBrandsResource) -> None:
-        self._brands = brands
+class AsyncCategoriesResourceWithStreamingResponse:
+    def __init__(self, categories: AsyncCategoriesResource) -> None:
+        self._categories = categories
 
         self.retrieve = async_to_streamed_response_wrapper(
-            brands.retrieve,
+            categories.retrieve,
         )
         self.list = async_to_streamed_response_wrapper(
-            brands.list,
-        )
-        self.find = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                brands.find,  # pyright: ignore[reportDeprecated],
-            )
+            categories.list,
         )
         self.search = async_to_streamed_response_wrapper(
-            brands.search,
+            categories.search,
         )

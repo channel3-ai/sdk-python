@@ -11,6 +11,8 @@ from tests.utils import assert_matches_type
 from channel3_sdk import Channel3, AsyncChannel3
 from channel3_sdk.types import Website
 
+# pyright: reportDeprecated=false
+
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
@@ -19,16 +21,16 @@ class TestWebsites:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_method_find(self, client: Channel3) -> None:
-        website = client.websites.find(
+    def test_method_retrieve(self, client: Channel3) -> None:
+        website = client.websites.retrieve(
             query="query",
         )
         assert_matches_type(Optional[Website], website, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_raw_response_find(self, client: Channel3) -> None:
-        response = client.websites.with_raw_response.find(
+    def test_raw_response_retrieve(self, client: Channel3) -> None:
+        response = client.websites.with_raw_response.retrieve(
             query="query",
         )
 
@@ -39,8 +41,8 @@ class TestWebsites:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    def test_streaming_response_find(self, client: Channel3) -> None:
-        with client.websites.with_streaming_response.find(
+    def test_streaming_response_retrieve(self, client: Channel3) -> None:
+        with client.websites.with_streaming_response.retrieve(
             query="query",
         ) as response:
             assert not response.is_closed
@@ -48,6 +50,44 @@ class TestWebsites:
 
             website = response.parse()
             assert_matches_type(Optional[Website], website, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_find(self, client: Channel3) -> None:
+        with pytest.warns(DeprecationWarning):
+            website = client.websites.find(
+                query="query",
+            )
+
+        assert_matches_type(Optional[Website], website, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_find(self, client: Channel3) -> None:
+        with pytest.warns(DeprecationWarning):
+            response = client.websites.with_raw_response.find(
+                query="query",
+            )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        website = response.parse()
+        assert_matches_type(Optional[Website], website, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_find(self, client: Channel3) -> None:
+        with pytest.warns(DeprecationWarning):
+            with client.websites.with_streaming_response.find(
+                query="query",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+                website = response.parse()
+                assert_matches_type(Optional[Website], website, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -59,16 +99,16 @@ class TestAsyncWebsites:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_method_find(self, async_client: AsyncChannel3) -> None:
-        website = await async_client.websites.find(
+    async def test_method_retrieve(self, async_client: AsyncChannel3) -> None:
+        website = await async_client.websites.retrieve(
             query="query",
         )
         assert_matches_type(Optional[Website], website, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_raw_response_find(self, async_client: AsyncChannel3) -> None:
-        response = await async_client.websites.with_raw_response.find(
+    async def test_raw_response_retrieve(self, async_client: AsyncChannel3) -> None:
+        response = await async_client.websites.with_raw_response.retrieve(
             query="query",
         )
 
@@ -79,8 +119,8 @@ class TestAsyncWebsites:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
-    async def test_streaming_response_find(self, async_client: AsyncChannel3) -> None:
-        async with async_client.websites.with_streaming_response.find(
+    async def test_streaming_response_retrieve(self, async_client: AsyncChannel3) -> None:
+        async with async_client.websites.with_streaming_response.retrieve(
             query="query",
         ) as response:
             assert not response.is_closed
@@ -88,5 +128,43 @@ class TestAsyncWebsites:
 
             website = await response.parse()
             assert_matches_type(Optional[Website], website, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_find(self, async_client: AsyncChannel3) -> None:
+        with pytest.warns(DeprecationWarning):
+            website = await async_client.websites.find(
+                query="query",
+            )
+
+        assert_matches_type(Optional[Website], website, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_find(self, async_client: AsyncChannel3) -> None:
+        with pytest.warns(DeprecationWarning):
+            response = await async_client.websites.with_raw_response.find(
+                query="query",
+            )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        website = await response.parse()
+        assert_matches_type(Optional[Website], website, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_find(self, async_client: AsyncChannel3) -> None:
+        with pytest.warns(DeprecationWarning):
+            async with async_client.websites.with_streaming_response.find(
+                query="query",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+                website = await response.parse()
+                assert_matches_type(Optional[Website], website, path=["response"])
 
         assert cast(Any, response.is_closed) is True
