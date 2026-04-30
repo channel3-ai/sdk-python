@@ -66,6 +66,9 @@ class EnrichEnrichURLResponse(BaseModel):
     url: str
     """Deprecated, use offers field"""
 
+    age: Optional[Literal["newborn", "infant", "toddler", "kids", "adult"]] = None
+    """Target age group. Age-agnostic products are typically returned as 'adult'."""
+
     brand_id: Optional[str] = None
 
     brand_name: Optional[str] = None
