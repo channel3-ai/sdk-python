@@ -10,7 +10,7 @@ __all__ = ["BrandListParams"]
 
 class BrandListParams(TypedDict, total=False):
     cursor: Optional[str]
-    """Pagination cursor"""
+    """Pagination cursor returned by a prior call. Omit for the first page."""
 
     limit: int
-    """Max results (1-100)"""
+    """Max items per page (1-100)."""

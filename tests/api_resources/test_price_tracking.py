@@ -15,6 +15,8 @@ from channel3_sdk.types import (
 )
 from channel3_sdk.pagination import SyncCursorPage, AsyncCursorPage
 
+# pyright: reportDeprecated=false
+
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
@@ -24,26 +26,31 @@ class TestPriceTracking:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_history(self, client: Channel3) -> None:
-        price_tracking = client.price_tracking.get_history(
-            canonical_product_id="canonical_product_id",
-        )
+        with pytest.warns(DeprecationWarning):
+            price_tracking = client.price_tracking.get_history(
+                canonical_product_id="canonical_product_id",
+            )
+
         assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_get_history_with_all_params(self, client: Channel3) -> None:
-        price_tracking = client.price_tracking.get_history(
-            canonical_product_id="canonical_product_id",
-            days=1,
-        )
+        with pytest.warns(DeprecationWarning):
+            price_tracking = client.price_tracking.get_history(
+                canonical_product_id="canonical_product_id",
+                days=1,
+            )
+
         assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_get_history(self, client: Channel3) -> None:
-        response = client.price_tracking.with_raw_response.get_history(
-            canonical_product_id="canonical_product_id",
-        )
+        with pytest.warns(DeprecationWarning):
+            response = client.price_tracking.with_raw_response.get_history(
+                canonical_product_id="canonical_product_id",
+            )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -53,24 +60,28 @@ class TestPriceTracking:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_get_history(self, client: Channel3) -> None:
-        with client.price_tracking.with_streaming_response.get_history(
-            canonical_product_id="canonical_product_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            with client.price_tracking.with_streaming_response.get_history(
+                canonical_product_id="canonical_product_id",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            price_tracking = response.parse()
-            assert_matches_type(PriceHistory, price_tracking, path=["response"])
+                price_tracking = response.parse()
+                assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_path_params_get_history(self, client: Channel3) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `canonical_product_id` but received ''"):
-            client.price_tracking.with_raw_response.get_history(
-                canonical_product_id="",
-            )
+        with pytest.warns(DeprecationWarning):
+            with pytest.raises(
+                ValueError, match=r"Expected a non-empty value for `canonical_product_id` but received ''"
+            ):
+                client.price_tracking.with_raw_response.get_history(
+                    canonical_product_id="",
+                )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -108,6 +119,57 @@ class TestPriceTracking:
             assert_matches_type(SyncCursorPage[Subscription], price_tracking, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_history(self, client: Channel3) -> None:
+        price_tracking = client.price_tracking.retrieve_history(
+            canonical_product_id="canonical_product_id",
+        )
+        assert_matches_type(PriceHistory, price_tracking, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_history_with_all_params(self, client: Channel3) -> None:
+        price_tracking = client.price_tracking.retrieve_history(
+            canonical_product_id="canonical_product_id",
+            days=1,
+        )
+        assert_matches_type(PriceHistory, price_tracking, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_retrieve_history(self, client: Channel3) -> None:
+        response = client.price_tracking.with_raw_response.retrieve_history(
+            canonical_product_id="canonical_product_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        price_tracking = response.parse()
+        assert_matches_type(PriceHistory, price_tracking, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_retrieve_history(self, client: Channel3) -> None:
+        with client.price_tracking.with_streaming_response.retrieve_history(
+            canonical_product_id="canonical_product_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            price_tracking = response.parse()
+            assert_matches_type(PriceHistory, price_tracking, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_path_params_retrieve_history(self, client: Channel3) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `canonical_product_id` but received ''"):
+            client.price_tracking.with_raw_response.retrieve_history(
+                canonical_product_id="",
+            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -186,26 +248,31 @@ class TestAsyncPriceTracking:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_history(self, async_client: AsyncChannel3) -> None:
-        price_tracking = await async_client.price_tracking.get_history(
-            canonical_product_id="canonical_product_id",
-        )
+        with pytest.warns(DeprecationWarning):
+            price_tracking = await async_client.price_tracking.get_history(
+                canonical_product_id="canonical_product_id",
+            )
+
         assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_get_history_with_all_params(self, async_client: AsyncChannel3) -> None:
-        price_tracking = await async_client.price_tracking.get_history(
-            canonical_product_id="canonical_product_id",
-            days=1,
-        )
+        with pytest.warns(DeprecationWarning):
+            price_tracking = await async_client.price_tracking.get_history(
+                canonical_product_id="canonical_product_id",
+                days=1,
+            )
+
         assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_get_history(self, async_client: AsyncChannel3) -> None:
-        response = await async_client.price_tracking.with_raw_response.get_history(
-            canonical_product_id="canonical_product_id",
-        )
+        with pytest.warns(DeprecationWarning):
+            response = await async_client.price_tracking.with_raw_response.get_history(
+                canonical_product_id="canonical_product_id",
+            )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -215,24 +282,28 @@ class TestAsyncPriceTracking:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_get_history(self, async_client: AsyncChannel3) -> None:
-        async with async_client.price_tracking.with_streaming_response.get_history(
-            canonical_product_id="canonical_product_id",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            async with async_client.price_tracking.with_streaming_response.get_history(
+                canonical_product_id="canonical_product_id",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            price_tracking = await response.parse()
-            assert_matches_type(PriceHistory, price_tracking, path=["response"])
+                price_tracking = await response.parse()
+                assert_matches_type(PriceHistory, price_tracking, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_path_params_get_history(self, async_client: AsyncChannel3) -> None:
-        with pytest.raises(ValueError, match=r"Expected a non-empty value for `canonical_product_id` but received ''"):
-            await async_client.price_tracking.with_raw_response.get_history(
-                canonical_product_id="",
-            )
+        with pytest.warns(DeprecationWarning):
+            with pytest.raises(
+                ValueError, match=r"Expected a non-empty value for `canonical_product_id` but received ''"
+            ):
+                await async_client.price_tracking.with_raw_response.get_history(
+                    canonical_product_id="",
+                )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
@@ -270,6 +341,57 @@ class TestAsyncPriceTracking:
             assert_matches_type(AsyncCursorPage[Subscription], price_tracking, path=["response"])
 
         assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_history(self, async_client: AsyncChannel3) -> None:
+        price_tracking = await async_client.price_tracking.retrieve_history(
+            canonical_product_id="canonical_product_id",
+        )
+        assert_matches_type(PriceHistory, price_tracking, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_history_with_all_params(self, async_client: AsyncChannel3) -> None:
+        price_tracking = await async_client.price_tracking.retrieve_history(
+            canonical_product_id="canonical_product_id",
+            days=1,
+        )
+        assert_matches_type(PriceHistory, price_tracking, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_retrieve_history(self, async_client: AsyncChannel3) -> None:
+        response = await async_client.price_tracking.with_raw_response.retrieve_history(
+            canonical_product_id="canonical_product_id",
+        )
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        price_tracking = await response.parse()
+        assert_matches_type(PriceHistory, price_tracking, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_retrieve_history(self, async_client: AsyncChannel3) -> None:
+        async with async_client.price_tracking.with_streaming_response.retrieve_history(
+            canonical_product_id="canonical_product_id",
+        ) as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            price_tracking = await response.parse()
+            assert_matches_type(PriceHistory, price_tracking, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_path_params_retrieve_history(self, async_client: AsyncChannel3) -> None:
+        with pytest.raises(ValueError, match=r"Expected a non-empty value for `canonical_product_id` but received ''"):
+            await async_client.price_tracking.with_raw_response.retrieve_history(
+                canonical_product_id="",
+            )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
