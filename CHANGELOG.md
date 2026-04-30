@@ -1,5 +1,40 @@
 # Changelog
 
+## 3.2.0 (2026-04-30)
+
+Full Changelog: [v3.1.0...v3.2.0](https://github.com/channel3-ai/sdk-python/compare/v3.1.0...v3.2.0)
+
+### Features
+
+* **api:** add categories, products search/similar, brands search, deprecate methods, update types ([5c8f1f1](https://github.com/channel3-ai/sdk-python/commit/5c8f1f1ece04d81551b7f2ab7ba959113e8edb34))
+* **api:** add country/currency/language to products retrieve and search config ([46a786e](https://github.com/channel3-ai/sdk-python/commit/46a786e0b032858ed857e5f0d1022f2af579b95d))
+* **client:** add language/country/currency parameters to client ([824e4e7](https://github.com/channel3-ai/sdk-python/commit/824e4e73593d79fc292c9d240dc1bfc436e15142))
+* Image search endpoint ([3d762a3](https://github.com/channel3-ai/sdk-python/commit/3d762a30cd1055e9210597d74a58e635aeb0b146))
+* support setting headers via env ([321ea5a](https://github.com/channel3-ai/sdk-python/commit/321ea5a6e310e5131d9d4c82c062ae57bd00cb90))
+
+
+### Bug Fixes
+
+* **api:** remove min_price_floor from search filter price param ([c919b08](https://github.com/channel3-ai/sdk-python/commit/c919b0897859f710d3350b20ed3035467252945b))
+* **types:** remove unisex option from gender field in search filters ([224ca0e](https://github.com/channel3-ai/sdk-python/commit/224ca0e757747e4b6b293265871ddd25bdccbd4c))
+* use correct field name format for multipart file arrays ([be51cf0](https://github.com/channel3-ai/sdk-python/commit/be51cf07939df4c086812ed7c3d9c2705bf64978))
+
+
+### Performance Improvements
+
+* **client:** optimize file structure copying in multipart requests ([ae25a89](https://github.com/channel3-ai/sdk-python/commit/ae25a89b6c36ffffd9446cb4a6829013cba596ad))
+
+
+### Chores
+
+* **internal:** more robust bootstrap script ([e300ba1](https://github.com/channel3-ai/sdk-python/commit/e300ba103d6eba5b98cdb27aa2a39805213291a0))
+
+
+### Documentation
+
+* **api:** clarify parameter requirements in search perform method ([a10d912](https://github.com/channel3-ai/sdk-python/commit/a10d912237fb973d9d25d82a4bf4135b5286b52f))
+* **api:** clarify search_filters category parameters accept slugs ([cbad6d7](https://github.com/channel3-ai/sdk-python/commit/cbad6d7d466e67a5c071d1a994a912d0eb7e75c2))
+
 ## 3.1.0 (2026-04-11)
 
 Full Changelog: [v3.0.0...v3.1.0](https://github.com/channel3-ai/sdk-python/compare/v3.0.0...v3.1.0)
