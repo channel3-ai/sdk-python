@@ -11,6 +11,8 @@ from tests.utils import assert_matches_type
 from channel3_sdk import Channel3, AsyncChannel3
 from channel3_sdk.types import EnrichEnrichURLResponse
 
+# pyright: reportDeprecated=false
+
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
@@ -20,17 +22,20 @@ class TestEnrich:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_method_enrich_url(self, client: Channel3) -> None:
-        enrich = client.enrich.enrich_url(
-            url="url",
-        )
+        with pytest.warns(DeprecationWarning):
+            enrich = client.enrich.enrich_url(
+                url="url",
+            )
+
         assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_raw_response_enrich_url(self, client: Channel3) -> None:
-        response = client.enrich.with_raw_response.enrich_url(
-            url="url",
-        )
+        with pytest.warns(DeprecationWarning):
+            response = client.enrich.with_raw_response.enrich_url(
+                url="url",
+            )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -40,14 +45,15 @@ class TestEnrich:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     def test_streaming_response_enrich_url(self, client: Channel3) -> None:
-        with client.enrich.with_streaming_response.enrich_url(
-            url="url",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            with client.enrich.with_streaming_response.enrich_url(
+                url="url",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            enrich = response.parse()
-            assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
+                enrich = response.parse()
+                assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -60,17 +66,20 @@ class TestAsyncEnrich:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_method_enrich_url(self, async_client: AsyncChannel3) -> None:
-        enrich = await async_client.enrich.enrich_url(
-            url="url",
-        )
+        with pytest.warns(DeprecationWarning):
+            enrich = await async_client.enrich.enrich_url(
+                url="url",
+            )
+
         assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_raw_response_enrich_url(self, async_client: AsyncChannel3) -> None:
-        response = await async_client.enrich.with_raw_response.enrich_url(
-            url="url",
-        )
+        with pytest.warns(DeprecationWarning):
+            response = await async_client.enrich.with_raw_response.enrich_url(
+                url="url",
+            )
 
         assert response.is_closed is True
         assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -80,13 +89,14 @@ class TestAsyncEnrich:
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
     async def test_streaming_response_enrich_url(self, async_client: AsyncChannel3) -> None:
-        async with async_client.enrich.with_streaming_response.enrich_url(
-            url="url",
-        ) as response:
-            assert not response.is_closed
-            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        with pytest.warns(DeprecationWarning):
+            async with async_client.enrich.with_streaming_response.enrich_url(
+                url="url",
+            ) as response:
+                assert not response.is_closed
+                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
 
-            enrich = await response.parse()
-            assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
+                enrich = await response.parse()
+                assert_matches_type(EnrichEnrichURLResponse, enrich, path=["response"])
 
         assert cast(Any, response.is_closed) is True

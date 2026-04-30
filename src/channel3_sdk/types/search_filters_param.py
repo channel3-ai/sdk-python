@@ -49,7 +49,7 @@ class SearchFiltersParam(TypedDict, total=False):
     exclude_website_ids: Optional[SequenceNotStr[str]]
     """If provided, products from these websites will be excluded from the results"""
 
-    gender: Optional[Literal["male", "female"]]
+    gender: Optional[Literal["male", "female", "unisex"]]
 
     price: Optional[SearchFilterPriceParam]
     """Price filter for search. Values are inclusive."""

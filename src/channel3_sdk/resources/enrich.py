@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import typing_extensions
+
 import httpx
 
 from ..types import enrich_enrich_url_params
@@ -41,6 +43,7 @@ class EnrichResource(SyncAPIResource):
         """
         return EnrichResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("use `products.lookup` instead; will be removed in the next major version")
     def enrich_url(
         self,
         *,
@@ -103,6 +106,7 @@ class AsyncEnrichResource(AsyncAPIResource):
         """
         return AsyncEnrichResourceWithStreamingResponse(self)
 
+    @typing_extensions.deprecated("use `products.lookup` instead; will be removed in the next major version")
     async def enrich_url(
         self,
         *,
@@ -149,8 +153,10 @@ class EnrichResourceWithRawResponse:
     def __init__(self, enrich: EnrichResource) -> None:
         self._enrich = enrich
 
-        self.enrich_url = to_raw_response_wrapper(
-            enrich.enrich_url,
+        self.enrich_url = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                enrich.enrich_url,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -158,8 +164,10 @@ class AsyncEnrichResourceWithRawResponse:
     def __init__(self, enrich: AsyncEnrichResource) -> None:
         self._enrich = enrich
 
-        self.enrich_url = async_to_raw_response_wrapper(
-            enrich.enrich_url,
+        self.enrich_url = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                enrich.enrich_url,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -167,8 +175,10 @@ class EnrichResourceWithStreamingResponse:
     def __init__(self, enrich: EnrichResource) -> None:
         self._enrich = enrich
 
-        self.enrich_url = to_streamed_response_wrapper(
-            enrich.enrich_url,
+        self.enrich_url = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                enrich.enrich_url,  # pyright: ignore[reportDeprecated],
+            )
         )
 
 
@@ -176,6 +186,8 @@ class AsyncEnrichResourceWithStreamingResponse:
     def __init__(self, enrich: AsyncEnrichResource) -> None:
         self._enrich = enrich
 
-        self.enrich_url = async_to_streamed_response_wrapper(
-            enrich.enrich_url,
+        self.enrich_url = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                enrich.enrich_url,  # pyright: ignore[reportDeprecated],
+            )
         )
