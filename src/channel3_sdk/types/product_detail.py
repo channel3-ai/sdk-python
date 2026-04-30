@@ -18,6 +18,9 @@ class ProductDetail(BaseModel):
 
     title: str
 
+    age: Optional[Literal["newborn", "infant", "toddler", "kids", "adult"]] = None
+    """Target age group. Age-agnostic products are typically returned as 'adult'."""
+
     brands: Optional[List[ProductBrand]] = None
     """Ordered list of brands."""
 
