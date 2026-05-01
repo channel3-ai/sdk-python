@@ -89,7 +89,7 @@ class ProductsResource(SyncAPIResource):
               when country and currency are also unset.
 
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
-              merchants exist
+              merchants exist. Accepts website IDs or domains (e.g. "nike.com").
 
           extra_headers: Send extra headers
 
@@ -423,7 +423,7 @@ class AsyncProductsResource(AsyncAPIResource):
               when country and currency are also unset.
 
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
-              merchants exist
+              merchants exist. Accepts website IDs or domains (e.g. "nike.com").
 
           extra_headers: Send extra headers
 

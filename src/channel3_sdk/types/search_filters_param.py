@@ -47,12 +47,18 @@ class SearchFiltersParam(TypedDict, total=False):
     """
 
     exclude_website_ids: Optional[SequenceNotStr[str]]
-    """If provided, products from these websites will be excluded from the results"""
+    """If provided, products from these websites will be excluded from the results.
 
-    gender: Optional[Literal["male", "female", "unisex"]]
+    Accepts website IDs or domains (e.g. "nike.com").
+    """
+
+    gender: Optional[Literal["male", "female"]]
 
     price: Optional[SearchFilterPriceParam]
     """Price filter for search. Values are inclusive."""
 
     website_ids: Optional[SequenceNotStr[str]]
-    """If provided, only products from these websites will be returned"""
+    """If provided, only products from these websites will be returned.
+
+    Accepts website IDs or domains (e.g. "nike.com").
+    """
