@@ -37,5 +37,5 @@ class ProductRetrieveParams(TypedDict, total=False):
     website_ids: Optional[SequenceNotStr[str]]
     """
     Optional list of website IDs to constrain the buy URL to, relevant if multiple
-    merchants exist
+    merchants exist. Accepts website IDs or domains (e.g. "nike.com").
     """

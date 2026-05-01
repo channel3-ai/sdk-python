@@ -55,8 +55,11 @@ class WebsitesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[Website]:
-        """
-        Find a website by URL.
+        """Resolve a website URL to its ID and best_commission_rate.
+
+        Tip: website_ids
+        filters accept domains directly, so this lookup is most useful for retrieving
+        commission rates.
 
         Args:
           extra_headers: Send extra headers
@@ -91,8 +94,11 @@ class WebsitesResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[Website]:
-        """
-        Find a website by URL.
+        """Resolve a website URL to its ID and best_commission_rate.
+
+        Tip: website_ids
+        filters accept domains directly, so this lookup is most useful for retrieving
+        commission rates.
 
         Args:
           extra_headers: Send extra headers
@@ -139,8 +145,11 @@ class AsyncWebsitesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[Website]:
-        """
-        Find a website by URL.
+        """Resolve a website URL to its ID and best_commission_rate.
+
+        Tip: website_ids
+        filters accept domains directly, so this lookup is most useful for retrieving
+        commission rates.
 
         Args:
           extra_headers: Send extra headers
@@ -175,8 +184,11 @@ class AsyncWebsitesResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> Optional[Website]:
-        """
-        Find a website by URL.
+        """Resolve a website URL to its ID and best_commission_rate.
+
+        Tip: website_ids
+        filters accept domains directly, so this lookup is most useful for retrieving
+        commission rates.
 
         Args:
           extra_headers: Send extra headers
