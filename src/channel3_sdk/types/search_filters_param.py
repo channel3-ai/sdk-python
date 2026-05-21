@@ -2,14 +2,35 @@
 
 from __future__ import annotations
 
-from typing import List, Optional
-from typing_extensions import Literal, TypedDict
+from typing import Dict, List, Iterable, Optional
+from typing_extensions import Literal, Required, TypedDict
 
 from .._types import SequenceNotStr
 from .availability_status import AvailabilityStatus
 from .search_filter_price_param import SearchFilterPriceParam
 
-__all__ = ["SearchFiltersParam"]
+__all__ = ["SearchFiltersParam", "Colors", "ColorsPalette"]
+
+
+class ColorsPalette(TypedDict, total=False):
+    """A single color requirement for the color filter."""
+
+    hex: Required[str]
+    """sRGB hex string, e.g. '#a1b2c3'"""
+
+    percentage: Optional[float]
+    """Percentage of color, where 1.0 is 100%"""
+
+
+class Colors(TypedDict, total=False):
+    """[Beta] Color filter wrapper.
+
+    Holds the list of required colors today;
+    reserved for future filter-level options (e.g. match modes, tolerance overrides).
+    """
+
+    palette: Required[Iterable[ColorsPalette]]
+    """Colors required in matching products. Treated as an AND condition."""
 
 
 class SearchFiltersParam(TypedDict, total=False):
@@ -17,6 +38,16 @@ class SearchFiltersParam(TypedDict, total=False):
 
     age: Optional[List[Literal["newborn", "infant", "toddler", "kids", "adult"]]]
     """Filter by age group. Age-agnostic products are treated as adult products."""
+
+    attributes: Optional[Dict[str, SequenceNotStr[str]]]
+    """
+    If provided, only products whose extracted attributes match these key/value
+    constraints will be returned. Keys are attribute handles (e.g. 'color',
+    'material') and values are lists of allowed values (OR within a key, AND across
+    keys). When a category filter is also supplied, all keys must be valid
+    attributes of at least one of the requested categories. See
+    `Category.attributes` for the valid keys/values per category.
+    """
 
     availability: Optional[List[AvailabilityStatus]]
     """If provided, only products with these availability statuses will be returned"""
@@ -28,6 +59,13 @@ class SearchFiltersParam(TypedDict, total=False):
     """If provided, only products from these categories will be returned.
 
     Accepts category slugs.
+    """
+
+    colors: Optional[Colors]
+    """[Beta] Color filter wrapper.
+
+    Holds the list of required colors today; reserved for future filter-level
+    options (e.g. match modes, tolerance overrides).
     """
 
     condition: Optional[Literal["new", "refurbished", "used"]]

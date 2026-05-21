@@ -61,12 +61,31 @@ class ProductsResource(SyncAPIResource):
         *,
         country: Optional[
             Literal[
-                "US", "GB", "EU", "AU", "CA", "IE", "DE", "AT", "FR", "BE", "IT", "ES", "NL", "SE", "FI", "PT", "CZ"
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
             ]
         ]
         | Omit = omit,
-        currency: Optional[Literal["USD", "CAD", "AUD", "GBP", "EUR", "SEK", "CZK"]] | Omit = omit,
-        language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs"]] | Omit = omit,
+        currency: Optional[Literal["USD", "CAD", "AUD", "GBP", "EUR", "SEK", "CZK", "RON"]] | Omit = omit,
+        language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs", "el", "ro"]]
+        | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -395,12 +414,31 @@ class AsyncProductsResource(AsyncAPIResource):
         *,
         country: Optional[
             Literal[
-                "US", "GB", "EU", "AU", "CA", "IE", "DE", "AT", "FR", "BE", "IT", "ES", "NL", "SE", "FI", "PT", "CZ"
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
             ]
         ]
         | Omit = omit,
-        currency: Optional[Literal["USD", "CAD", "AUD", "GBP", "EUR", "SEK", "CZK"]] | Omit = omit,
-        language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs"]] | Omit = omit,
+        currency: Optional[Literal["USD", "CAD", "AUD", "GBP", "EUR", "SEK", "CZK", "RON"]] | Omit = omit,
+        language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs", "el", "ro"]]
+        | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
