@@ -7,8 +7,9 @@ from .price import Price
 from .._models import BaseModel
 from .product_brand import ProductBrand
 from .product_offer import ProductOffer
+from .availability_status import AvailabilityStatus
 
-__all__ = ["EnrichEnrichURLResponse", "Image", "Variant"]
+__all__ = ["EnrichEnrichURLResponse", "Image", "Variants", "VariantsOption", "VariantsOptionValue", "VariantsSelected"]
 
 
 class Image(BaseModel):
@@ -42,12 +43,72 @@ class Image(BaseModel):
     """Product image type classification for API responses."""
 
 
-class Variant(BaseModel):
-    image_url: str
+class VariantsOptionValue(BaseModel):
+    """One value of one variant option (e.g. 'Blue' under 'Color')"""
 
-    product_id: str
+    exists: bool
+    """
+    Whether the option value exists on the product, or is a configuration only
+    present on another variant of the same product. For example, a shirt that comes
+    in multiple colors, but only one color is available in Size XL.
+    """
 
-    title: str
+    label: str
+    """The display value of the option value (e.g. 'Blue')"""
+
+    available: Optional[AvailabilityStatus] = None
+    """The availability status of the option value.
+
+    None when returned on search results, hydrated only on get product detail
+    requests.
+    """
+
+    product_id: Optional[str] = None
+    """The product id that represents this value.
+
+    Variants that point to different products will have this field set, as well as
+    thumbnail_url for displaying selector icons.
+    """
+
+    thumbnail_url: Optional[str] = None
+    """
+    For options that reference different products, this is the URL of the thumbnail
+    image for the option value. E.g., a shoe that comes in multiple colors will have
+    an OptionValue for each color with a thumbnail_url set.
+    """
+
+
+class VariantsOption(BaseModel):
+    """One dimension of a product family (e.g. 'Color', 'Size')."""
+
+    name: str
+    """The name of the option (e.g. 'Color', 'Size')"""
+
+    values: List[VariantsOptionValue]
+    """The values of the option (e.g. ['Blue', 'Red', 'Green'])"""
+
+
+class VariantsSelected(BaseModel):
+    """One effective selection on a product, post server-side relaxation."""
+
+    label: str
+    """The display value of the selected option (e.g. 'Blue', 'XL')"""
+
+    name: str
+    """The name of the selected option (e.g. 'Color', 'Size')"""
+
+
+class Variants(BaseModel):
+    """Wrapper for variant-interaction state on a Product.
+
+    Holds `options` and `selected`. `options` represent all of the
+    configuration options for the product. `selected` represents the
+    currently selected option values.
+    """
+
+    options: List[VariantsOption]
+
+    selected: List[VariantsSelected]
 
 
 class EnrichEnrichURLResponse(BaseModel):
@@ -101,5 +162,10 @@ class EnrichEnrichURLResponse(BaseModel):
     'color', 'material'). Values are the canonical allowed values for that handle.
     """
 
-    variants: Optional[List[Variant]] = None
-    """Legacy variant list, always empty. Use v1 API for variant dimensions."""
+    variants: Optional[Variants] = None
+    """Wrapper for variant-interaction state on a Product.
+
+    Holds `options` and `selected`. `options` represent all of the configuration
+    options for the product. `selected` represents the currently selected option
+    values.
+    """
