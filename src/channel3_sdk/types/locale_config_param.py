@@ -16,7 +16,27 @@ class LocaleConfigParam(TypedDict, total=False):
     """
 
     country: Optional[
-        Literal["US", "GB", "EU", "AU", "CA", "IE", "DE", "AT", "FR", "BE", "IT", "ES", "NL", "SE", "FI", "PT", "CZ"]
+        Literal[
+            "US",
+            "GB",
+            "EU",
+            "AU",
+            "CA",
+            "IE",
+            "DE",
+            "AT",
+            "FR",
+            "BE",
+            "IT",
+            "ES",
+            "NL",
+            "SE",
+            "FI",
+            "PT",
+            "CZ",
+            "GR",
+            "RO",
+        ]
     ]
     """ISO 3166-1 alpha-2 country code.
 
@@ -24,13 +44,13 @@ class LocaleConfigParam(TypedDict, total=False):
     country).
     """
 
-    currency: Optional[Literal["USD", "CAD", "AUD", "GBP", "EUR", "SEK", "CZK"]]
+    currency: Optional[Literal["USD", "CAD", "AUD", "GBP", "EUR", "SEK", "CZK", "RON"]]
     """ISO 4217 currency code.
 
     When unset, inferred from `country` (e.g. `GB` → `GBP`), defaulting to `USD`.
     """
 
-    language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs"]]
+    language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs", "el", "ro"]]
     """ISO 639-1 language code.
 
     When unset, inferred from `country` (preferred) then `currency`, defaulting to

@@ -92,7 +92,7 @@ class BrandsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncCursorPage[Brand]:
         """
-        Paginated list of brands.
+        Paginated list of brands, capped at the top 5,000.
 
         Args:
           cursor: Pagination cursor returned by a prior call. Omit for the first page.
@@ -276,7 +276,7 @@ class AsyncBrandsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Brand, AsyncCursorPage[Brand]]:
         """
-        Paginated list of brands.
+        Paginated list of brands, capped at the top 5,000.
 
         Args:
           cursor: Pagination cursor returned by a prior call. Omit for the first page.

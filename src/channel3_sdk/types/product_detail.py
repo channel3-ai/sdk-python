@@ -1,6 +1,6 @@
 # File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-from typing import List, Optional
+from typing import Dict, List, Optional
 from typing_extensions import Literal
 
 from .._models import BaseModel
@@ -38,3 +38,10 @@ class ProductDetail(BaseModel):
 
     offers: Optional[List[ProductOffer]] = None
     """All merchant offers for this product in the requested locale."""
+
+    structured_attributes: Optional[Dict[str, List[str]]] = None
+    """Structured attributes extracted for this product, keyed by attribute handle
+    (e.g.
+
+    'color', 'material'). Values are the canonical allowed values for that handle.
+    """
