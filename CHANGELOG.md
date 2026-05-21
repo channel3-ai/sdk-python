@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.3.0 (2026-05-21)
+
+Full Changelog: [v3.2.0...v3.3.0](https://github.com/channel3-ai/sdk-python/compare/v3.2.0...v3.3.0)
+
+### Features
+
+* add channel3 cli to stainless... i think? ([52ea3c0](https://github.com/channel3-ai/sdk-python/commit/52ea3c06ee87579182f3fbd2298ddfb7eec4ee88))
+* **api:** add attributes filter param, extracted_attributes to enrich/product responses ([474ee17](https://github.com/channel3-ai/sdk-python/commit/474ee17906a09dea74b7ae6fca8298755147b916))
+* **api:** add variants structure to enrich_url and product_detail responses ([7247053](https://github.com/channel3-ai/sdk-python/commit/7247053e1e5483e72a63a22e2e4f1b4df0dc6e95))
+* **internal/types:** support eagerly validating pydantic iterators ([1a51f70](https://github.com/channel3-ai/sdk-python/commit/1a51f700abd4cb9c07b55db36cdcd057b092f090))
+
+
+### Bug Fixes
+
+* **client:** add missing f-string prefix in file type error message ([a0c2e73](https://github.com/channel3-ai/sdk-python/commit/a0c2e7325a42171930f840a35a585e7d73327683))
+
+
+### Chores
+
+* **internal:** reformat pyproject.toml ([cd2c31d](https://github.com/channel3-ai/sdk-python/commit/cd2c31d08c9bd25224b1c8fac2557deb8e5a5b74))
+
 ## 3.2.0 (2026-04-30)
 
 Full Changelog: [v3.1.0...v3.2.0](https://github.com/channel3-ai/sdk-python/compare/v3.1.0...v3.2.0)
