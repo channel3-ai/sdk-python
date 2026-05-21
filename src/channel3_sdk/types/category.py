@@ -22,7 +22,10 @@ class Category(BaseModel):
     """Human-readable category title"""
 
     attributes: Optional[List[CategoryAttribute]] = None
-    """Structured attributes applicable to this category"""
+    """Structured attributes applicable to this category, with their allowed values.
+
+    Usable as keys in `SearchFilters.attributes`.
+    """
 
     children: Optional[List[CategoryRef]] = None
     """Direct subcategories only (one level)"""
