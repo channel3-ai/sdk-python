@@ -7,6 +7,7 @@ from .._models import BaseModel
 from .product_brand import ProductBrand
 from .product_image import ProductImage
 from .product_offer import ProductOffer
+from .category_summary import CategorySummary
 from .availability_status import AvailabilityStatus
 
 __all__ = ["ProductDetail", "Variants", "VariantsOption", "VariantsOptionValue", "VariantsSelected"]
@@ -94,6 +95,9 @@ class ProductDetail(BaseModel):
     """Ordered list of brands."""
 
     categories: Optional[List[str]] = None
+
+    category: Optional[CategorySummary] = None
+    """Lean category representation used in search hits and list rows."""
 
     description: Optional[str] = None
 
