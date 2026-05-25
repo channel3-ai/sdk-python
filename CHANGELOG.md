@@ -1,5 +1,18 @@
 # Changelog
 
+## 3.3.1 (2026-05-25)
+
+Full Changelog: [v3.3.0...v3.3.1](https://github.com/channel3-ai/sdk-python/compare/v3.3.0...v3.3.1)
+
+### Features
+
+* **api:** add category field to enrich and product responses ([08313bc](https://github.com/channel3-ai/sdk-python/commit/08313bc7ad31cdc92a4132f4e3803a73b92d829b))
+
+
+### Documentation
+
+* **types:** clarify is_cleaned_image field description in image models ([7473e06](https://github.com/channel3-ai/sdk-python/commit/7473e06c886e08879aea3cd126e4901a62d61320))
+
 ## 3.3.0 (2026-05-21)
 
 Full Changelog: [v3.2.0...v3.3.0](https://github.com/channel3-ai/sdk-python/compare/v3.2.0...v3.3.0)
