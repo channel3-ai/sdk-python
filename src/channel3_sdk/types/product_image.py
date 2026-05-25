@@ -15,6 +15,13 @@ class ProductImage(BaseModel):
 
     alt_text: Optional[str] = None
 
+    is_cleaned_image: Optional[bool] = None
+    """True if this URL points to a cleaned image.
+
+    A cleaned image has a square aspect ratio and a uniform, monochromatic
+    background. Cleaned images are best displayed in a product grid.
+    """
+
     is_main_image: Optional[bool] = None
 
     shot_type: Optional[
