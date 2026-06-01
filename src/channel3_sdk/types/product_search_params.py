@@ -15,7 +15,8 @@ class ProductSearchParams(TypedDict, total=False):
     base64_image: Optional[str]
     """Base64 encoded image.
 
-    At least one of `query`, `image_url`, or `base64_image` must be provided.
+    At least one of `query`, `image_url`, `base64_image`, or `page_token` must be
+    provided.
     """
 
     config: SearchConfigParam
@@ -30,7 +31,8 @@ class ProductSearchParams(TypedDict, total=False):
     image_url: Optional[str]
     """Image URL.
 
-    At least one of `query`, `image_url`, or `base64_image` must be provided.
+    At least one of `query`, `image_url`, `base64_image`, or `page_token` must be
+    provided.
     """
 
     limit: Optional[int]
@@ -42,5 +44,6 @@ class ProductSearchParams(TypedDict, total=False):
     query: Optional[str]
     """Search query.
 
-    At least one of `query`, `image_url`, or `base64_image` must be provided.
+    At least one of `query`, `image_url`, `base64_image`, or `page_token` must be
+    provided.
     """
