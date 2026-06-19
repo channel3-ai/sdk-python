@@ -18,6 +18,12 @@ class ProductOffer(BaseModel):
 
     url: str
 
+    condition: Optional[Literal["new", "refurbished", "used"]] = None
+    """Condition of this merchant offer (new, used, or refurbished).
+
+    Null when condition is unknown.
+    """
+
     max_commission_rate: Optional[float] = None
     """The maximum commission rate for the merchant, as a percentage.
 
