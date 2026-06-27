@@ -330,6 +330,7 @@ class ProductsResource(SyncAPIResource):
         image_url: Optional[str] | Omit = omit,
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
+        segment: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -358,6 +359,10 @@ class ProductsResource(SyncAPIResource):
           page_token: Opaque token from a previous image-search response to fetch the next page of
               results.
 
+          segment: Image segmentation mode. None (default) disables segmentation. "AUTO" segments
+              and crops the main product automatically. A custom string (e.g. "shoe", "mug")
+              segments the specified object.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -377,6 +382,7 @@ class ProductsResource(SyncAPIResource):
                     "image_url": image_url,
                     "limit": limit,
                     "page_token": page_token,
+                    "segment": segment,
                 },
                 product_search_by_image_params.ProductSearchByImageParams,
             ),
@@ -683,6 +689,7 @@ class AsyncProductsResource(AsyncAPIResource):
         image_url: Optional[str] | Omit = omit,
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
+        segment: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -711,6 +718,10 @@ class AsyncProductsResource(AsyncAPIResource):
           page_token: Opaque token from a previous image-search response to fetch the next page of
               results.
 
+          segment: Image segmentation mode. None (default) disables segmentation. "AUTO" segments
+              and crops the main product automatically. A custom string (e.g. "shoe", "mug")
+              segments the specified object.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -730,6 +741,7 @@ class AsyncProductsResource(AsyncAPIResource):
                     "image_url": image_url,
                     "limit": limit,
                     "page_token": page_token,
+                    "segment": segment,
                 },
                 product_search_by_image_params.ProductSearchByImageParams,
             ),

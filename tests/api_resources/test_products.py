@@ -116,6 +116,7 @@ class TestProducts:
                     "max_price": 0,
                     "min_price": 0,
                 },
+                "sale": "on_sale",
                 "website_ids": ["string"],
             },
             limit=1,
@@ -232,6 +233,7 @@ class TestProducts:
                     "max_price": 0,
                     "min_price": 0,
                 },
+                "sale": "on_sale",
                 "website_ids": ["string"],
             },
             image_url="image_url",
@@ -302,11 +304,13 @@ class TestProducts:
                     "max_price": 0,
                     "min_price": 0,
                 },
+                "sale": "on_sale",
                 "website_ids": ["string"],
             },
             image_url="image_url",
             limit=1,
             page_token="page_token",
+            segment="segment",
         )
         assert_matches_type(SyncSearchPage[ProductDetail], product, path=["response"])
 
@@ -433,6 +437,7 @@ class TestAsyncProducts:
                     "max_price": 0,
                     "min_price": 0,
                 },
+                "sale": "on_sale",
                 "website_ids": ["string"],
             },
             limit=1,
@@ -549,6 +554,7 @@ class TestAsyncProducts:
                     "max_price": 0,
                     "min_price": 0,
                 },
+                "sale": "on_sale",
                 "website_ids": ["string"],
             },
             image_url="image_url",
@@ -619,11 +625,13 @@ class TestAsyncProducts:
                     "max_price": 0,
                     "min_price": 0,
                 },
+                "sale": "on_sale",
                 "website_ids": ["string"],
             },
             image_url="image_url",
             limit=1,
             page_token="page_token",
+            segment="segment",
         )
         assert_matches_type(AsyncSearchPage[ProductDetail], product, path=["response"])
 
