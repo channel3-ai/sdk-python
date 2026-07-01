@@ -38,6 +38,7 @@ class TestSearch:
                     "currency": "USD",
                     "keyword_search_only": True,
                     "language": "en",
+                    "mode": "keyword",
                 },
                 filters={
                     "age": ["newborn"],
@@ -122,6 +123,7 @@ class TestAsyncSearch:
                     "currency": "USD",
                     "keyword_search_only": True,
                     "language": "en",
+                    "mode": "keyword",
                 },
                 filters={
                     "age": ["newborn"],

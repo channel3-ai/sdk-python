@@ -47,14 +47,20 @@ class SearchConfigParam(TypedDict, total=False):
     """
 
     keyword_search_only: bool
-    """If True, search will only use keyword search and not vector search.
-
-    Keyword-only search is not supported with image input.
-    """
+    """Deprecated: use `mode`. `true` is equivalent to `mode=keyword`."""
 
     language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs", "el", "ro"]]
     """ISO 639-1 language code.
 
     When unset, inferred from `country` (preferred) then `currency`, defaulting to
     `en`.
+    """
+
+    mode: Literal["keyword", "default", "agentic"]
+    """Search strategy.
+
+    `default` (recommended) combines lexical + semantic search and is right for most
+    use cases. `keyword` is lexical only — use it for real-time, low-latency needs
+    like ad targeting. `agentic` uses an LLM to plan multiple structured
+    sub-searches for complex queries, with higher latency than the other modes.
     """
