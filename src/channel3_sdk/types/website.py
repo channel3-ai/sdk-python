@@ -13,4 +13,7 @@ class Website(BaseModel):
     url: str
 
     best_commission_rate: Optional[float] = None
-    """The maximum commission rate for the website, as a percentage"""
+    """
+    The maximum commission rate for the website in the requested country (default
+    'US'), as a percentage
+    """

@@ -9,7 +9,10 @@ import pytest
 
 from tests.utils import assert_matches_type
 from channel3_sdk import Channel3, AsyncChannel3
-from channel3_sdk.types import Brand, SearchBrandsResponse
+from channel3_sdk.types import (
+    Brand,
+    SearchBrandsResponse,
+)
 from channel3_sdk.pagination import SyncCursorPage, AsyncCursorPage
 
 # pyright: reportDeprecated=false
@@ -24,7 +27,16 @@ class TestBrands:
     @parametrize
     def test_method_retrieve(self, client: Channel3) -> None:
         brand = client.brands.retrieve(
-            "brand_id",
+            brand_id="brand_id",
+        )
+        assert_matches_type(Brand, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_retrieve_with_all_params(self, client: Channel3) -> None:
+        brand = client.brands.retrieve(
+            brand_id="brand_id",
+            country="US",
         )
         assert_matches_type(Brand, brand, path=["response"])
 
@@ -32,7 +44,7 @@ class TestBrands:
     @parametrize
     def test_raw_response_retrieve(self, client: Channel3) -> None:
         response = client.brands.with_raw_response.retrieve(
-            "brand_id",
+            brand_id="brand_id",
         )
 
         assert response.is_closed is True
@@ -44,7 +56,7 @@ class TestBrands:
     @parametrize
     def test_streaming_response_retrieve(self, client: Channel3) -> None:
         with client.brands.with_streaming_response.retrieve(
-            "brand_id",
+            brand_id="brand_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -59,7 +71,7 @@ class TestBrands:
     def test_path_params_retrieve(self, client: Channel3) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `brand_id` but received ''"):
             client.brands.with_raw_response.retrieve(
-                "",
+                brand_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -72,6 +84,7 @@ class TestBrands:
     @parametrize
     def test_method_list_with_all_params(self, client: Channel3) -> None:
         brand = client.brands.list(
+            country="US",
             cursor="cursor",
             limit=1,
         )
@@ -150,6 +163,7 @@ class TestBrands:
     def test_method_search_with_all_params(self, client: Channel3) -> None:
         brand = client.brands.search(
             query="x",
+            country="US",
             limit=1,
         )
         assert_matches_type(SearchBrandsResponse, brand, path=["response"])
@@ -190,7 +204,16 @@ class TestAsyncBrands:
     @parametrize
     async def test_method_retrieve(self, async_client: AsyncChannel3) -> None:
         brand = await async_client.brands.retrieve(
-            "brand_id",
+            brand_id="brand_id",
+        )
+        assert_matches_type(Brand, brand, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_retrieve_with_all_params(self, async_client: AsyncChannel3) -> None:
+        brand = await async_client.brands.retrieve(
+            brand_id="brand_id",
+            country="US",
         )
         assert_matches_type(Brand, brand, path=["response"])
 
@@ -198,7 +221,7 @@ class TestAsyncBrands:
     @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncChannel3) -> None:
         response = await async_client.brands.with_raw_response.retrieve(
-            "brand_id",
+            brand_id="brand_id",
         )
 
         assert response.is_closed is True
@@ -210,7 +233,7 @@ class TestAsyncBrands:
     @parametrize
     async def test_streaming_response_retrieve(self, async_client: AsyncChannel3) -> None:
         async with async_client.brands.with_streaming_response.retrieve(
-            "brand_id",
+            brand_id="brand_id",
         ) as response:
             assert not response.is_closed
             assert response.http_request.headers.get("X-Stainless-Lang") == "python"
@@ -225,7 +248,7 @@ class TestAsyncBrands:
     async def test_path_params_retrieve(self, async_client: AsyncChannel3) -> None:
         with pytest.raises(ValueError, match=r"Expected a non-empty value for `brand_id` but received ''"):
             await async_client.brands.with_raw_response.retrieve(
-                "",
+                brand_id="",
             )
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
@@ -238,6 +261,7 @@ class TestAsyncBrands:
     @parametrize
     async def test_method_list_with_all_params(self, async_client: AsyncChannel3) -> None:
         brand = await async_client.brands.list(
+            country="US",
             cursor="cursor",
             limit=1,
         )
@@ -316,6 +340,7 @@ class TestAsyncBrands:
     async def test_method_search_with_all_params(self, async_client: AsyncChannel3) -> None:
         brand = await async_client.brands.search(
             query="x",
+            country="US",
             limit=1,
         )
         assert_matches_type(SearchBrandsResponse, brand, path=["response"])

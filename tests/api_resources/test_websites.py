@@ -29,6 +29,15 @@ class TestWebsites:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_retrieve_with_all_params(self, client: Channel3) -> None:
+        website = client.websites.retrieve(
+            query="query",
+            country="US",
+        )
+        assert_matches_type(Optional[Website], website, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_raw_response_retrieve(self, client: Channel3) -> None:
         response = client.websites.with_raw_response.retrieve(
             query="query",
@@ -59,6 +68,17 @@ class TestWebsites:
         with pytest.warns(DeprecationWarning):
             website = client.websites.find(
                 query="query",
+            )
+
+        assert_matches_type(Optional[Website], website, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_find_with_all_params(self, client: Channel3) -> None:
+        with pytest.warns(DeprecationWarning):
+            website = client.websites.find(
+                query="query",
+                country="US",
             )
 
         assert_matches_type(Optional[Website], website, path=["response"])
@@ -107,6 +127,15 @@ class TestAsyncWebsites:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    async def test_method_retrieve_with_all_params(self, async_client: AsyncChannel3) -> None:
+        website = await async_client.websites.retrieve(
+            query="query",
+            country="US",
+        )
+        assert_matches_type(Optional[Website], website, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     async def test_raw_response_retrieve(self, async_client: AsyncChannel3) -> None:
         response = await async_client.websites.with_raw_response.retrieve(
             query="query",
@@ -137,6 +166,17 @@ class TestAsyncWebsites:
         with pytest.warns(DeprecationWarning):
             website = await async_client.websites.find(
                 query="query",
+            )
+
+        assert_matches_type(Optional[Website], website, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_find_with_all_params(self, async_client: AsyncChannel3) -> None:
+        with pytest.warns(DeprecationWarning):
+            website = await async_client.websites.find(
+                query="query",
+                country="US",
             )
 
         assert_matches_type(Optional[Website], website, path=["response"])

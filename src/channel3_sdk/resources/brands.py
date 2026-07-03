@@ -4,10 +4,11 @@ from __future__ import annotations
 
 import typing_extensions
 from typing import Optional
+from typing_extensions import Literal
 
 import httpx
 
-from ..types import brand_find_params, brand_list_params, brand_search_params
+from ..types import brand_find_params, brand_list_params, brand_search_params, brand_retrieve_params
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import path_template, maybe_transform, async_maybe_transform
 from .._compat import cached_property
@@ -50,6 +51,30 @@ class BrandsResource(SyncAPIResource):
         self,
         brand_id: str,
         *,
+        country: Optional[
+            Literal[
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
+            ]
+        ]
+        | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -61,6 +86,9 @@ class BrandsResource(SyncAPIResource):
         Get detailed information about a specific brand by its ID.
 
         Args:
+          country: ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+              Defaults to 'US' when unset.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -74,7 +102,11 @@ class BrandsResource(SyncAPIResource):
         return self._get(
             path_template("/v1/brands/{brand_id}", brand_id=brand_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=maybe_transform({"country": country}, brand_retrieve_params.BrandRetrieveParams),
             ),
             cast_to=Brand,
         )
@@ -82,6 +114,30 @@ class BrandsResource(SyncAPIResource):
     def list(
         self,
         *,
+        country: Optional[
+            Literal[
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
+            ]
+        ]
+        | Omit = omit,
         cursor: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -95,6 +151,9 @@ class BrandsResource(SyncAPIResource):
         Paginated list of brands, capped at the top 5,000.
 
         Args:
+          country: ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+              Defaults to 'US' when unset.
+
           cursor: Pagination cursor returned by a prior call. Omit for the first page.
 
           limit: Max items per page (1-100).
@@ -117,6 +176,7 @@ class BrandsResource(SyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "country": country,
                         "cursor": cursor,
                         "limit": limit,
                     },
@@ -166,6 +226,30 @@ class BrandsResource(SyncAPIResource):
         self,
         *,
         query: str,
+        country: Optional[
+            Literal[
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
+            ]
+        ]
+        | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -180,6 +264,9 @@ class BrandsResource(SyncAPIResource):
           query: Free-text query (e.g.
 
         'Nike', 'lululemon').
+
+          country: ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+              Defaults to 'US' when unset.
 
           limit: Maximum number of brands to return.
 
@@ -201,6 +288,7 @@ class BrandsResource(SyncAPIResource):
                 query=maybe_transform(
                     {
                         "query": query,
+                        "country": country,
                         "limit": limit,
                     },
                     brand_search_params.BrandSearchParams,
@@ -234,6 +322,30 @@ class AsyncBrandsResource(AsyncAPIResource):
         self,
         brand_id: str,
         *,
+        country: Optional[
+            Literal[
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
+            ]
+        ]
+        | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -245,6 +357,9 @@ class AsyncBrandsResource(AsyncAPIResource):
         Get detailed information about a specific brand by its ID.
 
         Args:
+          country: ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+              Defaults to 'US' when unset.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -258,7 +373,11 @@ class AsyncBrandsResource(AsyncAPIResource):
         return await self._get(
             path_template("/v1/brands/{brand_id}", brand_id=brand_id),
             options=make_request_options(
-                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+                extra_headers=extra_headers,
+                extra_query=extra_query,
+                extra_body=extra_body,
+                timeout=timeout,
+                query=await async_maybe_transform({"country": country}, brand_retrieve_params.BrandRetrieveParams),
             ),
             cast_to=Brand,
         )
@@ -266,6 +385,30 @@ class AsyncBrandsResource(AsyncAPIResource):
     def list(
         self,
         *,
+        country: Optional[
+            Literal[
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
+            ]
+        ]
+        | Omit = omit,
         cursor: Optional[str] | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
@@ -279,6 +422,9 @@ class AsyncBrandsResource(AsyncAPIResource):
         Paginated list of brands, capped at the top 5,000.
 
         Args:
+          country: ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+              Defaults to 'US' when unset.
+
           cursor: Pagination cursor returned by a prior call. Omit for the first page.
 
           limit: Max items per page (1-100).
@@ -301,6 +447,7 @@ class AsyncBrandsResource(AsyncAPIResource):
                 timeout=timeout,
                 query=maybe_transform(
                     {
+                        "country": country,
                         "cursor": cursor,
                         "limit": limit,
                     },
@@ -350,6 +497,30 @@ class AsyncBrandsResource(AsyncAPIResource):
         self,
         *,
         query: str,
+        country: Optional[
+            Literal[
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
+            ]
+        ]
+        | Omit = omit,
         limit: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -364,6 +535,9 @@ class AsyncBrandsResource(AsyncAPIResource):
           query: Free-text query (e.g.
 
         'Nike', 'lululemon').
+
+          country: ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+              Defaults to 'US' when unset.
 
           limit: Maximum number of brands to return.
 
@@ -385,6 +559,7 @@ class AsyncBrandsResource(AsyncAPIResource):
                 query=await async_maybe_transform(
                     {
                         "query": query,
+                        "country": country,
                         "limit": limit,
                     },
                     brand_search_params.BrandSearchParams,

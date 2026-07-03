@@ -25,8 +25,8 @@ class ProductOffer(BaseModel):
     """
 
     max_commission_rate: Optional[float] = None
-    """The maximum commission rate for the merchant, as a percentage.
-
-    0 is no commission. 0.5 is 50% commission. 'Max' because the actual commission
-    rate may be lower due to vendor-specific affiliate rules.
+    """
+    The maximum commission rate for the merchant, as a decimal fraction: 0 is no
+    commission, 0.5 is 50% commission. 'Max' because the actual commission rate may
+    be lower due to vendor-specific affiliate rules.
     """
