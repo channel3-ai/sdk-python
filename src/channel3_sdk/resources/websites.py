@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import typing_extensions
 from typing import Optional
+from typing_extensions import Literal
 
 import httpx
 
 from ..types import website_retrieve_params
-from .._types import Body, Query, Headers, NotGiven, not_given
+from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
 from .._utils import maybe_transform, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
@@ -48,6 +49,30 @@ class WebsitesResource(SyncAPIResource):
         self,
         *,
         query: str,
+        country: Optional[
+            Literal[
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
+            ]
+        ]
+        | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -62,6 +87,9 @@ class WebsitesResource(SyncAPIResource):
         commission rates.
 
         Args:
+          country: ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+              Defaults to 'US' when unset.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -77,7 +105,13 @@ class WebsitesResource(SyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=maybe_transform({"query": query}, website_retrieve_params.WebsiteRetrieveParams),
+                query=maybe_transform(
+                    {
+                        "query": query,
+                        "country": country,
+                    },
+                    website_retrieve_params.WebsiteRetrieveParams,
+                ),
             ),
             cast_to=Website,
         )
@@ -87,6 +121,30 @@ class WebsitesResource(SyncAPIResource):
         self,
         *,
         query: str,
+        country: Optional[
+            Literal[
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
+            ]
+        ]
+        | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -101,6 +159,9 @@ class WebsitesResource(SyncAPIResource):
         commission rates.
 
         Args:
+          country: ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+              Defaults to 'US' when unset.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -110,7 +171,12 @@ class WebsitesResource(SyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return self.retrieve(
-            query=query, extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            query=query,
+            country=country,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+            timeout=timeout,
         )
 
 
@@ -138,6 +204,30 @@ class AsyncWebsitesResource(AsyncAPIResource):
         self,
         *,
         query: str,
+        country: Optional[
+            Literal[
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
+            ]
+        ]
+        | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -152,6 +242,9 @@ class AsyncWebsitesResource(AsyncAPIResource):
         commission rates.
 
         Args:
+          country: ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+              Defaults to 'US' when unset.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -167,7 +260,13 @@ class AsyncWebsitesResource(AsyncAPIResource):
                 extra_query=extra_query,
                 extra_body=extra_body,
                 timeout=timeout,
-                query=await async_maybe_transform({"query": query}, website_retrieve_params.WebsiteRetrieveParams),
+                query=await async_maybe_transform(
+                    {
+                        "query": query,
+                        "country": country,
+                    },
+                    website_retrieve_params.WebsiteRetrieveParams,
+                ),
             ),
             cast_to=Website,
         )
@@ -177,6 +276,30 @@ class AsyncWebsitesResource(AsyncAPIResource):
         self,
         *,
         query: str,
+        country: Optional[
+            Literal[
+                "US",
+                "GB",
+                "EU",
+                "AU",
+                "CA",
+                "IE",
+                "DE",
+                "AT",
+                "FR",
+                "BE",
+                "IT",
+                "ES",
+                "NL",
+                "SE",
+                "FI",
+                "PT",
+                "CZ",
+                "GR",
+                "RO",
+            ]
+        ]
+        | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -191,6 +314,9 @@ class AsyncWebsitesResource(AsyncAPIResource):
         commission rates.
 
         Args:
+          country: ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+              Defaults to 'US' when unset.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -200,7 +326,12 @@ class AsyncWebsitesResource(AsyncAPIResource):
           timeout: Override the client-level default timeout for this request, in seconds
         """
         return await self.retrieve(
-            query=query, extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            query=query,
+            country=country,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+            timeout=timeout,
         )
 
 
