@@ -1,5 +1,26 @@
 # Changelog
 
+## 3.4.0 (2026-07-06)
+
+Full Changelog: [v3.3.1...v3.4.0](https://github.com/channel3-ai/sdk-python/compare/v3.3.1...v3.4.0)
+
+### Features
+
+* **api:** add mode parameter, deprecate keyword_search_only in search config ([ece41b1](https://github.com/channel3-ai/sdk-python/commit/ece41b1ad7c118839c670b635fd3d10c248fdfcf))
+* Experimental ClickHouse scraping telemetry (+ Grafana dashboards) ([560a919](https://github.com/channel3-ai/sdk-python/commit/560a9197df08d25e0fb126247942a4c7125cb041))
+
+
+### Chores
+
+* **internal:** regenerate SDK with no functional changes ([e540a0b](https://github.com/channel3-ai/sdk-python/commit/e540a0b5a1f5b282b491a7f3d64a0ee22ac2af55))
+* **internal:** regenerate SDK with no functional changes ([09433d8](https://github.com/channel3-ai/sdk-python/commit/09433d8ed917d5ece969c13e4a06ac35cfc181da))
+
+
+### Documentation
+
+* **api:** clarify page_token in search parameter requirements ([82cadd2](https://github.com/channel3-ai/sdk-python/commit/82cadd2931fffddcaae9c327903c9566954be814))
+* **types:** clarify max_commission_rate description in ProductOffer ([c700c02](https://github.com/channel3-ai/sdk-python/commit/c700c02b8d7893320207c4e2ea95237e966c2c59))
+
 ## 3.3.1 (2026-05-25)
 
 Full Changelog: [v3.3.0...v3.3.1](https://github.com/channel3-ai/sdk-python/compare/v3.3.0...v3.3.1)
