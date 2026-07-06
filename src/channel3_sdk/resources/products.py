@@ -8,6 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..types import (
+    product_browse_params,
     product_lookup_params,
     product_search_params,
     product_retrieve_params,
@@ -138,6 +139,64 @@ class ProductsResource(SyncAPIResource):
                 ),
             ),
             cast_to=ProductDetail,
+        )
+
+    def browse(
+        self,
+        *,
+        filters: SearchFiltersParam | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SyncSearchPage[ProductDetail]:
+        """
+        List and page through products for a set of filters.
+
+        Useful for a static, grid view of products for a brand, website, or category.
+
+        At least one of `filters.brand_ids`, `filters.category_ids`, or
+        `filters.website_ids` must be provided.
+
+        Access to this endpoint is restricted. If you think your use-case requires it,
+        please contact us.
+
+        Args:
+          filters: Filters to browse by. At least one of `brand_ids`, `category_ids`, or
+              `website_ids` must be provided.
+
+          limit: Optional limit on the number of results. Default is 20, max is 30.
+
+          page_token: Opaque token from a previous browse response to fetch the next page.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get_api_list(
+            "/v1/browse",
+            page=SyncSearchPage[ProductDetail],
+            body=maybe_transform(
+                {
+                    "filters": filters,
+                    "limit": limit,
+                    "page_token": page_token,
+                },
+                product_browse_params.ProductBrowseParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            model=ProductDetail,
+            method="post",
         )
 
     def find_similar(
@@ -499,6 +558,64 @@ class AsyncProductsResource(AsyncAPIResource):
             cast_to=ProductDetail,
         )
 
+    def browse(
+        self,
+        *,
+        filters: SearchFiltersParam | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AsyncPaginator[ProductDetail, AsyncSearchPage[ProductDetail]]:
+        """
+        List and page through products for a set of filters.
+
+        Useful for a static, grid view of products for a brand, website, or category.
+
+        At least one of `filters.brand_ids`, `filters.category_ids`, or
+        `filters.website_ids` must be provided.
+
+        Access to this endpoint is restricted. If you think your use-case requires it,
+        please contact us.
+
+        Args:
+          filters: Filters to browse by. At least one of `brand_ids`, `category_ids`, or
+              `website_ids` must be provided.
+
+          limit: Optional limit on the number of results. Default is 20, max is 30.
+
+          page_token: Opaque token from a previous browse response to fetch the next page.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get_api_list(
+            "/v1/browse",
+            page=AsyncSearchPage[ProductDetail],
+            body=maybe_transform(
+                {
+                    "filters": filters,
+                    "limit": limit,
+                    "page_token": page_token,
+                },
+                product_browse_params.ProductBrowseParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            model=ProductDetail,
+            method="post",
+        )
+
     def find_similar(
         self,
         *,
@@ -760,6 +877,9 @@ class ProductsResourceWithRawResponse:
         self.retrieve = to_raw_response_wrapper(
             products.retrieve,
         )
+        self.browse = to_raw_response_wrapper(
+            products.browse,
+        )
         self.find_similar = to_raw_response_wrapper(
             products.find_similar,
         )
@@ -780,6 +900,9 @@ class AsyncProductsResourceWithRawResponse:
 
         self.retrieve = async_to_raw_response_wrapper(
             products.retrieve,
+        )
+        self.browse = async_to_raw_response_wrapper(
+            products.browse,
         )
         self.find_similar = async_to_raw_response_wrapper(
             products.find_similar,
@@ -802,6 +925,9 @@ class ProductsResourceWithStreamingResponse:
         self.retrieve = to_streamed_response_wrapper(
             products.retrieve,
         )
+        self.browse = to_streamed_response_wrapper(
+            products.browse,
+        )
         self.find_similar = to_streamed_response_wrapper(
             products.find_similar,
         )
@@ -822,6 +948,9 @@ class AsyncProductsResourceWithStreamingResponse:
 
         self.retrieve = async_to_streamed_response_wrapper(
             products.retrieve,
+        )
+        self.browse = async_to_streamed_response_wrapper(
+            products.browse,
         )
         self.find_similar = async_to_streamed_response_wrapper(
             products.find_similar,
