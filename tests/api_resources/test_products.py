@@ -77,6 +77,69 @@ class TestProducts:
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize
+    def test_method_browse(self, client: Channel3) -> None:
+        product = client.products.browse()
+        assert_matches_type(SyncSearchPage[ProductDetail], product, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_browse_with_all_params(self, client: Channel3) -> None:
+        product = client.products.browse(
+            filters={
+                "age": ["newborn"],
+                "attributes": {"foo": ["string"]},
+                "availability": ["InStock"],
+                "brand_ids": ["string"],
+                "category_ids": ["string"],
+                "colors": {
+                    "palette": [
+                        {
+                            "hex": "hex",
+                            "percentage": 0,
+                        }
+                    ]
+                },
+                "condition": "new",
+                "exclude_brand_ids": ["string"],
+                "exclude_category_ids": ["string"],
+                "exclude_website_ids": ["string"],
+                "gender": "male",
+                "price": {
+                    "max_price": 0,
+                    "min_price": 0,
+                },
+                "sale": "on_sale",
+                "website_ids": ["string"],
+            },
+            limit=1,
+            page_token="page_token",
+        )
+        assert_matches_type(SyncSearchPage[ProductDetail], product, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_raw_response_browse(self, client: Channel3) -> None:
+        response = client.products.with_raw_response.browse()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        product = response.parse()
+        assert_matches_type(SyncSearchPage[ProductDetail], product, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_streaming_response_browse(self, client: Channel3) -> None:
+        with client.products.with_streaming_response.browse() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            product = response.parse()
+            assert_matches_type(SyncSearchPage[ProductDetail], product, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
     def test_method_find_similar(self, client: Channel3) -> None:
         product = client.products.find_similar(
             product_id="product_id",
@@ -396,6 +459,69 @@ class TestAsyncProducts:
             await async_client.products.with_raw_response.retrieve(
                 product_id="",
             )
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_browse(self, async_client: AsyncChannel3) -> None:
+        product = await async_client.products.browse()
+        assert_matches_type(AsyncSearchPage[ProductDetail], product, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_browse_with_all_params(self, async_client: AsyncChannel3) -> None:
+        product = await async_client.products.browse(
+            filters={
+                "age": ["newborn"],
+                "attributes": {"foo": ["string"]},
+                "availability": ["InStock"],
+                "brand_ids": ["string"],
+                "category_ids": ["string"],
+                "colors": {
+                    "palette": [
+                        {
+                            "hex": "hex",
+                            "percentage": 0,
+                        }
+                    ]
+                },
+                "condition": "new",
+                "exclude_brand_ids": ["string"],
+                "exclude_category_ids": ["string"],
+                "exclude_website_ids": ["string"],
+                "gender": "male",
+                "price": {
+                    "max_price": 0,
+                    "min_price": 0,
+                },
+                "sale": "on_sale",
+                "website_ids": ["string"],
+            },
+            limit=1,
+            page_token="page_token",
+        )
+        assert_matches_type(AsyncSearchPage[ProductDetail], product, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_raw_response_browse(self, async_client: AsyncChannel3) -> None:
+        response = await async_client.products.with_raw_response.browse()
+
+        assert response.is_closed is True
+        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+        product = await response.parse()
+        assert_matches_type(AsyncSearchPage[ProductDetail], product, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_streaming_response_browse(self, async_client: AsyncChannel3) -> None:
+        async with async_client.products.with_streaming_response.browse() as response:
+            assert not response.is_closed
+            assert response.http_request.headers.get("X-Stainless-Lang") == "python"
+
+            product = await response.parse()
+            assert_matches_type(AsyncSearchPage[ProductDetail], product, path=["response"])
+
+        assert cast(Any, response.is_closed) is True
 
     @pytest.mark.skip(reason="Mock server tests are disabled")
     @parametrize

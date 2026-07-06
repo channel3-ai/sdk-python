@@ -32,6 +32,7 @@ from .website_find_params import WebsiteFindParams as WebsiteFindParams
 from .category_list_params import CategoryListParams as CategoryListParams
 from .search_filters_param import SearchFiltersParam as SearchFiltersParam
 from .brand_retrieve_params import BrandRetrieveParams as BrandRetrieveParams
+from .product_browse_params import ProductBrowseParams as ProductBrowseParams
 from .product_lookup_params import ProductLookupParams as ProductLookupParams
 from .product_search_params import ProductSearchParams as ProductSearchParams
 from .search_perform_params import SearchPerformParams as SearchPerformParams
