@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.4.1 (2026-07-06)
+
+Full Changelog: [v3.4.0...v3.4.1](https://github.com/channel3-ai/sdk-python/compare/v3.4.0...v3.4.1)
+
+### Features
+
+* **api:** add monetize method to products ([76c3088](https://github.com/channel3-ai/sdk-python/commit/76c30886a94bede38f57733d204bcf4e6a4d679d))
+
 ## 3.4.0 (2026-07-06)
 
 Full Changelog: [v3.3.1...v3.4.0](https://github.com/channel3-ai/sdk-python/compare/v3.3.1...v3.4.0)

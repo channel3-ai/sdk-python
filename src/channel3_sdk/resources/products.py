@@ -11,6 +11,7 @@ from ..types import (
     product_browse_params,
     product_lookup_params,
     product_search_params,
+    product_monetize_params,
     product_retrieve_params,
     product_find_similar_params,
     product_search_by_image_params,
@@ -29,6 +30,7 @@ from ..pagination import SyncSearchPage, AsyncSearchPage
 from .._base_client import AsyncPaginator, make_request_options
 from ..types.product_detail import ProductDetail
 from ..types.lookup_response import LookupResponse
+from ..types.monetize_response import MonetizeResponse
 from ..types.locale_config_param import LocaleConfigParam
 from ..types.search_config_param import SearchConfigParam
 from ..types.search_filters_param import SearchFiltersParam
@@ -306,6 +308,44 @@ class ProductsResource(SyncAPIResource):
                 extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
             ),
             cast_to=LookupResponse,
+        )
+
+    def monetize(
+        self,
+        *,
+        url: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonetizeResponse:
+        """
+        Return monetizable offers (with max commission rate) for a product URL.
+
+        Access to this endpoint is restricted. If you think your use-case requires it,
+        please contact us. Usually, developers actually want search. This is helpful for
+        migrating to Channel3.
+
+        Args:
+          url: The URL of the product to monetize
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._post(
+            "/v1/monetize",
+            body=maybe_transform({"url": url}, product_monetize_params.ProductMonetizeParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonetizeResponse,
         )
 
     def search(
@@ -725,6 +765,44 @@ class AsyncProductsResource(AsyncAPIResource):
             cast_to=LookupResponse,
         )
 
+    async def monetize(
+        self,
+        *,
+        url: str,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> MonetizeResponse:
+        """
+        Return monetizable offers (with max commission rate) for a product URL.
+
+        Access to this endpoint is restricted. If you think your use-case requires it,
+        please contact us. Usually, developers actually want search. This is helpful for
+        migrating to Channel3.
+
+        Args:
+          url: The URL of the product to monetize
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self._post(
+            "/v1/monetize",
+            body=await async_maybe_transform({"url": url}, product_monetize_params.ProductMonetizeParams),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            cast_to=MonetizeResponse,
+        )
+
     def search(
         self,
         *,
@@ -886,6 +964,9 @@ class ProductsResourceWithRawResponse:
         self.lookup = to_raw_response_wrapper(
             products.lookup,
         )
+        self.monetize = to_raw_response_wrapper(
+            products.monetize,
+        )
         self.search = to_raw_response_wrapper(
             products.search,
         )
@@ -909,6 +990,9 @@ class AsyncProductsResourceWithRawResponse:
         )
         self.lookup = async_to_raw_response_wrapper(
             products.lookup,
+        )
+        self.monetize = async_to_raw_response_wrapper(
+            products.monetize,
         )
         self.search = async_to_raw_response_wrapper(
             products.search,
@@ -934,6 +1018,9 @@ class ProductsResourceWithStreamingResponse:
         self.lookup = to_streamed_response_wrapper(
             products.lookup,
         )
+        self.monetize = to_streamed_response_wrapper(
+            products.monetize,
+        )
         self.search = to_streamed_response_wrapper(
             products.search,
         )
@@ -957,6 +1044,9 @@ class AsyncProductsResourceWithStreamingResponse:
         )
         self.lookup = async_to_streamed_response_wrapper(
             products.lookup,
+        )
+        self.monetize = async_to_streamed_response_wrapper(
+            products.monetize,
         )
         self.search = async_to_streamed_response_wrapper(
             products.search,
