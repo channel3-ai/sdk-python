@@ -15,6 +15,7 @@ from .price_history import PriceHistory as PriceHistory
 from .product_brand import ProductBrand as ProductBrand
 from .product_image import ProductImage as ProductImage
 from .product_offer import ProductOffer as ProductOffer
+from .monetize_offer import MonetizeOffer as MonetizeOffer
 from .product_detail import ProductDetail as ProductDetail
 from .lookup_response import LookupResponse as LookupResponse
 from .search_response import SearchResponse as SearchResponse
@@ -22,6 +23,7 @@ from .category_summary import CategorySummary as CategorySummary
 from .price_statistics import PriceStatistics as PriceStatistics
 from .brand_find_params import BrandFindParams as BrandFindParams
 from .brand_list_params import BrandListParams as BrandListParams
+from .monetize_response import MonetizeResponse as MonetizeResponse
 from .category_attribute import CategoryAttribute as CategoryAttribute
 from .availability_status import AvailabilityStatus as AvailabilityStatus
 from .brand_search_params import BrandSearchParams as BrandSearchParams
@@ -38,6 +40,7 @@ from .product_search_params import ProductSearchParams as ProductSearchParams
 from .search_perform_params import SearchPerformParams as SearchPerformParams
 from .category_search_params import CategorySearchParams as CategorySearchParams
 from .search_brands_response import SearchBrandsResponse as SearchBrandsResponse
+from .product_monetize_params import ProductMonetizeParams as ProductMonetizeParams
 from .product_retrieve_params import ProductRetrieveParams as ProductRetrieveParams
 from .website_retrieve_params import WebsiteRetrieveParams as WebsiteRetrieveParams
 from .enrich_enrich_url_params import EnrichEnrichURLParams as EnrichEnrichURLParams
