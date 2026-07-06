@@ -8,6 +8,7 @@ from typing_extensions import Literal
 import httpx
 
 from ..types import (
+    product_browse_params,
     product_lookup_params,
     product_search_params,
     product_retrieve_params,
@@ -140,6 +141,64 @@ class ProductsResource(SyncAPIResource):
             cast_to=ProductDetail,
         )
 
+    def browse(
+        self,
+        *,
+        filters: SearchFiltersParam | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> SyncSearchPage[ProductDetail]:
+        """
+        List and page through products for a set of filters.
+
+        Useful for a static, grid view of products for a brand, website, or category.
+
+        At least one of `filters.brand_ids`, `filters.category_ids`, or
+        `filters.website_ids` must be provided.
+
+        Access to this endpoint is restricted. If you think your use-case requires it,
+        please contact us.
+
+        Args:
+          filters: Filters to browse by. At least one of `brand_ids`, `category_ids`, or
+              `website_ids` must be provided.
+
+          limit: Optional limit on the number of results. Default is 20, max is 30.
+
+          page_token: Opaque token from a previous browse response to fetch the next page.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get_api_list(
+            "/v1/browse",
+            page=SyncSearchPage[ProductDetail],
+            body=maybe_transform(
+                {
+                    "filters": filters,
+                    "limit": limit,
+                    "page_token": page_token,
+                },
+                product_browse_params.ProductBrowseParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            model=ProductDetail,
+            method="post",
+        )
+
     def find_similar(
         self,
         *,
@@ -269,27 +328,27 @@ class ProductsResource(SyncAPIResource):
         """
         Search for products with pagination support.
 
-        At least one of `query`, `image_url`, or `base64_image` must be provided;
-        requests with none of these will return 422.
+        At least one of `query`, `image_url`, `base64_image`, or `page_token` must be
+        provided; requests with none of these will return 422.
 
         Args:
-          base64_image: Base64 encoded image. At least one of `query`, `image_url`, or `base64_image`
-              must be provided.
+          base64_image: Base64 encoded image. At least one of `query`, `image_url`, `base64_image`, or
+              `page_token` must be provided.
 
           config: Optional configuration
 
           filters: Optional filters. Search will only consider products that match all of the
               filters.
 
-          image_url: Image URL. At least one of `query`, `image_url`, or `base64_image` must be
-              provided.
+          image_url: Image URL. At least one of `query`, `image_url`, `base64_image`, or `page_token`
+              must be provided.
 
           limit: Optional limit on the number of results. Default is 20, max is 30.
 
           page_token: Opaque token from a previous search response to fetch the next page of results.
 
-          query: Search query. At least one of `query`, `image_url`, or `base64_image` must be
-              provided.
+          query: Search query. At least one of `query`, `image_url`, `base64_image`, or
+              `page_token` must be provided.
 
           extra_headers: Send extra headers
 
@@ -330,6 +389,7 @@ class ProductsResource(SyncAPIResource):
         image_url: Optional[str] | Omit = omit,
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
+        segment: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -358,6 +418,10 @@ class ProductsResource(SyncAPIResource):
           page_token: Opaque token from a previous image-search response to fetch the next page of
               results.
 
+          segment: Image segmentation mode. None (default) disables segmentation. "AUTO" segments
+              and crops the main product automatically. A custom string (e.g. "shoe", "mug")
+              segments the specified object.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -377,6 +441,7 @@ class ProductsResource(SyncAPIResource):
                     "image_url": image_url,
                     "limit": limit,
                     "page_token": page_token,
+                    "segment": segment,
                 },
                 product_search_by_image_params.ProductSearchByImageParams,
             ),
@@ -491,6 +556,64 @@ class AsyncProductsResource(AsyncAPIResource):
                 ),
             ),
             cast_to=ProductDetail,
+        )
+
+    def browse(
+        self,
+        *,
+        filters: SearchFiltersParam | Omit = omit,
+        limit: Optional[int] | Omit = omit,
+        page_token: Optional[str] | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> AsyncPaginator[ProductDetail, AsyncSearchPage[ProductDetail]]:
+        """
+        List and page through products for a set of filters.
+
+        Useful for a static, grid view of products for a brand, website, or category.
+
+        At least one of `filters.brand_ids`, `filters.category_ids`, or
+        `filters.website_ids` must be provided.
+
+        Access to this endpoint is restricted. If you think your use-case requires it,
+        please contact us.
+
+        Args:
+          filters: Filters to browse by. At least one of `brand_ids`, `category_ids`, or
+              `website_ids` must be provided.
+
+          limit: Optional limit on the number of results. Default is 20, max is 30.
+
+          page_token: Opaque token from a previous browse response to fetch the next page.
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return self._get_api_list(
+            "/v1/browse",
+            page=AsyncSearchPage[ProductDetail],
+            body=maybe_transform(
+                {
+                    "filters": filters,
+                    "limit": limit,
+                    "page_token": page_token,
+                },
+                product_browse_params.ProductBrowseParams,
+            ),
+            options=make_request_options(
+                extra_headers=extra_headers, extra_query=extra_query, extra_body=extra_body, timeout=timeout
+            ),
+            model=ProductDetail,
+            method="post",
         )
 
     def find_similar(
@@ -622,27 +745,27 @@ class AsyncProductsResource(AsyncAPIResource):
         """
         Search for products with pagination support.
 
-        At least one of `query`, `image_url`, or `base64_image` must be provided;
-        requests with none of these will return 422.
+        At least one of `query`, `image_url`, `base64_image`, or `page_token` must be
+        provided; requests with none of these will return 422.
 
         Args:
-          base64_image: Base64 encoded image. At least one of `query`, `image_url`, or `base64_image`
-              must be provided.
+          base64_image: Base64 encoded image. At least one of `query`, `image_url`, `base64_image`, or
+              `page_token` must be provided.
 
           config: Optional configuration
 
           filters: Optional filters. Search will only consider products that match all of the
               filters.
 
-          image_url: Image URL. At least one of `query`, `image_url`, or `base64_image` must be
-              provided.
+          image_url: Image URL. At least one of `query`, `image_url`, `base64_image`, or `page_token`
+              must be provided.
 
           limit: Optional limit on the number of results. Default is 20, max is 30.
 
           page_token: Opaque token from a previous search response to fetch the next page of results.
 
-          query: Search query. At least one of `query`, `image_url`, or `base64_image` must be
-              provided.
+          query: Search query. At least one of `query`, `image_url`, `base64_image`, or
+              `page_token` must be provided.
 
           extra_headers: Send extra headers
 
@@ -683,6 +806,7 @@ class AsyncProductsResource(AsyncAPIResource):
         image_url: Optional[str] | Omit = omit,
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
+        segment: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -711,6 +835,10 @@ class AsyncProductsResource(AsyncAPIResource):
           page_token: Opaque token from a previous image-search response to fetch the next page of
               results.
 
+          segment: Image segmentation mode. None (default) disables segmentation. "AUTO" segments
+              and crops the main product automatically. A custom string (e.g. "shoe", "mug")
+              segments the specified object.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -730,6 +858,7 @@ class AsyncProductsResource(AsyncAPIResource):
                     "image_url": image_url,
                     "limit": limit,
                     "page_token": page_token,
+                    "segment": segment,
                 },
                 product_search_by_image_params.ProductSearchByImageParams,
             ),
@@ -747,6 +876,9 @@ class ProductsResourceWithRawResponse:
 
         self.retrieve = to_raw_response_wrapper(
             products.retrieve,
+        )
+        self.browse = to_raw_response_wrapper(
+            products.browse,
         )
         self.find_similar = to_raw_response_wrapper(
             products.find_similar,
@@ -769,6 +901,9 @@ class AsyncProductsResourceWithRawResponse:
         self.retrieve = async_to_raw_response_wrapper(
             products.retrieve,
         )
+        self.browse = async_to_raw_response_wrapper(
+            products.browse,
+        )
         self.find_similar = async_to_raw_response_wrapper(
             products.find_similar,
         )
@@ -790,6 +925,9 @@ class ProductsResourceWithStreamingResponse:
         self.retrieve = to_streamed_response_wrapper(
             products.retrieve,
         )
+        self.browse = to_streamed_response_wrapper(
+            products.browse,
+        )
         self.find_similar = to_streamed_response_wrapper(
             products.find_similar,
         )
@@ -810,6 +948,9 @@ class AsyncProductsResourceWithStreamingResponse:
 
         self.retrieve = async_to_streamed_response_wrapper(
             products.retrieve,
+        )
+        self.browse = async_to_streamed_response_wrapper(
+            products.browse,
         )
         self.find_similar = async_to_streamed_response_wrapper(
             products.find_similar,

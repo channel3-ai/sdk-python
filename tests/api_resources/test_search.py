@@ -38,6 +38,7 @@ class TestSearch:
                     "currency": "USD",
                     "keyword_search_only": True,
                     "language": "en",
+                    "mode": "keyword",
                 },
                 filters={
                     "age": ["newborn"],
@@ -62,6 +63,7 @@ class TestSearch:
                         "max_price": 0,
                         "min_price": 0,
                     },
+                    "sale": "on_sale",
                     "website_ids": ["string"],
                 },
                 image_url="image_url",
@@ -121,6 +123,7 @@ class TestAsyncSearch:
                     "currency": "USD",
                     "keyword_search_only": True,
                     "language": "en",
+                    "mode": "keyword",
                 },
                 filters={
                     "age": ["newborn"],
@@ -145,6 +148,7 @@ class TestAsyncSearch:
                         "max_price": 0,
                         "min_price": 0,
                     },
+                    "sale": "on_sale",
                     "website_ids": ["string"],
                 },
                 image_url="image_url",

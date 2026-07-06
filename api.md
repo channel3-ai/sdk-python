@@ -11,6 +11,7 @@ Types:
 ```python
 from channel3_sdk.types import (
     AvailabilityStatus,
+    BrowseRequest,
     ImageSearchRequest,
     LocaleConfig,
     LookupRequest,
@@ -27,6 +28,7 @@ from channel3_sdk.types import (
 Methods:
 
 - <code title="get /v1/products/{product_id}">client.products.<a href="./src/channel3_sdk/resources/products.py">retrieve</a>(product_id, \*\*<a href="src/channel3_sdk/types/product_retrieve_params.py">params</a>) -> <a href="./src/channel3_sdk/types/product_detail.py">ProductDetail</a></code>
+- <code title="post /v1/browse">client.products.<a href="./src/channel3_sdk/resources/products.py">browse</a>(\*\*<a href="src/channel3_sdk/types/product_browse_params.py">params</a>) -> <a href="./src/channel3_sdk/types/product_detail.py">SyncSearchPage[ProductDetail]</a></code>
 - <code title="post /v1/similar">client.products.<a href="./src/channel3_sdk/resources/products.py">find_similar</a>(\*\*<a href="src/channel3_sdk/types/product_find_similar_params.py">params</a>) -> <a href="./src/channel3_sdk/types/product_detail.py">SyncSearchPage[ProductDetail]</a></code>
 - <code title="post /v1/lookup">client.products.<a href="./src/channel3_sdk/resources/products.py">lookup</a>(\*\*<a href="src/channel3_sdk/types/product_lookup_params.py">params</a>) -> <a href="./src/channel3_sdk/types/lookup_response.py">LookupResponse</a></code>
 - <code title="post /v1/search">client.products.<a href="./src/channel3_sdk/resources/products.py">search</a>(\*\*<a href="src/channel3_sdk/types/product_search_params.py">params</a>) -> <a href="./src/channel3_sdk/types/product_detail.py">SyncSearchPage[ProductDetail]</a></code>
@@ -42,7 +44,7 @@ from channel3_sdk.types import Brand, SearchBrandsResponse
 
 Methods:
 
-- <code title="get /v1/brands/{brand_id}">client.brands.<a href="./src/channel3_sdk/resources/brands.py">retrieve</a>(brand_id) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
+- <code title="get /v1/brands/{brand_id}">client.brands.<a href="./src/channel3_sdk/resources/brands.py">retrieve</a>(brand_id, \*\*<a href="src/channel3_sdk/types/brand_retrieve_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
 - <code title="get /v1/brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">list</a>(\*\*<a href="src/channel3_sdk/types/brand_list_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">SyncCursorPage[Brand]</a></code>
 - <code title="get /v0/brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">find</a>(\*\*<a href="src/channel3_sdk/types/brand_find_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
 - <code title="get /v1/brands/search">client.brands.<a href="./src/channel3_sdk/resources/brands.py">search</a>(\*\*<a href="src/channel3_sdk/types/brand_search_params.py">params</a>) -> <a href="./src/channel3_sdk/types/search_brands_response.py">SearchBrandsResponse</a></code>

@@ -2,10 +2,39 @@
 
 from __future__ import annotations
 
-from typing_extensions import Required, TypedDict
+from typing import Optional
+from typing_extensions import Literal, Required, TypedDict
 
 __all__ = ["WebsiteFindParams"]
 
 
 class WebsiteFindParams(TypedDict, total=False):
     query: Required[str]
+
+    country: Optional[
+        Literal[
+            "US",
+            "GB",
+            "EU",
+            "AU",
+            "CA",
+            "IE",
+            "DE",
+            "AT",
+            "FR",
+            "BE",
+            "IT",
+            "ES",
+            "NL",
+            "SE",
+            "FI",
+            "PT",
+            "CZ",
+            "GR",
+            "RO",
+        ]
+    ]
+    """ISO 3166-1 alpha-2 country code that `best_commission_rate` is scoped to.
+
+    Defaults to 'US' when unset.
+    """

@@ -69,10 +69,10 @@ class SearchFiltersParam(TypedDict, total=False):
     """
 
     condition: Optional[Literal["new", "refurbished", "used"]]
-    """Filter by product condition.
+    """Filter by offer condition.
 
-    Incubating: condition data is currently incomplete; products without condition
-    data will be included in all condition filter results.
+    Requires at least one offer matching the requested condition, locale, and any
+    price filter. Offers without condition data are indexed as new.
     """
 
     exclude_brand_ids: Optional[SequenceNotStr[str]]
@@ -94,6 +94,12 @@ class SearchFiltersParam(TypedDict, total=False):
 
     price: Optional[SearchFilterPriceParam]
     """Price filter for search. Values are inclusive."""
+
+    sale: Optional[Literal["on_sale"]]
+    """
+    If 'on_sale', only products with at least one on-sale offer (priced below its
+    compare-at price) for the requested locale are returned. If omitted, no filter.
+    """
 
     website_ids: Optional[SequenceNotStr[str]]
     """If provided, only products from these websites will be returned.

@@ -35,3 +35,11 @@ class ProductSearchByImageParams(TypedDict, total=False):
     Opaque token from a previous image-search response to fetch the next page of
     results.
     """
+
+    segment: Optional[str]
+    """Image segmentation mode.
+
+    None (default) disables segmentation. "AUTO" segments and crops the main product
+    automatically. A custom string (e.g. "shoe", "mug") segments the specified
+    object.
+    """

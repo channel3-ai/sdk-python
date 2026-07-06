@@ -18,9 +18,15 @@ class ProductOffer(BaseModel):
 
     url: str
 
-    max_commission_rate: Optional[float] = None
-    """The maximum commission rate for the merchant, as a percentage.
+    condition: Optional[Literal["new", "refurbished", "used"]] = None
+    """Condition of this merchant offer (new, used, or refurbished).
 
-    0 is no commission. 0.5 is 50% commission. 'Max' because the actual commission
-    rate may be lower due to vendor-specific affiliate rules.
+    Null when condition is unknown.
+    """
+
+    max_commission_rate: Optional[float] = None
+    """
+    The maximum commission rate for the merchant, as a decimal fraction: 0 is no
+    commission, 0.5 is 50% commission. 'Max' because the actual commission rate may
+    be lower due to vendor-specific affiliate rules.
     """
