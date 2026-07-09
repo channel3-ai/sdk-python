@@ -38,9 +38,9 @@ class TestSearch:
                     "currency": "USD",
                     "keyword_search_only": True,
                     "language": "en",
+                    "length_unit": "mm",
                     "mode": "keyword",
-                    "preferred_length_unit": "mm",
-                    "preferred_weight_unit": "mg",
+                    "weight_unit": "mg",
                 },
                 filters={
                     "age": ["newborn"],
@@ -147,9 +147,9 @@ class TestAsyncSearch:
                     "currency": "USD",
                     "keyword_search_only": True,
                     "language": "en",
+                    "length_unit": "mm",
                     "mode": "keyword",
-                    "preferred_length_unit": "mm",
-                    "preferred_weight_unit": "mg",
+                    "weight_unit": "mg",
                 },
                 filters={
                     "age": ["newborn"],
