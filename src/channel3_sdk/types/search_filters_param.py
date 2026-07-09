@@ -9,7 +9,16 @@ from .._types import SequenceNotStr
 from .availability_status import AvailabilityStatus
 from .search_filter_price_param import SearchFilterPriceParam
 
-__all__ = ["SearchFiltersParam", "Colors", "ColorsPalette"]
+__all__ = [
+    "SearchFiltersParam",
+    "Colors",
+    "ColorsPalette",
+    "Dimensions",
+    "DimensionsHeight",
+    "DimensionsLength",
+    "DimensionsWeight",
+    "DimensionsWidth",
+]
 
 
 class ColorsPalette(TypedDict, total=False):
@@ -31,6 +40,70 @@ class Colors(TypedDict, total=False):
 
     palette: Required[Iterable[ColorsPalette]]
     """Colors required in matching products. Treated as an AND condition."""
+
+
+class DimensionsHeight(TypedDict, total=False):
+    unit: Required[Literal["mm", "cm", "m", "in", "ft"]]
+    """Unit that min/max are expressed in"""
+
+    max: Optional[float]
+    """Maximum value, in `unit`. Inclusive."""
+
+    min: Optional[float]
+    """Minimum value, in `unit`. Inclusive."""
+
+
+class DimensionsLength(TypedDict, total=False):
+    unit: Required[Literal["mm", "cm", "m", "in", "ft"]]
+    """Unit that min/max are expressed in"""
+
+    max: Optional[float]
+    """Maximum value, in `unit`. Inclusive."""
+
+    min: Optional[float]
+    """Minimum value, in `unit`. Inclusive."""
+
+
+class DimensionsWeight(TypedDict, total=False):
+    unit: Required[Literal["mg", "g", "kg", "oz", "lb"]]
+    """Unit that min/max are expressed in"""
+
+    max: Optional[float]
+    """Maximum value, in `unit`. Inclusive."""
+
+    min: Optional[float]
+    """Minimum value, in `unit`. Inclusive."""
+
+
+class DimensionsWidth(TypedDict, total=False):
+    unit: Required[Literal["mm", "cm", "m", "in", "ft"]]
+    """Unit that min/max are expressed in"""
+
+    max: Optional[float]
+    """Maximum value, in `unit`. Inclusive."""
+
+    min: Optional[float]
+    """Minimum value, in `unit`. Inclusive."""
+
+
+class Dimensions(TypedDict, total=False):
+    """Physical-dimension range filters, matched against the same offer.
+
+    Matching products have at least one offer satisfying every provided
+    range (alongside any locale/price/availability filters). Values are
+    compared with a small relative tolerance. An offer with no dimension data
+    for a filtered field does not match; note that when a single merchant on a
+    product reports a dimension it is shared across that product's offers, so a
+    matching offer may not itself surface that dimension in the response.
+    """
+
+    height: Optional[DimensionsHeight]
+
+    length: Optional[DimensionsLength]
+
+    weight: Optional[DimensionsWeight]
+
+    width: Optional[DimensionsWidth]
 
 
 class SearchFiltersParam(TypedDict, total=False):
@@ -73,6 +146,17 @@ class SearchFiltersParam(TypedDict, total=False):
 
     Requires at least one offer matching the requested condition, locale, and any
     price filter. Offers without condition data are indexed as new.
+    """
+
+    dimensions: Optional[Dimensions]
+    """Physical-dimension range filters, matched against the same offer.
+
+    Matching products have at least one offer satisfying every provided range
+    (alongside any locale/price/availability filters). Values are compared with a
+    small relative tolerance. An offer with no dimension data for a filtered field
+    does not match; note that when a single merchant on a product reports a
+    dimension it is shared across that product's offers, so a matching offer may not
+    itself surface that dimension in the response.
     """
 
     exclude_brand_ids: Optional[SequenceNotStr[str]]
