@@ -39,6 +39,8 @@ class TestSearch:
                     "keyword_search_only": True,
                     "language": "en",
                     "mode": "keyword",
+                    "preferred_length_unit": "mm",
+                    "preferred_weight_unit": "mg",
                 },
                 filters={
                     "age": ["newborn"],
@@ -55,6 +57,28 @@ class TestSearch:
                         ]
                     },
                     "condition": "new",
+                    "dimensions": {
+                        "height": {
+                            "unit": "mm",
+                            "max": 0,
+                            "min": 0,
+                        },
+                        "length": {
+                            "unit": "mm",
+                            "max": 0,
+                            "min": 0,
+                        },
+                        "weight": {
+                            "unit": "mg",
+                            "max": 0,
+                            "min": 0,
+                        },
+                        "width": {
+                            "unit": "mm",
+                            "max": 0,
+                            "min": 0,
+                        },
+                    },
                     "exclude_brand_ids": ["string"],
                     "exclude_category_ids": ["string"],
                     "exclude_website_ids": ["string"],
@@ -124,6 +148,8 @@ class TestAsyncSearch:
                     "keyword_search_only": True,
                     "language": "en",
                     "mode": "keyword",
+                    "preferred_length_unit": "mm",
+                    "preferred_weight_unit": "mg",
                 },
                 filters={
                     "age": ["newborn"],
@@ -140,6 +166,28 @@ class TestAsyncSearch:
                         ]
                     },
                     "condition": "new",
+                    "dimensions": {
+                        "height": {
+                            "unit": "mm",
+                            "max": 0,
+                            "min": 0,
+                        },
+                        "length": {
+                            "unit": "mm",
+                            "max": 0,
+                            "min": 0,
+                        },
+                        "weight": {
+                            "unit": "mg",
+                            "max": 0,
+                            "min": 0,
+                        },
+                        "width": {
+                            "unit": "mm",
+                            "max": 0,
+                            "min": 0,
+                        },
+                    },
                     "exclude_brand_ids": ["string"],
                     "exclude_category_ids": ["string"],
                     "exclude_website_ids": ["string"],

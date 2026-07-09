@@ -64,3 +64,17 @@ class SearchConfigParam(TypedDict, total=False):
     like ad targeting. `agentic` uses an LLM to plan multiple structured
     sub-searches for complex queries, with higher latency than the other modes.
     """
+
+    preferred_length_unit: Optional[Literal["mm", "cm", "m", "in", "ft"]]
+    """Preferred unit for length dimensions (length/width/height) in responses.
+
+    A request dimension filter's unit for the field takes precedence; when neither
+    is set, the merchant's stated unit is returned.
+    """
+
+    preferred_weight_unit: Optional[Literal["mg", "g", "kg", "oz", "lb"]]
+    """Preferred unit for weight dimensions in responses.
+
+    A request dimension filter's weight unit takes precedence; when neither is set,
+    the merchant's stated unit is returned.
+    """

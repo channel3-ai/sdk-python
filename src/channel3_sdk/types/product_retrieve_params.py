@@ -54,6 +54,18 @@ class ProductRetrieveParams(TypedDict, total=False):
     are also unset.
     """
 
+    preferred_length_unit: Optional[Literal["mm", "cm", "m", "in", "ft"]]
+    """Preferred unit for length dimensions (length/width/height).
+
+    When unset, dimensions are returned in the unit the merchant stated.
+    """
+
+    preferred_weight_unit: Optional[Literal["mg", "g", "kg", "oz", "lb"]]
+    """Preferred unit for weight dimensions.
+
+    When unset, weight is returned in the unit the merchant stated.
+    """
+
     website_ids: Optional[SequenceNotStr[str]]
     """
     Optional list of website IDs to constrain the buy URL to, relevant if multiple
