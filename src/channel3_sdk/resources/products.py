@@ -89,9 +89,9 @@ class ProductsResource(SyncAPIResource):
         currency: Optional[Literal["USD", "CAD", "AUD", "GBP", "EUR", "SEK", "CZK", "RON"]] | Omit = omit,
         language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs", "el", "ro"]]
         | Omit = omit,
-        preferred_length_unit: Optional[Literal["mm", "cm", "m", "in", "ft"]] | Omit = omit,
-        preferred_weight_unit: Optional[Literal["mg", "g", "kg", "oz", "lb"]] | Omit = omit,
+        length_unit: Optional[Literal["mm", "cm", "m", "in", "ft"]] | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
+        weight_unit: Optional[Literal["mg", "g", "kg", "oz", "lb"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -112,14 +112,14 @@ class ProductsResource(SyncAPIResource):
           language: ISO 639-1 language code. Matches any language when unset; defaults to 'en' only
               when country and currency are also unset.
 
-          preferred_length_unit: Preferred unit for length dimensions (length/width/height). When unset,
+          length_unit: Preferred unit for length dimensions (length/width/height). When unset,
               dimensions are returned in the unit the merchant stated.
-
-          preferred_weight_unit: Preferred unit for weight dimensions. When unset, weight is returned in the unit
-              the merchant stated.
 
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
               merchants exist. Accepts website IDs or domains (e.g. "nike.com").
+
+          weight_unit: Preferred unit for weight dimensions. When unset, weight is returned in the unit
+              the merchant stated.
 
           extra_headers: Send extra headers
 
@@ -143,9 +143,9 @@ class ProductsResource(SyncAPIResource):
                         "country": country,
                         "currency": currency,
                         "language": language,
-                        "preferred_length_unit": preferred_length_unit,
-                        "preferred_weight_unit": preferred_weight_unit,
+                        "length_unit": length_unit,
                         "website_ids": website_ids,
+                        "weight_unit": weight_unit,
                     },
                     product_retrieve_params.ProductRetrieveParams,
                 ),
@@ -554,9 +554,9 @@ class AsyncProductsResource(AsyncAPIResource):
         currency: Optional[Literal["USD", "CAD", "AUD", "GBP", "EUR", "SEK", "CZK", "RON"]] | Omit = omit,
         language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs", "el", "ro"]]
         | Omit = omit,
-        preferred_length_unit: Optional[Literal["mm", "cm", "m", "in", "ft"]] | Omit = omit,
-        preferred_weight_unit: Optional[Literal["mg", "g", "kg", "oz", "lb"]] | Omit = omit,
+        length_unit: Optional[Literal["mm", "cm", "m", "in", "ft"]] | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
+        weight_unit: Optional[Literal["mg", "g", "kg", "oz", "lb"]] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -577,14 +577,14 @@ class AsyncProductsResource(AsyncAPIResource):
           language: ISO 639-1 language code. Matches any language when unset; defaults to 'en' only
               when country and currency are also unset.
 
-          preferred_length_unit: Preferred unit for length dimensions (length/width/height). When unset,
+          length_unit: Preferred unit for length dimensions (length/width/height). When unset,
               dimensions are returned in the unit the merchant stated.
-
-          preferred_weight_unit: Preferred unit for weight dimensions. When unset, weight is returned in the unit
-              the merchant stated.
 
           website_ids: Optional list of website IDs to constrain the buy URL to, relevant if multiple
               merchants exist. Accepts website IDs or domains (e.g. "nike.com").
+
+          weight_unit: Preferred unit for weight dimensions. When unset, weight is returned in the unit
+              the merchant stated.
 
           extra_headers: Send extra headers
 
@@ -608,9 +608,9 @@ class AsyncProductsResource(AsyncAPIResource):
                         "country": country,
                         "currency": currency,
                         "language": language,
-                        "preferred_length_unit": preferred_length_unit,
-                        "preferred_weight_unit": preferred_weight_unit,
+                        "length_unit": length_unit,
                         "website_ids": website_ids,
+                        "weight_unit": weight_unit,
                     },
                     product_retrieve_params.ProductRetrieveParams,
                 ),

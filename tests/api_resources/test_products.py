@@ -38,9 +38,9 @@ class TestProducts:
             country="US",
             currency="USD",
             language="en",
-            preferred_length_unit="mm",
-            preferred_weight_unit="mg",
+            length_unit="mm",
             website_ids=["string"],
+            weight_unit="mg",
         )
         assert_matches_type(ProductDetail, product, path=["response"])
 
@@ -180,8 +180,8 @@ class TestProducts:
                 "country": "US",
                 "currency": "USD",
                 "language": "en",
-                "preferred_length_unit": "mm",
-                "preferred_weight_unit": "mg",
+                "length_unit": "mm",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
@@ -355,9 +355,9 @@ class TestProducts:
                 "currency": "USD",
                 "keyword_search_only": True,
                 "language": "en",
+                "length_unit": "mm",
                 "mode": "keyword",
-                "preferred_length_unit": "mm",
-                "preferred_weight_unit": "mg",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
@@ -451,8 +451,8 @@ class TestProducts:
                 "country": "US",
                 "currency": "USD",
                 "language": "en",
-                "preferred_length_unit": "mm",
-                "preferred_weight_unit": "mg",
+                "length_unit": "mm",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
@@ -553,9 +553,9 @@ class TestAsyncProducts:
             country="US",
             currency="USD",
             language="en",
-            preferred_length_unit="mm",
-            preferred_weight_unit="mg",
+            length_unit="mm",
             website_ids=["string"],
+            weight_unit="mg",
         )
         assert_matches_type(ProductDetail, product, path=["response"])
 
@@ -695,8 +695,8 @@ class TestAsyncProducts:
                 "country": "US",
                 "currency": "USD",
                 "language": "en",
-                "preferred_length_unit": "mm",
-                "preferred_weight_unit": "mg",
+                "length_unit": "mm",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
@@ -870,9 +870,9 @@ class TestAsyncProducts:
                 "currency": "USD",
                 "keyword_search_only": True,
                 "language": "en",
+                "length_unit": "mm",
                 "mode": "keyword",
-                "preferred_length_unit": "mm",
-                "preferred_weight_unit": "mg",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
@@ -966,8 +966,8 @@ class TestAsyncProducts:
                 "country": "US",
                 "currency": "USD",
                 "language": "en",
-                "preferred_length_unit": "mm",
-                "preferred_weight_unit": "mg",
+                "length_unit": "mm",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
