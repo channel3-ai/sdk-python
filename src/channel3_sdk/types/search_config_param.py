@@ -56,6 +56,13 @@ class SearchConfigParam(TypedDict, total=False):
     `en`.
     """
 
+    length_unit: Optional[Literal["mm", "cm", "m", "in", "ft"]]
+    """Preferred unit for length dimensions (length/width/height) in responses.
+
+    A request dimension filter's unit for the field takes precedence; when neither
+    is set, the merchant's stated unit is returned.
+    """
+
     mode: Literal["keyword", "default", "agentic"]
     """Search strategy.
 
@@ -63,4 +70,11 @@ class SearchConfigParam(TypedDict, total=False):
     use cases. `keyword` is lexical only — use it for real-time, low-latency needs
     like ad targeting. `agentic` uses an LLM to plan multiple structured
     sub-searches for complex queries, with higher latency than the other modes.
+    """
+
+    weight_unit: Optional[Literal["mg", "g", "kg", "oz", "lb"]]
+    """Preferred unit for weight dimensions in responses.
+
+    A request dimension filter's weight unit takes precedence; when neither is set,
+    the merchant's stated unit is returned.
     """

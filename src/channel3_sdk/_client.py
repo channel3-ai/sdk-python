@@ -62,6 +62,8 @@ class Channel3(SyncAPIClient):
     language: str | None
     country: str | None
     currency: str | None
+    length_unit: str | None
+    weight_unit: str | None
 
     def __init__(
         self,
@@ -70,6 +72,8 @@ class Channel3(SyncAPIClient):
         language: str | None = None,
         country: str | None = None,
         currency: str | None = None,
+        length_unit: str | None = None,
+        weight_unit: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -96,6 +100,8 @@ class Channel3(SyncAPIClient):
         - `language` from `CHANNEL3_LANGUAGE`
         - `country` from `CHANNEL3_COUNTRY`
         - `currency` from `CHANNEL3_CURRENCY`
+        - `length_unit` from `CHANNEL3_LENGTH_UNIT`
+        - `weight_unit` from `CHANNEL3_WEIGHT_UNIT`
         """
         if api_key is None:
             api_key = os.environ.get("CHANNEL3_API_KEY")
@@ -116,6 +122,14 @@ class Channel3(SyncAPIClient):
         if currency is None:
             currency = os.environ.get("CHANNEL3_CURRENCY")
         self.currency = currency
+
+        if length_unit is None:
+            length_unit = os.environ.get("CHANNEL3_LENGTH_UNIT")
+        self.length_unit = length_unit
+
+        if weight_unit is None:
+            weight_unit = os.environ.get("CHANNEL3_WEIGHT_UNIT")
+        self.weight_unit = weight_unit
 
         if base_url is None:
             base_url = os.environ.get("CHANNEL3_BASE_URL")
@@ -212,6 +226,8 @@ class Channel3(SyncAPIClient):
             "X-Channel3-Language": self.language if self.language is not None else Omit(),
             "X-Channel3-Country": self.country if self.country is not None else Omit(),
             "X-Channel3-Currency": self.currency if self.currency is not None else Omit(),
+            "X-Channel3-Length-Unit": self.length_unit if self.length_unit is not None else Omit(),
+            "X-Channel3-Weight-Unit": self.weight_unit if self.weight_unit is not None else Omit(),
             **self._custom_headers,
         }
 
@@ -222,6 +238,8 @@ class Channel3(SyncAPIClient):
         language: str | None = None,
         country: str | None = None,
         currency: str | None = None,
+        length_unit: str | None = None,
+        weight_unit: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.Client | None = None,
@@ -259,6 +277,8 @@ class Channel3(SyncAPIClient):
             language=language or self.language,
             country=country or self.country,
             currency=currency or self.currency,
+            length_unit=length_unit or self.length_unit,
+            weight_unit=weight_unit or self.weight_unit,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,
@@ -312,6 +332,8 @@ class AsyncChannel3(AsyncAPIClient):
     language: str | None
     country: str | None
     currency: str | None
+    length_unit: str | None
+    weight_unit: str | None
 
     def __init__(
         self,
@@ -320,6 +342,8 @@ class AsyncChannel3(AsyncAPIClient):
         language: str | None = None,
         country: str | None = None,
         currency: str | None = None,
+        length_unit: str | None = None,
+        weight_unit: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         max_retries: int = DEFAULT_MAX_RETRIES,
@@ -346,6 +370,8 @@ class AsyncChannel3(AsyncAPIClient):
         - `language` from `CHANNEL3_LANGUAGE`
         - `country` from `CHANNEL3_COUNTRY`
         - `currency` from `CHANNEL3_CURRENCY`
+        - `length_unit` from `CHANNEL3_LENGTH_UNIT`
+        - `weight_unit` from `CHANNEL3_WEIGHT_UNIT`
         """
         if api_key is None:
             api_key = os.environ.get("CHANNEL3_API_KEY")
@@ -366,6 +392,14 @@ class AsyncChannel3(AsyncAPIClient):
         if currency is None:
             currency = os.environ.get("CHANNEL3_CURRENCY")
         self.currency = currency
+
+        if length_unit is None:
+            length_unit = os.environ.get("CHANNEL3_LENGTH_UNIT")
+        self.length_unit = length_unit
+
+        if weight_unit is None:
+            weight_unit = os.environ.get("CHANNEL3_WEIGHT_UNIT")
+        self.weight_unit = weight_unit
 
         if base_url is None:
             base_url = os.environ.get("CHANNEL3_BASE_URL")
@@ -462,6 +496,8 @@ class AsyncChannel3(AsyncAPIClient):
             "X-Channel3-Language": self.language if self.language is not None else Omit(),
             "X-Channel3-Country": self.country if self.country is not None else Omit(),
             "X-Channel3-Currency": self.currency if self.currency is not None else Omit(),
+            "X-Channel3-Length-Unit": self.length_unit if self.length_unit is not None else Omit(),
+            "X-Channel3-Weight-Unit": self.weight_unit if self.weight_unit is not None else Omit(),
             **self._custom_headers,
         }
 
@@ -472,6 +508,8 @@ class AsyncChannel3(AsyncAPIClient):
         language: str | None = None,
         country: str | None = None,
         currency: str | None = None,
+        length_unit: str | None = None,
+        weight_unit: str | None = None,
         base_url: str | httpx.URL | None = None,
         timeout: float | Timeout | None | NotGiven = not_given,
         http_client: httpx.AsyncClient | None = None,
@@ -509,6 +547,8 @@ class AsyncChannel3(AsyncAPIClient):
             language=language or self.language,
             country=country or self.country,
             currency=currency or self.currency,
+            length_unit=length_unit or self.length_unit,
+            weight_unit=weight_unit or self.weight_unit,
             base_url=base_url or self.base_url,
             timeout=self.timeout if isinstance(timeout, NotGiven) else timeout,
             http_client=http_client,

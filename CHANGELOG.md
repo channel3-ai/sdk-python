@@ -1,5 +1,19 @@
 # Changelog
 
+## 3.5.0 (2026-07-09)
+
+Full Changelog: [v3.4.1...v3.5.0](https://github.com/channel3-ai/sdk-python/compare/v3.4.1...v3.5.0)
+
+### Features
+
+* **api:** add dimensions to search filters and product offers ([5e3a20d](https://github.com/channel3-ai/sdk-python/commit/5e3a20d82caa9109fa41810a838a6d88fb34b6cc))
+* **client:** add length_unit/weight_unit params, rename preferred_* in products ([cfc1376](https://github.com/channel3-ai/sdk-python/commit/cfc1376215d423f5addb55b19ae58b9ade0dfe50))
+
+
+### Bug Fixes
+
+* **client:** emit method aliases after the methods they reference ([754274e](https://github.com/channel3-ai/sdk-python/commit/754274e4072878ee434189f944f4020ae9cdadfd))
+
 ## 3.4.1 (2026-07-06)
 
 Full Changelog: [v3.4.0...v3.4.1](https://github.com/channel3-ai/sdk-python/compare/v3.4.0...v3.4.1)

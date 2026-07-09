@@ -38,7 +38,9 @@ class TestProducts:
             country="US",
             currency="USD",
             language="en",
+            length_unit="mm",
             website_ids=["string"],
+            weight_unit="mg",
         )
         assert_matches_type(ProductDetail, product, path=["response"])
 
@@ -101,6 +103,28 @@ class TestProducts:
                     ]
                 },
                 "condition": "new",
+                "dimensions": {
+                    "height": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "length": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "weight": {
+                        "unit": "mg",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "width": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                },
                 "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
                 "exclude_website_ids": ["string"],
@@ -156,6 +180,8 @@ class TestProducts:
                 "country": "US",
                 "currency": "USD",
                 "language": "en",
+                "length_unit": "mm",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
@@ -172,6 +198,28 @@ class TestProducts:
                     ]
                 },
                 "condition": "new",
+                "dimensions": {
+                    "height": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "length": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "weight": {
+                        "unit": "mg",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "width": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                },
                 "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
                 "exclude_website_ids": ["string"],
@@ -307,7 +355,9 @@ class TestProducts:
                 "currency": "USD",
                 "keyword_search_only": True,
                 "language": "en",
+                "length_unit": "mm",
                 "mode": "keyword",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
@@ -324,6 +374,28 @@ class TestProducts:
                     ]
                 },
                 "condition": "new",
+                "dimensions": {
+                    "height": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "length": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "weight": {
+                        "unit": "mg",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "width": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                },
                 "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
                 "exclude_website_ids": ["string"],
@@ -379,6 +451,8 @@ class TestProducts:
                 "country": "US",
                 "currency": "USD",
                 "language": "en",
+                "length_unit": "mm",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
@@ -395,6 +469,28 @@ class TestProducts:
                     ]
                 },
                 "condition": "new",
+                "dimensions": {
+                    "height": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "length": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "weight": {
+                        "unit": "mg",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "width": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                },
                 "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
                 "exclude_website_ids": ["string"],
@@ -457,7 +553,9 @@ class TestAsyncProducts:
             country="US",
             currency="USD",
             language="en",
+            length_unit="mm",
             website_ids=["string"],
+            weight_unit="mg",
         )
         assert_matches_type(ProductDetail, product, path=["response"])
 
@@ -520,6 +618,28 @@ class TestAsyncProducts:
                     ]
                 },
                 "condition": "new",
+                "dimensions": {
+                    "height": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "length": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "weight": {
+                        "unit": "mg",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "width": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                },
                 "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
                 "exclude_website_ids": ["string"],
@@ -575,6 +695,8 @@ class TestAsyncProducts:
                 "country": "US",
                 "currency": "USD",
                 "language": "en",
+                "length_unit": "mm",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
@@ -591,6 +713,28 @@ class TestAsyncProducts:
                     ]
                 },
                 "condition": "new",
+                "dimensions": {
+                    "height": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "length": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "weight": {
+                        "unit": "mg",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "width": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                },
                 "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
                 "exclude_website_ids": ["string"],
@@ -726,7 +870,9 @@ class TestAsyncProducts:
                 "currency": "USD",
                 "keyword_search_only": True,
                 "language": "en",
+                "length_unit": "mm",
                 "mode": "keyword",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
@@ -743,6 +889,28 @@ class TestAsyncProducts:
                     ]
                 },
                 "condition": "new",
+                "dimensions": {
+                    "height": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "length": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "weight": {
+                        "unit": "mg",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "width": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                },
                 "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
                 "exclude_website_ids": ["string"],
@@ -798,6 +966,8 @@ class TestAsyncProducts:
                 "country": "US",
                 "currency": "USD",
                 "language": "en",
+                "length_unit": "mm",
+                "weight_unit": "mg",
             },
             filters={
                 "age": ["newborn"],
@@ -814,6 +984,28 @@ class TestAsyncProducts:
                     ]
                 },
                 "condition": "new",
+                "dimensions": {
+                    "height": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "length": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "weight": {
+                        "unit": "mg",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "width": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                },
                 "exclude_brand_ids": ["string"],
                 "exclude_category_ids": ["string"],
                 "exclude_website_ids": ["string"],

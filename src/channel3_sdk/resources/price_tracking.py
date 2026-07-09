@@ -51,42 +51,6 @@ class PriceTrackingResource(SyncAPIResource):
         """
         return PriceTrackingResourceWithStreamingResponse(self)
 
-    @typing_extensions.deprecated("use `retrieve_history` instead; will be removed in the next major version")
-    def get_history(
-        self,
-        canonical_product_id: str,
-        *,
-        days: int | Omit = omit,
-        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
-        # The extra values given here take precedence over values defined on the client or passed to this method.
-        extra_headers: Headers | None = None,
-        extra_query: Query | None = None,
-        extra_body: Body | None = None,
-        timeout: float | httpx.Timeout | None | NotGiven = not_given,
-    ) -> PriceHistory:
-        """
-        Get price history for a canonical product.
-
-        Args:
-          days: Number of days of history to fetch (max 30)
-
-          extra_headers: Send extra headers
-
-          extra_query: Add additional query parameters to the request
-
-          extra_body: Add additional JSON properties to the request
-
-          timeout: Override the client-level default timeout for this request, in seconds
-        """
-        return self.retrieve_history(
-            canonical_product_id=canonical_product_id,
-            days=days,
-            extra_headers=extra_headers,
-            extra_query=extra_query,
-            extra_body=extra_body,
-            timeout=timeout,
-        )
-
     def list_subscriptions(
         self,
         *,
@@ -248,29 +212,8 @@ class PriceTrackingResource(SyncAPIResource):
             cast_to=Subscription,
         )
 
-
-class AsyncPriceTrackingResource(AsyncAPIResource):
-    @cached_property
-    def with_raw_response(self) -> AsyncPriceTrackingResourceWithRawResponse:
-        """
-        This property can be used as a prefix for any HTTP method call to return
-        the raw response object instead of the parsed content.
-
-        For more information, see https://www.github.com/channel3-ai/sdk-python#accessing-raw-response-data-eg-headers
-        """
-        return AsyncPriceTrackingResourceWithRawResponse(self)
-
-    @cached_property
-    def with_streaming_response(self) -> AsyncPriceTrackingResourceWithStreamingResponse:
-        """
-        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
-
-        For more information, see https://www.github.com/channel3-ai/sdk-python#with_streaming_response
-        """
-        return AsyncPriceTrackingResourceWithStreamingResponse(self)
-
     @typing_extensions.deprecated("use `retrieve_history` instead; will be removed in the next major version")
-    async def get_history(
+    def get_history(
         self,
         canonical_product_id: str,
         *,
@@ -296,7 +239,7 @@ class AsyncPriceTrackingResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
-        return await self.retrieve_history(
+        return self.retrieve_history(
             canonical_product_id=canonical_product_id,
             days=days,
             extra_headers=extra_headers,
@@ -304,6 +247,27 @@ class AsyncPriceTrackingResource(AsyncAPIResource):
             extra_body=extra_body,
             timeout=timeout,
         )
+
+
+class AsyncPriceTrackingResource(AsyncAPIResource):
+    @cached_property
+    def with_raw_response(self) -> AsyncPriceTrackingResourceWithRawResponse:
+        """
+        This property can be used as a prefix for any HTTP method call to return
+        the raw response object instead of the parsed content.
+
+        For more information, see https://www.github.com/channel3-ai/sdk-python#accessing-raw-response-data-eg-headers
+        """
+        return AsyncPriceTrackingResourceWithRawResponse(self)
+
+    @cached_property
+    def with_streaming_response(self) -> AsyncPriceTrackingResourceWithStreamingResponse:
+        """
+        An alternative to `.with_raw_response` that doesn't eagerly read the response body.
+
+        For more information, see https://www.github.com/channel3-ai/sdk-python#with_streaming_response
+        """
+        return AsyncPriceTrackingResourceWithStreamingResponse(self)
 
     def list_subscriptions(
         self,
@@ -466,16 +430,47 @@ class AsyncPriceTrackingResource(AsyncAPIResource):
             cast_to=Subscription,
         )
 
+    @typing_extensions.deprecated("use `retrieve_history` instead; will be removed in the next major version")
+    async def get_history(
+        self,
+        canonical_product_id: str,
+        *,
+        days: int | Omit = omit,
+        # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
+        # The extra values given here take precedence over values defined on the client or passed to this method.
+        extra_headers: Headers | None = None,
+        extra_query: Query | None = None,
+        extra_body: Body | None = None,
+        timeout: float | httpx.Timeout | None | NotGiven = not_given,
+    ) -> PriceHistory:
+        """
+        Get price history for a canonical product.
+
+        Args:
+          days: Number of days of history to fetch (max 30)
+
+          extra_headers: Send extra headers
+
+          extra_query: Add additional query parameters to the request
+
+          extra_body: Add additional JSON properties to the request
+
+          timeout: Override the client-level default timeout for this request, in seconds
+        """
+        return await self.retrieve_history(
+            canonical_product_id=canonical_product_id,
+            days=days,
+            extra_headers=extra_headers,
+            extra_query=extra_query,
+            extra_body=extra_body,
+            timeout=timeout,
+        )
+
 
 class PriceTrackingResourceWithRawResponse:
     def __init__(self, price_tracking: PriceTrackingResource) -> None:
         self._price_tracking = price_tracking
 
-        self.get_history = (  # pyright: ignore[reportDeprecated]
-            to_raw_response_wrapper(
-                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
-            )
-        )
         self.list_subscriptions = to_raw_response_wrapper(
             price_tracking.list_subscriptions,
         )
@@ -488,17 +483,17 @@ class PriceTrackingResourceWithRawResponse:
         self.stop = to_raw_response_wrapper(
             price_tracking.stop,
         )
+        self.get_history = (  # pyright: ignore[reportDeprecated]
+            to_raw_response_wrapper(
+                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
+            )
+        )
 
 
 class AsyncPriceTrackingResourceWithRawResponse:
     def __init__(self, price_tracking: AsyncPriceTrackingResource) -> None:
         self._price_tracking = price_tracking
 
-        self.get_history = (  # pyright: ignore[reportDeprecated]
-            async_to_raw_response_wrapper(
-                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
-            )
-        )
         self.list_subscriptions = async_to_raw_response_wrapper(
             price_tracking.list_subscriptions,
         )
@@ -511,17 +506,17 @@ class AsyncPriceTrackingResourceWithRawResponse:
         self.stop = async_to_raw_response_wrapper(
             price_tracking.stop,
         )
+        self.get_history = (  # pyright: ignore[reportDeprecated]
+            async_to_raw_response_wrapper(
+                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
+            )
+        )
 
 
 class PriceTrackingResourceWithStreamingResponse:
     def __init__(self, price_tracking: PriceTrackingResource) -> None:
         self._price_tracking = price_tracking
 
-        self.get_history = (  # pyright: ignore[reportDeprecated]
-            to_streamed_response_wrapper(
-                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
-            )
-        )
         self.list_subscriptions = to_streamed_response_wrapper(
             price_tracking.list_subscriptions,
         )
@@ -534,17 +529,17 @@ class PriceTrackingResourceWithStreamingResponse:
         self.stop = to_streamed_response_wrapper(
             price_tracking.stop,
         )
+        self.get_history = (  # pyright: ignore[reportDeprecated]
+            to_streamed_response_wrapper(
+                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
+            )
+        )
 
 
 class AsyncPriceTrackingResourceWithStreamingResponse:
     def __init__(self, price_tracking: AsyncPriceTrackingResource) -> None:
         self._price_tracking = price_tracking
 
-        self.get_history = (  # pyright: ignore[reportDeprecated]
-            async_to_streamed_response_wrapper(
-                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
-            )
-        )
         self.list_subscriptions = async_to_streamed_response_wrapper(
             price_tracking.list_subscriptions,
         )
@@ -556,4 +551,9 @@ class AsyncPriceTrackingResourceWithStreamingResponse:
         )
         self.stop = async_to_streamed_response_wrapper(
             price_tracking.stop,
+        )
+        self.get_history = (  # pyright: ignore[reportDeprecated]
+            async_to_streamed_response_wrapper(
+                price_tracking.get_history,  # pyright: ignore[reportDeprecated],
+            )
         )
