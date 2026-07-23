@@ -54,7 +54,8 @@ class TestSearch:
                                 "hex": "hex",
                                 "percentage": 0,
                             }
-                        ]
+                        ],
+                        "match": "strict",
                     },
                     "condition": "new",
                     "dimensions": {
@@ -163,7 +164,8 @@ class TestAsyncSearch:
                                 "hex": "hex",
                                 "percentage": 0,
                             }
-                        ]
+                        ],
+                        "match": "strict",
                     },
                     "condition": "new",
                     "dimensions": {

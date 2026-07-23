@@ -32,14 +32,13 @@ class ColorsPalette(TypedDict, total=False):
 
 
 class Colors(TypedDict, total=False):
-    """[Beta] Color filter wrapper.
-
-    Holds the list of required colors today;
-    reserved for future filter-level options (e.g. match modes, tolerance overrides).
-    """
+    """[Beta] Color filter wrapper. Holds required colors and optional match mode."""
 
     palette: Required[Iterable[ColorsPalette]]
     """Colors required in matching products. Treated as an AND condition."""
+
+    match: Literal["strict", "standard", "loose"]
+    """How tightly colors must match: 'strict', 'standard', or 'loose'."""
 
 
 class DimensionsHeight(TypedDict, total=False):
@@ -135,11 +134,7 @@ class SearchFiltersParam(TypedDict, total=False):
     """
 
     colors: Optional[Colors]
-    """[Beta] Color filter wrapper.
-
-    Holds the list of required colors today; reserved for future filter-level
-    options (e.g. match modes, tolerance overrides).
-    """
+    """[Beta] Color filter wrapper. Holds required colors and optional match mode."""
 
     condition: Optional[Literal["new", "refurbished", "used"]]
     """Filter by offer condition.
