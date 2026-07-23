@@ -100,7 +100,8 @@ class TestProducts:
                             "hex": "hex",
                             "percentage": 0,
                         }
-                    ]
+                    ],
+                    "match": "strict",
                 },
                 "condition": "new",
                 "dimensions": {
@@ -195,7 +196,8 @@ class TestProducts:
                             "hex": "hex",
                             "percentage": 0,
                         }
-                    ]
+                    ],
+                    "match": "strict",
                 },
                 "condition": "new",
                 "dimensions": {
@@ -371,7 +373,8 @@ class TestProducts:
                             "hex": "hex",
                             "percentage": 0,
                         }
-                    ]
+                    ],
+                    "match": "strict",
                 },
                 "condition": "new",
                 "dimensions": {
@@ -466,7 +469,8 @@ class TestProducts:
                             "hex": "hex",
                             "percentage": 0,
                         }
-                    ]
+                    ],
+                    "match": "strict",
                 },
                 "condition": "new",
                 "dimensions": {
@@ -615,7 +619,8 @@ class TestAsyncProducts:
                             "hex": "hex",
                             "percentage": 0,
                         }
-                    ]
+                    ],
+                    "match": "strict",
                 },
                 "condition": "new",
                 "dimensions": {
@@ -710,7 +715,8 @@ class TestAsyncProducts:
                             "hex": "hex",
                             "percentage": 0,
                         }
-                    ]
+                    ],
+                    "match": "strict",
                 },
                 "condition": "new",
                 "dimensions": {
@@ -886,7 +892,8 @@ class TestAsyncProducts:
                             "hex": "hex",
                             "percentage": 0,
                         }
-                    ]
+                    ],
+                    "match": "strict",
                 },
                 "condition": "new",
                 "dimensions": {
@@ -981,7 +988,8 @@ class TestAsyncProducts:
                             "hex": "hex",
                             "percentage": 0,
                         }
-                    ]
+                    ],
+                    "match": "strict",
                 },
                 "condition": "new",
                 "dimensions": {
