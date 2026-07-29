@@ -22,10 +22,9 @@ class ProductImage(BaseModel):
     """
 
     is_cleaned_image: Optional[bool] = None
-    """True when `url` itself points to a cleaned image (no separate `cleaned_url`).
+    """Deprecated: always `false`.
 
-    When both `url` and `cleaned_url` are set, `url` is the regular shot and this is
-    false.
+    Use `cleaned_url` for product grids when set; otherwise `url`.
     """
 
     is_main_image: Optional[bool] = None
