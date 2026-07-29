@@ -15,11 +15,17 @@ class ProductImage(BaseModel):
 
     alt_text: Optional[str] = None
 
-    is_cleaned_image: Optional[bool] = None
-    """True if this URL points to a cleaned image.
+    cleaned_url: Optional[str] = None
+    """Background-removed square image on Channel3 CDN when available.
 
-    A cleaned image has a square aspect ratio and a uniform, monochromatic
-    background. Cleaned images are best displayed in a product grid.
+    Use for product grids; `url` is the regular hosted shot.
+    """
+
+    is_cleaned_image: Optional[bool] = None
+    """True when `url` itself points to a cleaned image (no separate `cleaned_url`).
+
+    When both `url` and `cleaned_url` are set, `url` is the regular shot and this is
+    false.
     """
 
     is_main_image: Optional[bool] = None
