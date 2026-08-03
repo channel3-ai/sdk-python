@@ -4,14 +4,14 @@ from typing import Optional
 from datetime import datetime
 
 from ..._models import BaseModel
-from ..affiliate_product import AffiliateProduct
+from ..reporting_product import ReportingProduct
 from .public_transaction_status import PublicTransactionStatus
 
 __all__ = ["Transaction"]
 
 
 class Transaction(BaseModel):
-    """A single affiliate CPA transaction."""
+    """A single CPA transaction."""
 
     id: str
     """Transaction ID."""
@@ -37,5 +37,5 @@ class Transaction(BaseModel):
     country: Optional[str] = None
     """Purchase country, if available."""
 
-    product: Optional[AffiliateProduct] = None
+    product: Optional[ReportingProduct] = None
     """Compact product reference on click/transaction items."""

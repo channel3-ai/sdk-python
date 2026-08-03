@@ -4,10 +4,10 @@ from typing import Optional
 
 from .._models import BaseModel
 
-__all__ = ["AffiliateProduct"]
+__all__ = ["ReportingProduct"]
 
 
-class AffiliateProduct(BaseModel):
+class ReportingProduct(BaseModel):
     """Compact product reference on click/transaction items."""
 
     id: str

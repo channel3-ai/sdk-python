@@ -60,7 +60,7 @@ class TransactionsResource(SyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> SyncAnalyticsPage[Transaction]:
         """
-        List affiliate transactions for your account over a datetime window.
+        List transactions for your account over a datetime window.
 
         Defaults to the last 30 days ending now. Maximum window is 90 days. Pass an
         offset-aware ISO datetime to express local time (e.g. last 6 hours). Returns a
@@ -146,7 +146,7 @@ class AsyncTransactionsResource(AsyncAPIResource):
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> AsyncPaginator[Transaction, AsyncAnalyticsPage[Transaction]]:
         """
-        List affiliate transactions for your account over a datetime window.
+        List transactions for your account over a datetime window.
 
         Defaults to the last 30 days ending now. Maximum window is 90 days. Pass an
         offset-aware ISO datetime to express local time (e.g. last 6 hours). Returns a

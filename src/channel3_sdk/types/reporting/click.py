@@ -4,13 +4,13 @@ from typing import Optional
 from datetime import datetime
 
 from ..._models import BaseModel
-from ..affiliate_product import AffiliateProduct
+from ..reporting_product import ReportingProduct
 
 __all__ = ["Click"]
 
 
 class Click(BaseModel):
-    """A single affiliate click event."""
+    """A single click event."""
 
     id: str
     """Click event ID."""
@@ -24,5 +24,5 @@ class Click(BaseModel):
     country: Optional[str] = None
     """Click country, if available."""
 
-    product: Optional[AffiliateProduct] = None
+    product: Optional[ReportingProduct] = None
     """Compact product reference on click/transaction items."""

@@ -43,7 +43,7 @@ Methods:
 Types:
 
 ```python
-from channel3_sdk.types import AffiliateProduct
+from channel3_sdk.types import ReportingProduct
 ```
 
 ## Clicks
