@@ -40,6 +40,14 @@ from .websites import (
     WebsitesResourceWithStreamingResponse,
     AsyncWebsitesResourceWithStreamingResponse,
 )
+from .reporting import (
+    ReportingResource,
+    AsyncReportingResource,
+    ReportingResourceWithRawResponse,
+    AsyncReportingResourceWithRawResponse,
+    ReportingResourceWithStreamingResponse,
+    AsyncReportingResourceWithStreamingResponse,
+)
 from .categories import (
     CategoriesResource,
     AsyncCategoriesResource,
@@ -64,6 +72,12 @@ __all__ = [
     "AsyncProductsResourceWithRawResponse",
     "ProductsResourceWithStreamingResponse",
     "AsyncProductsResourceWithStreamingResponse",
+    "ReportingResource",
+    "AsyncReportingResource",
+    "ReportingResourceWithRawResponse",
+    "AsyncReportingResourceWithRawResponse",
+    "ReportingResourceWithStreamingResponse",
+    "AsyncReportingResourceWithStreamingResponse",
     "BrandsResource",
     "AsyncBrandsResource",
     "BrandsResourceWithRawResponse",
