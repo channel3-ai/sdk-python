@@ -38,6 +38,43 @@ Methods:
 - <code title="post /v1/search">client.products.<a href="./src/channel3_sdk/resources/products.py">search</a>(\*\*<a href="src/channel3_sdk/types/product_search_params.py">params</a>) -> <a href="./src/channel3_sdk/types/product_detail.py">SyncSearchPage[ProductDetail]</a></code>
 - <code title="post /v1/image-search">client.products.<a href="./src/channel3_sdk/resources/products.py">search_by_image</a>(\*\*<a href="src/channel3_sdk/types/product_search_by_image_params.py">params</a>) -> <a href="./src/channel3_sdk/types/product_detail.py">SyncSearchPage[ProductDetail]</a></code>
 
+# Reporting
+
+Types:
+
+```python
+from channel3_sdk.types import AffiliateProduct
+```
+
+## Clicks
+
+Types:
+
+```python
+from channel3_sdk.types.reporting import Click, ClicksResponse, ClicksSummary
+```
+
+Methods:
+
+- <code title="get /v1/reporting/clicks">client.reporting.clicks.<a href="./src/channel3_sdk/resources/reporting/clicks.py">list</a>(\*\*<a href="src/channel3_sdk/types/reporting/click_list_params.py">params</a>) -> <a href="./src/channel3_sdk/types/reporting/click.py">SyncAnalyticsPage[Click]</a></code>
+
+## Transactions
+
+Types:
+
+```python
+from channel3_sdk.types.reporting import (
+    PublicTransactionStatus,
+    Transaction,
+    TransactionsResponse,
+    TransactionsSummary,
+)
+```
+
+Methods:
+
+- <code title="get /v1/reporting/transactions">client.reporting.transactions.<a href="./src/channel3_sdk/resources/reporting/transactions.py">list</a>(\*\*<a href="src/channel3_sdk/types/reporting/transaction_list_params.py">params</a>) -> <a href="./src/channel3_sdk/types/reporting/transaction.py">SyncAnalyticsPage[Transaction]</a></code>
+
 # Brands
 
 Types:

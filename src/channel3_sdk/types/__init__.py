@@ -21,6 +21,7 @@ from .lookup_response import LookupResponse as LookupResponse
 from .search_response import SearchResponse as SearchResponse
 from .category_summary import CategorySummary as CategorySummary
 from .price_statistics import PriceStatistics as PriceStatistics
+from .affiliate_product import AffiliateProduct as AffiliateProduct
 from .brand_find_params import BrandFindParams as BrandFindParams
 from .brand_list_params import BrandListParams as BrandListParams
 from .monetize_response import MonetizeResponse as MonetizeResponse
