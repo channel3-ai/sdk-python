@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Literal, TypedDict
+from typing_extensions import Literal, Annotated, TypedDict
 
 from .._types import SequenceNotStr
+from .._utils import PropertyInfo
 
 __all__ = ["ProductRetrieveParams"]
 
@@ -70,4 +71,10 @@ class ProductRetrieveParams(TypedDict, total=False):
     """Preferred unit for weight dimensions.
 
     When unset, weight is returned in the unit the merchant stated.
+    """
+
+    x_user_id: Annotated[str, PropertyInfo(alias="x-user-id")]
+    """Optional user identifier to attribute clicks and sales to a user in your system.
+
+    Channel3 appends it to buy URLs in the response.
     """

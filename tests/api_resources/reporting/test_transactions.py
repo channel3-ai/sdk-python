@@ -33,6 +33,7 @@ class TestTransactions:
             limit=1,
             page=1,
             start_date=parse_datetime("2019-12-27T18:11:19.117Z"),
+            user_id="user_id",
         )
         assert_matches_type(SyncAnalyticsPage[Transaction], transaction, path=["response"])
 
@@ -78,6 +79,7 @@ class TestAsyncTransactions:
             limit=1,
             page=1,
             start_date=parse_datetime("2019-12-27T18:11:19.117Z"),
+            user_id="user_id",
         )
         assert_matches_type(AsyncAnalyticsPage[Transaction], transaction, path=["response"])
 

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union
+from typing import Union, Optional
 from datetime import datetime
 
 import httpx
@@ -52,6 +52,7 @@ class TransactionsResource(SyncAPIResource):
         limit: int | Omit = omit,
         page: int | Omit = omit,
         start_date: Union[str, datetime, None] | Omit = omit,
+        user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -81,6 +82,8 @@ class TransactionsResource(SyncAPIResource):
               2026-08-01T00:00:00-04:00). Offset-aware values are converted to UTC; naive
               values are treated as UTC.
 
+          user_id: Filter results to clicks or transactions for this user.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -103,6 +106,7 @@ class TransactionsResource(SyncAPIResource):
                         "limit": limit,
                         "page": page,
                         "start_date": start_date,
+                        "user_id": user_id,
                     },
                     transaction_list_params.TransactionListParams,
                 ),
@@ -138,6 +142,7 @@ class AsyncTransactionsResource(AsyncAPIResource):
         limit: int | Omit = omit,
         page: int | Omit = omit,
         start_date: Union[str, datetime, None] | Omit = omit,
+        user_id: Optional[str] | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -167,6 +172,8 @@ class AsyncTransactionsResource(AsyncAPIResource):
               2026-08-01T00:00:00-04:00). Offset-aware values are converted to UTC; naive
               values are treated as UTC.
 
+          user_id: Filter results to clicks or transactions for this user.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -189,6 +196,7 @@ class AsyncTransactionsResource(AsyncAPIResource):
                         "limit": limit,
                         "page": page,
                         "start_date": start_date,
+                        "user_id": user_id,
                     },
                     transaction_list_params.TransactionListParams,
                 ),

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from typing import Union
+from typing import Union, Optional
 from datetime import datetime
 from typing_extensions import Annotated, TypedDict
 
@@ -31,3 +31,6 @@ class ClickListParams(TypedDict, total=False):
     2026-08-01T00:00:00-04:00). Offset-aware values are converted to UTC; naive
     values are treated as UTC.
     """
+
+    user_id: Optional[str]
+    """Filter results to clicks or transactions for this user."""
