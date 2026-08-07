@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import TypedDict
+from typing_extensions import Annotated, TypedDict
 
+from .._utils import PropertyInfo
 from .search_config_param import SearchConfigParam
 from .search_filters_param import SearchFiltersParam
 
@@ -46,4 +47,10 @@ class SearchPerformParams(TypedDict, total=False):
 
     At least one of `query`, `image_url`, `base64_image`, or `page_token` must be
     provided.
+    """
+
+    x_user_id: Annotated[str, PropertyInfo(alias="x-user-id")]
+    """Optional user identifier to attribute clicks and sales to a user in your system.
+
+    Channel3 appends it to buy URLs in the response.
     """

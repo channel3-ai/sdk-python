@@ -137,10 +137,15 @@ class SearchFiltersParam(TypedDict, total=False):
     """[Beta] Color filter wrapper. Holds required colors and optional match mode."""
 
     condition: Optional[Literal["new", "refurbished", "used"]]
-    """Filter by offer condition.
+    """Filter by a single offer condition.
 
-    Requires at least one offer matching the requested condition, locale, and any
-    price filter. Offers without condition data are indexed as new.
+    Prefer `conditions` when multiple values should match (OR).
+    """
+
+    conditions: Optional[List[Literal["new", "refurbished", "used"]]]
+    """Filter by any of these offer conditions (OR).
+
+    Takes precedence over `condition` when set.
     """
 
     dimensions: Optional[Dimensions]

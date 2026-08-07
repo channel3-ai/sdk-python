@@ -39,3 +39,6 @@ class Transaction(BaseModel):
 
     product: Optional[ReportingProduct] = None
     """Compact product reference on click/transaction items."""
+
+    user_id: Optional[str] = None
+    """Partner-supplied user identifier from the originating click, if provided."""

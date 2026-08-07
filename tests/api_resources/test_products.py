@@ -41,6 +41,7 @@ class TestProducts:
             length_unit="mm",
             website_ids=["string"],
             weight_unit="mg",
+            x_user_id="x-user-id",
         )
         assert_matches_type(ProductDetail, product, path=["response"])
 
@@ -104,6 +105,7 @@ class TestProducts:
                     "match": "strict",
                 },
                 "condition": "new",
+                "conditions": ["new"],
                 "dimensions": {
                     "height": {
                         "unit": "mm",
@@ -139,6 +141,7 @@ class TestProducts:
             },
             limit=1,
             page_token="page_token",
+            x_user_id="x-user-id",
         )
         assert_matches_type(SyncSearchPage[ProductDetail], product, path=["response"])
 
@@ -200,6 +203,7 @@ class TestProducts:
                     "match": "strict",
                 },
                 "condition": "new",
+                "conditions": ["new"],
                 "dimensions": {
                     "height": {
                         "unit": "mm",
@@ -235,6 +239,7 @@ class TestProducts:
             },
             limit=1,
             page_token="page_token",
+            x_user_id="x-user-id",
         )
         assert_matches_type(SyncSearchPage[ProductDetail], product, path=["response"])
 
@@ -278,6 +283,7 @@ class TestProducts:
         product = client.products.lookup(
             url="url",
             max_staleness_hours=1,
+            x_user_id="x-user-id",
         )
         assert_matches_type(LookupResponse, product, path=["response"])
 
@@ -312,6 +318,15 @@ class TestProducts:
     def test_method_monetize(self, client: Channel3) -> None:
         product = client.products.monetize(
             url="url",
+        )
+        assert_matches_type(MonetizeResponse, product, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    def test_method_monetize_with_all_params(self, client: Channel3) -> None:
+        product = client.products.monetize(
+            url="url",
+            x_user_id="x-user-id",
         )
         assert_matches_type(MonetizeResponse, product, path=["response"])
 
@@ -377,6 +392,7 @@ class TestProducts:
                     "match": "strict",
                 },
                 "condition": "new",
+                "conditions": ["new"],
                 "dimensions": {
                     "height": {
                         "unit": "mm",
@@ -414,6 +430,7 @@ class TestProducts:
             limit=1,
             page_token="page_token",
             query="query",
+            x_user_id="x-user-id",
         )
         assert_matches_type(SyncSearchPage[ProductDetail], product, path=["response"])
 
@@ -473,6 +490,7 @@ class TestProducts:
                     "match": "strict",
                 },
                 "condition": "new",
+                "conditions": ["new"],
                 "dimensions": {
                     "height": {
                         "unit": "mm",
@@ -510,6 +528,7 @@ class TestProducts:
             limit=1,
             page_token="page_token",
             segment="segment",
+            x_user_id="x-user-id",
         )
         assert_matches_type(SyncSearchPage[ProductDetail], product, path=["response"])
 
@@ -560,6 +579,7 @@ class TestAsyncProducts:
             length_unit="mm",
             website_ids=["string"],
             weight_unit="mg",
+            x_user_id="x-user-id",
         )
         assert_matches_type(ProductDetail, product, path=["response"])
 
@@ -623,6 +643,7 @@ class TestAsyncProducts:
                     "match": "strict",
                 },
                 "condition": "new",
+                "conditions": ["new"],
                 "dimensions": {
                     "height": {
                         "unit": "mm",
@@ -658,6 +679,7 @@ class TestAsyncProducts:
             },
             limit=1,
             page_token="page_token",
+            x_user_id="x-user-id",
         )
         assert_matches_type(AsyncSearchPage[ProductDetail], product, path=["response"])
 
@@ -719,6 +741,7 @@ class TestAsyncProducts:
                     "match": "strict",
                 },
                 "condition": "new",
+                "conditions": ["new"],
                 "dimensions": {
                     "height": {
                         "unit": "mm",
@@ -754,6 +777,7 @@ class TestAsyncProducts:
             },
             limit=1,
             page_token="page_token",
+            x_user_id="x-user-id",
         )
         assert_matches_type(AsyncSearchPage[ProductDetail], product, path=["response"])
 
@@ -797,6 +821,7 @@ class TestAsyncProducts:
         product = await async_client.products.lookup(
             url="url",
             max_staleness_hours=1,
+            x_user_id="x-user-id",
         )
         assert_matches_type(LookupResponse, product, path=["response"])
 
@@ -831,6 +856,15 @@ class TestAsyncProducts:
     async def test_method_monetize(self, async_client: AsyncChannel3) -> None:
         product = await async_client.products.monetize(
             url="url",
+        )
+        assert_matches_type(MonetizeResponse, product, path=["response"])
+
+    @pytest.mark.skip(reason="Mock server tests are disabled")
+    @parametrize
+    async def test_method_monetize_with_all_params(self, async_client: AsyncChannel3) -> None:
+        product = await async_client.products.monetize(
+            url="url",
+            x_user_id="x-user-id",
         )
         assert_matches_type(MonetizeResponse, product, path=["response"])
 
@@ -896,6 +930,7 @@ class TestAsyncProducts:
                     "match": "strict",
                 },
                 "condition": "new",
+                "conditions": ["new"],
                 "dimensions": {
                     "height": {
                         "unit": "mm",
@@ -933,6 +968,7 @@ class TestAsyncProducts:
             limit=1,
             page_token="page_token",
             query="query",
+            x_user_id="x-user-id",
         )
         assert_matches_type(AsyncSearchPage[ProductDetail], product, path=["response"])
 
@@ -992,6 +1028,7 @@ class TestAsyncProducts:
                     "match": "strict",
                 },
                 "condition": "new",
+                "conditions": ["new"],
                 "dimensions": {
                     "height": {
                         "unit": "mm",
@@ -1029,6 +1066,7 @@ class TestAsyncProducts:
             limit=1,
             page_token="page_token",
             segment="segment",
+            x_user_id="x-user-id",
         )
         assert_matches_type(AsyncSearchPage[ProductDetail], product, path=["response"])
 
