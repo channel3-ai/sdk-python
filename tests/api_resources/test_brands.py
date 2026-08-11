@@ -15,8 +15,6 @@ from channel3_sdk.types import (
 )
 from channel3_sdk.pagination import SyncCursorPage, AsyncCursorPage
 
-# pyright: reportDeprecated=false
-
 base_url = os.environ.get("TEST_API_BASE_URL", "http://127.0.0.1:4010")
 
 
@@ -109,44 +107,6 @@ class TestBrands:
 
             brand = response.parse()
             assert_matches_type(SyncCursorPage[Brand], brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_method_find(self, client: Channel3) -> None:
-        with pytest.warns(DeprecationWarning):
-            brand = client.brands.find(
-                query="query",
-            )
-
-        assert_matches_type(Brand, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_raw_response_find(self, client: Channel3) -> None:
-        with pytest.warns(DeprecationWarning):
-            response = client.brands.with_raw_response.find(
-                query="query",
-            )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = response.parse()
-        assert_matches_type(Brand, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    def test_streaming_response_find(self, client: Channel3) -> None:
-        with pytest.warns(DeprecationWarning):
-            with client.brands.with_streaming_response.find(
-                query="query",
-            ) as response:
-                assert not response.is_closed
-                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-                brand = response.parse()
-                assert_matches_type(Brand, brand, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 
@@ -286,44 +246,6 @@ class TestAsyncBrands:
 
             brand = await response.parse()
             assert_matches_type(AsyncCursorPage[Brand], brand, path=["response"])
-
-        assert cast(Any, response.is_closed) is True
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_method_find(self, async_client: AsyncChannel3) -> None:
-        with pytest.warns(DeprecationWarning):
-            brand = await async_client.brands.find(
-                query="query",
-            )
-
-        assert_matches_type(Brand, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_raw_response_find(self, async_client: AsyncChannel3) -> None:
-        with pytest.warns(DeprecationWarning):
-            response = await async_client.brands.with_raw_response.find(
-                query="query",
-            )
-
-        assert response.is_closed is True
-        assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-        brand = await response.parse()
-        assert_matches_type(Brand, brand, path=["response"])
-
-    @pytest.mark.skip(reason="Mock server tests are disabled")
-    @parametrize
-    async def test_streaming_response_find(self, async_client: AsyncChannel3) -> None:
-        with pytest.warns(DeprecationWarning):
-            async with async_client.brands.with_streaming_response.find(
-                query="query",
-            ) as response:
-                assert not response.is_closed
-                assert response.http_request.headers.get("X-Stainless-Lang") == "python"
-
-                brand = await response.parse()
-                assert_matches_type(Brand, brand, path=["response"])
 
         assert cast(Any, response.is_closed) is True
 

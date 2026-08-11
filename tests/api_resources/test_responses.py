@@ -52,7 +52,6 @@ class TestResponses:
                     ],
                     "match": "strict",
                 },
-                "condition": "new",
                 "conditions": ["new"],
                 "dimensions": {
                     "height": {
@@ -193,7 +192,6 @@ class TestAsyncResponses:
                     ],
                     "match": "strict",
                 },
-                "condition": "new",
                 "conditions": ["new"],
                 "dimensions": {
                     "height": {

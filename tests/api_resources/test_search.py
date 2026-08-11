@@ -36,7 +36,6 @@ class TestSearch:
                 config={
                     "country": "US",
                     "currency": "USD",
-                    "keyword_search_only": True,
                     "language": "en",
                     "length_unit": "mm",
                     "mode": "keyword",
@@ -57,7 +56,6 @@ class TestSearch:
                         ],
                         "match": "strict",
                     },
-                    "condition": "new",
                     "conditions": ["new"],
                     "dimensions": {
                         "height": {
@@ -148,7 +146,6 @@ class TestAsyncSearch:
                 config={
                     "country": "US",
                     "currency": "USD",
-                    "keyword_search_only": True,
                     "language": "en",
                     "length_unit": "mm",
                     "mode": "keyword",
@@ -169,7 +166,6 @@ class TestAsyncSearch:
                         ],
                         "match": "strict",
                     },
-                    "condition": "new",
                     "conditions": ["new"],
                     "dimensions": {
                         "height": {

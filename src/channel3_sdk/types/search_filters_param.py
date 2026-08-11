@@ -6,7 +6,6 @@ from typing import Dict, List, Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
 
 from .._types import SequenceNotStr
-from .availability_status import AvailabilityStatus
 from .search_filter_price_param import SearchFilterPriceParam
 
 __all__ = [
@@ -121,8 +120,12 @@ class SearchFiltersParam(TypedDict, total=False):
     `Category.attributes` for the valid keys/values per category.
     """
 
-    availability: Optional[List[AvailabilityStatus]]
-    """If provided, only products with these availability statuses will be returned"""
+    availability: List[Literal["InStock", "OutOfStock"]]
+    """Offer availability statuses to match (OR).
+
+    Defaults to ['InStock']. An offer with no availability data counts as 'InStock'.
+    Pass every value to disable availability filtering.
+    """
 
     brand_ids: Optional[SequenceNotStr[str]]
     """If provided, only products from these brands will be returned"""
@@ -136,16 +139,11 @@ class SearchFiltersParam(TypedDict, total=False):
     colors: Optional[Colors]
     """[Beta] Color filter wrapper. Holds required colors and optional match mode."""
 
-    condition: Optional[Literal["new", "refurbished", "used"]]
-    """Filter by a single offer condition.
+    conditions: List[Literal["new", "used"]]
+    """Offer conditions to match (OR).
 
-    Prefer `conditions` when multiple values should match (OR).
-    """
-
-    conditions: Optional[List[Literal["new", "refurbished", "used"]]]
-    """Filter by any of these offer conditions (OR).
-
-    Takes precedence over `condition` when set.
+    Defaults to ['new'], which also matches offers whose condition is unknown. Pass
+    every value to disable condition filtering.
     """
 
     dimensions: Optional[Dimensions]
@@ -175,6 +173,10 @@ class SearchFiltersParam(TypedDict, total=False):
     """
 
     gender: Optional[Literal["male", "female"]]
+    """Product gender.
+
+    'unisex' is deprecated: coerced to None on input, never emitted.
+    """
 
     price: Optional[SearchFilterPriceParam]
     """Price filter for search. Values are inclusive."""

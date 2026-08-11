@@ -37,7 +37,6 @@ from ._base_client import (
 if TYPE_CHECKING:
     from .resources import (
         brands,
-        enrich,
         search,
         products,
         websites,
@@ -48,7 +47,6 @@ if TYPE_CHECKING:
         price_tracking,
     )
     from .resources.brands import BrandsResource, AsyncBrandsResource
-    from .resources.enrich import EnrichResource, AsyncEnrichResource
     from .resources.search import SearchResource, AsyncSearchResource
     from .resources.products import ProductsResource, AsyncProductsResource
     from .resources.websites import WebsitesResource, AsyncWebsitesResource
@@ -223,12 +221,6 @@ class Channel3(SyncAPIClient):
         from .resources.search import SearchResource
 
         return SearchResource(self)
-
-    @cached_property
-    def enrich(self) -> EnrichResource:
-        from .resources.enrich import EnrichResource
-
-        return EnrichResource(self)
 
     @cached_property
     def with_raw_response(self) -> Channel3WithRawResponse:
@@ -513,12 +505,6 @@ class AsyncChannel3(AsyncAPIClient):
         return AsyncSearchResource(self)
 
     @cached_property
-    def enrich(self) -> AsyncEnrichResource:
-        from .resources.enrich import AsyncEnrichResource
-
-        return AsyncEnrichResource(self)
-
-    @cached_property
     def with_raw_response(self) -> AsyncChannel3WithRawResponse:
         return AsyncChannel3WithRawResponse(self)
 
@@ -706,12 +692,6 @@ class Channel3WithRawResponse:
 
         return SearchResourceWithRawResponse(self._client.search)
 
-    @cached_property
-    def enrich(self) -> enrich.EnrichResourceWithRawResponse:
-        from .resources.enrich import EnrichResourceWithRawResponse
-
-        return EnrichResourceWithRawResponse(self._client.enrich)
-
 
 class AsyncChannel3WithRawResponse:
     _client: AsyncChannel3
@@ -772,12 +752,6 @@ class AsyncChannel3WithRawResponse:
         from .resources.search import AsyncSearchResourceWithRawResponse
 
         return AsyncSearchResourceWithRawResponse(self._client.search)
-
-    @cached_property
-    def enrich(self) -> enrich.AsyncEnrichResourceWithRawResponse:
-        from .resources.enrich import AsyncEnrichResourceWithRawResponse
-
-        return AsyncEnrichResourceWithRawResponse(self._client.enrich)
 
 
 class Channel3WithStreamedResponse:
@@ -840,12 +814,6 @@ class Channel3WithStreamedResponse:
 
         return SearchResourceWithStreamingResponse(self._client.search)
 
-    @cached_property
-    def enrich(self) -> enrich.EnrichResourceWithStreamingResponse:
-        from .resources.enrich import EnrichResourceWithStreamingResponse
-
-        return EnrichResourceWithStreamingResponse(self._client.enrich)
-
 
 class AsyncChannel3WithStreamedResponse:
     _client: AsyncChannel3
@@ -906,12 +874,6 @@ class AsyncChannel3WithStreamedResponse:
         from .resources.search import AsyncSearchResourceWithStreamingResponse
 
         return AsyncSearchResourceWithStreamingResponse(self._client.search)
-
-    @cached_property
-    def enrich(self) -> enrich.AsyncEnrichResourceWithStreamingResponse:
-        from .resources.enrich import AsyncEnrichResourceWithStreamingResponse
-
-        return AsyncEnrichResourceWithStreamingResponse(self._client.enrich)
 
 
 Client = Channel3

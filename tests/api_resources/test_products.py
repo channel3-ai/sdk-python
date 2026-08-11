@@ -104,7 +104,6 @@ class TestProducts:
                     ],
                     "match": "strict",
                 },
-                "condition": "new",
                 "conditions": ["new"],
                 "dimensions": {
                     "height": {
@@ -202,7 +201,6 @@ class TestProducts:
                     ],
                     "match": "strict",
                 },
-                "condition": "new",
                 "conditions": ["new"],
                 "dimensions": {
                     "height": {
@@ -370,7 +368,6 @@ class TestProducts:
             config={
                 "country": "US",
                 "currency": "USD",
-                "keyword_search_only": True,
                 "language": "en",
                 "length_unit": "mm",
                 "mode": "keyword",
@@ -391,7 +388,6 @@ class TestProducts:
                     ],
                     "match": "strict",
                 },
-                "condition": "new",
                 "conditions": ["new"],
                 "dimensions": {
                     "height": {
@@ -489,7 +485,6 @@ class TestProducts:
                     ],
                     "match": "strict",
                 },
-                "condition": "new",
                 "conditions": ["new"],
                 "dimensions": {
                     "height": {
@@ -642,7 +637,6 @@ class TestAsyncProducts:
                     ],
                     "match": "strict",
                 },
-                "condition": "new",
                 "conditions": ["new"],
                 "dimensions": {
                     "height": {
@@ -740,7 +734,6 @@ class TestAsyncProducts:
                     ],
                     "match": "strict",
                 },
-                "condition": "new",
                 "conditions": ["new"],
                 "dimensions": {
                     "height": {
@@ -908,7 +901,6 @@ class TestAsyncProducts:
             config={
                 "country": "US",
                 "currency": "USD",
-                "keyword_search_only": True,
                 "language": "en",
                 "length_unit": "mm",
                 "mode": "keyword",
@@ -929,7 +921,6 @@ class TestAsyncProducts:
                     ],
                     "match": "strict",
                 },
-                "condition": "new",
                 "conditions": ["new"],
                 "dimensions": {
                     "height": {
@@ -1027,7 +1018,6 @@ class TestAsyncProducts:
                     ],
                     "match": "strict",
                 },
-                "condition": "new",
                 "conditions": ["new"],
                 "dimensions": {
                     "height": {
