@@ -48,6 +48,14 @@ from .reporting import (
     ReportingResourceWithStreamingResponse,
     AsyncReportingResourceWithStreamingResponse,
 )
+from .responses import (
+    ResponsesResource,
+    AsyncResponsesResource,
+    ResponsesResourceWithRawResponse,
+    AsyncResponsesResourceWithRawResponse,
+    ResponsesResourceWithStreamingResponse,
+    AsyncResponsesResourceWithStreamingResponse,
+)
 from .categories import (
     CategoriesResource,
     AsyncCategoriesResource,
@@ -55,6 +63,14 @@ from .categories import (
     AsyncCategoriesResourceWithRawResponse,
     CategoriesResourceWithStreamingResponse,
     AsyncCategoriesResourceWithStreamingResponse,
+)
+from .conversations import (
+    ConversationsResource,
+    AsyncConversationsResource,
+    ConversationsResourceWithRawResponse,
+    AsyncConversationsResourceWithRawResponse,
+    ConversationsResourceWithStreamingResponse,
+    AsyncConversationsResourceWithStreamingResponse,
 )
 from .price_tracking import (
     PriceTrackingResource,
@@ -102,6 +118,18 @@ __all__ = [
     "AsyncPriceTrackingResourceWithRawResponse",
     "PriceTrackingResourceWithStreamingResponse",
     "AsyncPriceTrackingResourceWithStreamingResponse",
+    "ResponsesResource",
+    "AsyncResponsesResource",
+    "ResponsesResourceWithRawResponse",
+    "AsyncResponsesResourceWithRawResponse",
+    "ResponsesResourceWithStreamingResponse",
+    "AsyncResponsesResourceWithStreamingResponse",
+    "ConversationsResource",
+    "AsyncConversationsResource",
+    "ConversationsResourceWithRawResponse",
+    "AsyncConversationsResourceWithRawResponse",
+    "ConversationsResourceWithStreamingResponse",
+    "AsyncConversationsResourceWithStreamingResponse",
     "SearchResource",
     "AsyncSearchResource",
     "SearchResourceWithRawResponse",

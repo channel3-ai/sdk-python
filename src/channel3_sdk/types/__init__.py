@@ -10,6 +10,7 @@ from .website import Website as Website
 from .category import Category as Category
 from .statistics import Statistics as Statistics
 from .category_ref import CategoryRef as CategoryRef
+from .conversation import Conversation as Conversation
 from .subscription import Subscription as Subscription
 from .price_history import PriceHistory as PriceHistory
 from .product_brand import ProductBrand as ProductBrand
@@ -33,6 +34,7 @@ from .price_history_point import PriceHistoryPoint as PriceHistoryPoint
 from .search_config_param import SearchConfigParam as SearchConfigParam
 from .website_find_params import WebsiteFindParams as WebsiteFindParams
 from .category_list_params import CategoryListParams as CategoryListParams
+from .conversation_context import ConversationContext as ConversationContext
 from .search_filters_param import SearchFiltersParam as SearchFiltersParam
 from .brand_retrieve_params import BrandRetrieveParams as BrandRetrieveParams
 from .product_browse_params import ProductBrowseParams as ProductBrowseParams
@@ -40,15 +42,19 @@ from .product_lookup_params import ProductLookupParams as ProductLookupParams
 from .product_search_params import ProductSearchParams as ProductSearchParams
 from .search_perform_params import SearchPerformParams as SearchPerformParams
 from .category_search_params import CategorySearchParams as CategorySearchParams
+from .response_create_params import ResponseCreateParams as ResponseCreateParams
 from .search_brands_response import SearchBrandsResponse as SearchBrandsResponse
 from .product_monetize_params import ProductMonetizeParams as ProductMonetizeParams
 from .product_retrieve_params import ProductRetrieveParams as ProductRetrieveParams
 from .website_retrieve_params import WebsiteRetrieveParams as WebsiteRetrieveParams
 from .enrich_enrich_url_params import EnrichEnrichURLParams as EnrichEnrichURLParams
+from .response_create_response import ResponseCreateResponse as ResponseCreateResponse
 from .search_filter_price_param import SearchFilterPriceParam as SearchFilterPriceParam
+from .conversation_context_param import ConversationContextParam as ConversationContextParam
 from .enrich_enrich_url_response import EnrichEnrichURLResponse as EnrichEnrichURLResponse
 from .price_tracking_stop_params import PriceTrackingStopParams as PriceTrackingStopParams
 from .search_categories_response import SearchCategoriesResponse as SearchCategoriesResponse
+from .conversation_items_response import ConversationItemsResponse as ConversationItemsResponse
 from .price_tracking_start_params import PriceTrackingStartParams as PriceTrackingStartParams
 from .product_find_similar_params import ProductFindSimilarParams as ProductFindSimilarParams
 from .product_search_by_image_params import ProductSearchByImageParams as ProductSearchByImageParams

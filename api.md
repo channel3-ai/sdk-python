@@ -148,6 +148,36 @@ Methods:
 - <code title="post /v0/price-tracking/start">client.price_tracking.<a href="./src/channel3_sdk/resources/price_tracking.py">start</a>(\*\*<a href="src/channel3_sdk/types/price_tracking_start_params.py">params</a>) -> <a href="./src/channel3_sdk/types/subscription.py">Subscription</a></code>
 - <code title="post /v0/price-tracking/stop">client.price_tracking.<a href="./src/channel3_sdk/resources/price_tracking.py">stop</a>(\*\*<a href="src/channel3_sdk/types/price_tracking_stop_params.py">params</a>) -> <a href="./src/channel3_sdk/types/subscription.py">Subscription</a></code>
 
+# Responses
+
+Types:
+
+```python
+from channel3_sdk.types import ChatRequest, ResponseCreateResponse
+```
+
+Methods:
+
+- <code title="post /v1/responses">client.responses.<a href="./src/channel3_sdk/resources/responses.py">create</a>(\*\*<a href="src/channel3_sdk/types/response_create_params.py">params</a>) -> str</code>
+
+# Conversations
+
+Types:
+
+```python
+from channel3_sdk.types import Conversation, ConversationContext, ConversationItemsResponse
+```
+
+Methods:
+
+- <code title="get /v1/conversations/{conversation_id}">client.conversations.<a href="./src/channel3_sdk/resources/conversations/conversations.py">retrieve</a>(conversation_id) -> <a href="./src/channel3_sdk/types/conversation.py">Conversation</a></code>
+
+## Items
+
+Methods:
+
+- <code title="get /v1/conversations/{conversation_id}/items">client.conversations.items.<a href="./src/channel3_sdk/resources/conversations/items.py">list</a>(conversation_id) -> <a href="./src/channel3_sdk/types/conversation_items_response.py">ConversationItemsResponse</a></code>
+
 # Search
 
 Types:
