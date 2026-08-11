@@ -21,12 +21,6 @@ class ProductImage(BaseModel):
     Use for product grids; `url` is the regular hosted shot.
     """
 
-    is_cleaned_image: Optional[bool] = None
-    """Deprecated: always `false`.
-
-    Use `cleaned_url` for product grids when set; otherwise `url`.
-    """
-
     is_main_image: Optional[bool] = None
 
     shot_type: Optional[
