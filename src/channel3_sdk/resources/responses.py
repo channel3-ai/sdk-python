@@ -19,6 +19,7 @@ from .._response import (
 )
 from .._streaming import Stream, AsyncStream
 from .._base_client import make_request_options
+from ..types.search_filters_param import SearchFiltersParam
 from ..types.response_create_response import ResponseCreateResponse
 from ..types.conversation_context_param import ConversationContextParam
 
@@ -52,6 +53,7 @@ class ResponsesResource(SyncAPIResource):
         context: Optional[ConversationContextParam] | Omit = omit,
         conversation_id: Optional[str] | Omit = omit,
         debug: bool | Omit = omit,
+        filters: Optional[SearchFiltersParam] | Omit = omit,
         image: Optional[response_create_params.Image] | Omit = omit,
         message: Optional[response_create_params.Message] | Omit = omit,
         messages: Iterable[response_create_params.Message] | Omit = omit,
@@ -68,6 +70,8 @@ class ResponsesResource(SyncAPIResource):
 
         Args:
           context: Partner-supplied context pinned to the top of a conversation thread.
+
+          filters: Search filters for the search API.
 
           x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
               Channel3 appends it to buy URLs in the response.
@@ -90,6 +94,7 @@ class ResponsesResource(SyncAPIResource):
                     "context": context,
                     "conversation_id": conversation_id,
                     "debug": debug,
+                    "filters": filters,
                     "image": image,
                     "message": message,
                     "messages": messages,
@@ -132,6 +137,7 @@ class AsyncResponsesResource(AsyncAPIResource):
         context: Optional[ConversationContextParam] | Omit = omit,
         conversation_id: Optional[str] | Omit = omit,
         debug: bool | Omit = omit,
+        filters: Optional[SearchFiltersParam] | Omit = omit,
         image: Optional[response_create_params.Image] | Omit = omit,
         message: Optional[response_create_params.Message] | Omit = omit,
         messages: Iterable[response_create_params.Message] | Omit = omit,
@@ -148,6 +154,8 @@ class AsyncResponsesResource(AsyncAPIResource):
 
         Args:
           context: Partner-supplied context pinned to the top of a conversation thread.
+
+          filters: Search filters for the search API.
 
           x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
               Channel3 appends it to buy URLs in the response.
@@ -170,6 +178,7 @@ class AsyncResponsesResource(AsyncAPIResource):
                     "context": context,
                     "conversation_id": conversation_id,
                     "debug": debug,
+                    "filters": filters,
                     "image": image,
                     "message": message,
                     "messages": messages,

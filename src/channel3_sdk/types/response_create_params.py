@@ -7,6 +7,7 @@ from typing_extensions import Literal, Required, Annotated, TypedDict
 
 from .._types import SequenceNotStr
 from .._utils import PropertyInfo
+from .search_filters_param import SearchFiltersParam
 from .conversation_context_param import ConversationContextParam
 
 __all__ = ["ResponseCreateParams", "Attachment", "Image", "Message", "MessagePart"]
@@ -21,6 +22,9 @@ class ResponseCreateParams(TypedDict, total=False):
     conversation_id: Optional[str]
 
     debug: bool
+
+    filters: Optional[SearchFiltersParam]
+    """Search filters for the search API."""
 
     image: Optional[Image]
 
