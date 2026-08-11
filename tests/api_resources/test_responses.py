@@ -37,6 +37,56 @@ class TestResponses:
             },
             conversation_id="conversation_id",
             debug=True,
+            filters={
+                "age": ["newborn"],
+                "attributes": {"foo": ["string"]},
+                "availability": ["InStock"],
+                "brand_ids": ["string"],
+                "category_ids": ["string"],
+                "colors": {
+                    "palette": [
+                        {
+                            "hex": "hex",
+                            "percentage": 0,
+                        }
+                    ],
+                    "match": "strict",
+                },
+                "condition": "new",
+                "conditions": ["new"],
+                "dimensions": {
+                    "height": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "length": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "weight": {
+                        "unit": "mg",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "width": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                },
+                "exclude_brand_ids": ["string"],
+                "exclude_category_ids": ["string"],
+                "exclude_website_ids": ["string"],
+                "gender": "male",
+                "price": {
+                    "max_price": 0,
+                    "min_price": 0,
+                },
+                "sale": "on_sale",
+                "website_ids": ["string"],
+            },
             image={
                 "base64": "base64",
                 "url": "url",
@@ -128,6 +178,56 @@ class TestAsyncResponses:
             },
             conversation_id="conversation_id",
             debug=True,
+            filters={
+                "age": ["newborn"],
+                "attributes": {"foo": ["string"]},
+                "availability": ["InStock"],
+                "brand_ids": ["string"],
+                "category_ids": ["string"],
+                "colors": {
+                    "palette": [
+                        {
+                            "hex": "hex",
+                            "percentage": 0,
+                        }
+                    ],
+                    "match": "strict",
+                },
+                "condition": "new",
+                "conditions": ["new"],
+                "dimensions": {
+                    "height": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "length": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "weight": {
+                        "unit": "mg",
+                        "max": 0,
+                        "min": 0,
+                    },
+                    "width": {
+                        "unit": "mm",
+                        "max": 0,
+                        "min": 0,
+                    },
+                },
+                "exclude_brand_ids": ["string"],
+                "exclude_category_ids": ["string"],
+                "exclude_website_ids": ["string"],
+                "gender": "male",
+                "price": {
+                    "max_price": 0,
+                    "min_price": 0,
+                },
+                "sale": "on_sale",
+                "website_ids": ["string"],
+            },
             image={
                 "base64": "base64",
                 "url": "url",
