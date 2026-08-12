@@ -40,14 +40,6 @@ from .reporting import (
     ReportingResourceWithStreamingResponse,
     AsyncReportingResourceWithStreamingResponse,
 )
-from .responses import (
-    ResponsesResource,
-    AsyncResponsesResource,
-    ResponsesResourceWithRawResponse,
-    AsyncResponsesResourceWithRawResponse,
-    ResponsesResourceWithStreamingResponse,
-    AsyncResponsesResourceWithStreamingResponse,
-)
 from .categories import (
     CategoriesResource,
     AsyncCategoriesResource,
@@ -110,12 +102,6 @@ __all__ = [
     "AsyncPriceTrackingResourceWithRawResponse",
     "PriceTrackingResourceWithStreamingResponse",
     "AsyncPriceTrackingResourceWithStreamingResponse",
-    "ResponsesResource",
-    "AsyncResponsesResource",
-    "ResponsesResourceWithRawResponse",
-    "AsyncResponsesResourceWithRawResponse",
-    "ResponsesResourceWithStreamingResponse",
-    "AsyncResponsesResourceWithStreamingResponse",
     "ConversationsResource",
     "AsyncConversationsResource",
     "ConversationsResourceWithRawResponse",
