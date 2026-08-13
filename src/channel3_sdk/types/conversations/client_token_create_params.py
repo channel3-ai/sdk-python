@@ -11,6 +11,4 @@ __all__ = ["ClientTokenCreateParams"]
 class ClientTokenCreateParams(TypedDict, total=False):
     conversation_id: Optional[str]
 
-    session_id: Optional[str]
-
     ttl_seconds: int

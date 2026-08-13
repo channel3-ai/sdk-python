@@ -13,4 +13,6 @@ class ClientTokenResponse(BaseModel):
 
     expires_at: int
 
+    token_id: str
+
     token_type: Optional[Literal["Bearer"]] = None

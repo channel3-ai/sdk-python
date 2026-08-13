@@ -47,7 +47,6 @@ class ClientTokensResource(SyncAPIResource):
         self,
         *,
         conversation_id: Optional[str] | Omit = omit,
-        session_id: Optional[str] | Omit = omit,
         ttl_seconds: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -56,12 +55,11 @@ class ClientTokensResource(SyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ClientTokenResponse:
-        """Mint a short-lived, browser-safe client token for the conversations API.
+        """Mint a short-lived, browser-safe token.
 
-        Pass
-        `session_id` for a session token that can create and continue conversations for
-        that session, or `conversation_id` for a token bound to one existing
-        conversation.
+        With `conversation_id` the token
+        continues and reads that thread; without it, the token's first turn creates the
+        thread and binds the token to it.
 
         Args:
           extra_headers: Send extra headers
@@ -77,7 +75,6 @@ class ClientTokensResource(SyncAPIResource):
             body=maybe_transform(
                 {
                     "conversation_id": conversation_id,
-                    "session_id": session_id,
                     "ttl_seconds": ttl_seconds,
                 },
                 client_token_create_params.ClientTokenCreateParams,
@@ -148,7 +145,6 @@ class AsyncClientTokensResource(AsyncAPIResource):
         self,
         *,
         conversation_id: Optional[str] | Omit = omit,
-        session_id: Optional[str] | Omit = omit,
         ttl_seconds: int | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
@@ -157,12 +153,11 @@ class AsyncClientTokensResource(AsyncAPIResource):
         extra_body: Body | None = None,
         timeout: float | httpx.Timeout | None | NotGiven = not_given,
     ) -> ClientTokenResponse:
-        """Mint a short-lived, browser-safe client token for the conversations API.
+        """Mint a short-lived, browser-safe token.
 
-        Pass
-        `session_id` for a session token that can create and continue conversations for
-        that session, or `conversation_id` for a token bound to one existing
-        conversation.
+        With `conversation_id` the token
+        continues and reads that thread; without it, the token's first turn creates the
+        thread and binds the token to it.
 
         Args:
           extra_headers: Send extra headers
@@ -178,7 +173,6 @@ class AsyncClientTokensResource(AsyncAPIResource):
             body=await async_maybe_transform(
                 {
                     "conversation_id": conversation_id,
-                    "session_id": session_id,
                     "ttl_seconds": ttl_seconds,
                 },
                 client_token_create_params.ClientTokenCreateParams,

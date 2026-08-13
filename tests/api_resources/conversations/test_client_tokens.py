@@ -27,8 +27,7 @@ class TestClientTokens:
     @parametrize
     def test_method_create_with_all_params(self, client: Channel3) -> None:
         client_token = client.conversations.client_tokens.create(
-            conversation_id="conversation_id",
-            session_id="session_id",
+            conversation_id="x",
             ttl_seconds=60,
         )
         assert_matches_type(ClientTokenResponse, client_token, path=["response"])
@@ -105,8 +104,7 @@ class TestAsyncClientTokens:
     @parametrize
     async def test_method_create_with_all_params(self, async_client: AsyncChannel3) -> None:
         client_token = await async_client.conversations.client_tokens.create(
-            conversation_id="conversation_id",
-            session_id="session_id",
+            conversation_id="x",
             ttl_seconds=60,
         )
         assert_matches_type(ClientTokenResponse, client_token, path=["response"])
