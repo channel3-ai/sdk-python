@@ -13,7 +13,7 @@ __all__ = ["ToolPart", "Input", "Output"]
 
 Input: TypeAlias = Union[SearchProductsInput, ProductIDsInput]
 
-Output: TypeAlias = Union[CatalogDisplayPayload, CatalogToolError]
+Output: TypeAlias = Union[CatalogDisplayPayload, CatalogToolError, None]
 
 
 class ToolPart(BaseModel):

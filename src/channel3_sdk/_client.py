@@ -41,9 +41,9 @@ if TYPE_CHECKING:
     from .resources.products import ProductsResource, AsyncProductsResource
     from .resources.websites import WebsitesResource, AsyncWebsitesResource
     from .resources.categories import CategoriesResource, AsyncCategoriesResource
-    from .resources.conversations import ConversationsResource, AsyncConversationsResource
     from .resources.price_tracking import PriceTrackingResource, AsyncPriceTrackingResource
     from .resources.reporting.reporting import ReportingResource, AsyncReportingResource
+    from .resources.conversations.conversations import ConversationsResource, AsyncConversationsResource
 
 __all__ = [
     "Timeout",

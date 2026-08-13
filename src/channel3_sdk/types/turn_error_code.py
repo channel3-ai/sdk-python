@@ -12,5 +12,7 @@ TurnErrorCode: TypeAlias = Literal[
     "turn_conflict",
     "rate_limited",
     "model_unavailable",
+    "token_not_found",
+    "service_unavailable",
     "internal",
 ]

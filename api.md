@@ -10,6 +10,7 @@ Types:
 
 ```python
 from channel3_sdk.types import (
+    AvailabilityStatus,
     BrowseRequest,
     ImageSearchRequest,
     LocaleConfig,
@@ -161,15 +162,13 @@ from channel3_sdk.types import (
     ConversationErrorBody,
     CreateTurnRequest,
     ImagePart,
+    PartCompletedEvent,
+    PartDeltaEvent,
+    PartStartedEvent,
     ProductIDsInput,
-    SearchDiscussionEvent,
     SearchProductsInput,
-    TextDeltaEvent,
-    TextEndEvent,
     TextPart,
-    ToolCompletedEvent,
     ToolPart,
-    ToolStartedEvent,
     TurnCompletedEvent,
     TurnErrorCode,
     TurnErrorEvent,
@@ -183,8 +182,25 @@ from channel3_sdk.types import (
 
 Methods:
 
-- <code title="post /v1/conversations">client.conversations.<a href="./src/channel3_sdk/resources/conversations.py">create</a>(\*\*<a href="src/channel3_sdk/types/conversation_create_params.py">params</a>) -> <a href="./src/channel3_sdk/types/turn_result.py">TurnResult</a></code>
-- <code title="get /v1/conversations/{conversation_id}">client.conversations.<a href="./src/channel3_sdk/resources/conversations.py">retrieve</a>(conversation_id, \*\*<a href="src/channel3_sdk/types/conversation_retrieve_params.py">params</a>) -> <a href="./src/channel3_sdk/types/conversation_detail.py">ConversationDetail</a></code>
+- <code title="post /v1/conversations">client.conversations.<a href="./src/channel3_sdk/resources/conversations/conversations.py">create</a>(\*\*<a href="src/channel3_sdk/types/conversation_create_params.py">params</a>) -> <a href="./src/channel3_sdk/types/turn_result.py">TurnResult</a></code>
+- <code title="get /v1/conversations/{conversation_id}">client.conversations.<a href="./src/channel3_sdk/resources/conversations/conversations.py">retrieve</a>(conversation_id, \*\*<a href="src/channel3_sdk/types/conversation_retrieve_params.py">params</a>) -> <a href="./src/channel3_sdk/types/conversation_detail.py">ConversationDetail</a></code>
+
+## ClientTokens
+
+Types:
+
+```python
+from channel3_sdk.types.conversations import (
+    ClientTokenResponse,
+    CreateClientTokenRequest,
+    RevokeClientTokenRequest,
+)
+```
+
+Methods:
+
+- <code title="post /v1/conversations/client_tokens">client.conversations.client_tokens.<a href="./src/channel3_sdk/resources/conversations/client_tokens.py">create</a>(\*\*<a href="src/channel3_sdk/types/conversations/client_token_create_params.py">params</a>) -> <a href="./src/channel3_sdk/types/conversations/client_token_response.py">ClientTokenResponse</a></code>
+- <code title="post /v1/conversations/client_tokens/revoke">client.conversations.client_tokens.<a href="./src/channel3_sdk/resources/conversations/client_tokens.py">revoke</a>(\*\*<a href="src/channel3_sdk/types/conversations/client_token_revoke_params.py">params</a>) -> None</code>
 
 # Search
 

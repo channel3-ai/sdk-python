@@ -5,6 +5,7 @@ from typing_extensions import Literal
 
 from .price import Price
 from .._models import BaseModel
+from .availability_status import AvailabilityStatus
 
 __all__ = ["ProductOffer", "Dimensions", "DimensionsHeight", "DimensionsLength", "DimensionsWeight", "DimensionsWidth"]
 
@@ -78,7 +79,7 @@ class Dimensions(BaseModel):
 
 
 class ProductOffer(BaseModel):
-    availability: Literal["InStock", "OutOfStock"]
+    availability: AvailabilityStatus
     """The two availability values the public API emits on offers.
 
     Internal `AvailabilityStatus` values are collapsed to these via
