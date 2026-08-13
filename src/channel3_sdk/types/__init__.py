@@ -38,6 +38,7 @@ from .reporting_product import ReportingProduct as ReportingProduct
 from .catalog_tool_error import CatalogToolError as CatalogToolError
 from .category_attribute import CategoryAttribute as CategoryAttribute
 from .user_message_param import UserMessageParam as UserMessageParam
+from .availability_status import AvailabilityStatus as AvailabilityStatus
 from .brand_search_params import BrandSearchParams as BrandSearchParams
 from .conversation_detail import ConversationDetail as ConversationDetail
 from .locale_config_param import LocaleConfigParam as LocaleConfigParam

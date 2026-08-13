@@ -20,7 +20,10 @@ class ConversationCreateParams(TypedDict, total=False):
     """Partner-supplied context pinned to the top of a conversation thread."""
 
     conversation_id: Optional[str]
-    """Existing thread to continue; when omitted, a new thread is created."""
+    """Existing thread to continue.
+
+    When omitted, a new thread is created and its id returned.
+    """
 
     filters: Optional[SearchFiltersParam]
     """Search filters for the search API."""

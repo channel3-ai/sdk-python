@@ -8,6 +8,7 @@ from .product_brand import ProductBrand
 from .product_image import ProductImage
 from .product_offer import ProductOffer
 from .category_summary import CategorySummary
+from .availability_status import AvailabilityStatus
 
 __all__ = ["ProductDetail", "Variants", "VariantsOption", "VariantsOptionValue", "VariantsSelected"]
 
@@ -25,7 +26,7 @@ class VariantsOptionValue(BaseModel):
     label: str
     """The display value of the option value (e.g. 'Blue')"""
 
-    available: Optional[Literal["InStock", "OutOfStock"]] = None
+    available: Optional[AvailabilityStatus] = None
     """The two availability values the public API emits on offers.
 
     Internal `AvailabilityStatus` values are collapsed to these via

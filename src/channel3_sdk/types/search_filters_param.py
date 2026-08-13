@@ -6,6 +6,7 @@ from typing import Dict, List, Iterable, Optional
 from typing_extensions import Literal, Required, TypedDict
 
 from .._types import SequenceNotStr
+from .availability_status import AvailabilityStatus
 from .search_filter_price_param import SearchFilterPriceParam
 
 __all__ = [
@@ -120,7 +121,7 @@ class SearchFiltersParam(TypedDict, total=False):
     `Category.attributes` for the valid keys/values per category.
     """
 
-    availability: List[Literal["InStock", "OutOfStock"]]
+    availability: List[AvailabilityStatus]
     """Offer availability statuses to match (OR).
 
     Defaults to ['InStock']. An offer with no availability data counts as 'InStock'.

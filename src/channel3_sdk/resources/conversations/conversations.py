@@ -6,31 +6,43 @@ from typing import Optional
 
 import httpx
 
-from ..types import (
+from ...types import (
     conversation_create_params,
     conversation_retrieve_params,
 )
-from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from .._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
-from .._compat import cached_property
-from .._resource import SyncAPIResource, AsyncAPIResource
-from .._response import (
+from ..._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
+from ..._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
+from ..._compat import cached_property
+from ..._resource import SyncAPIResource, AsyncAPIResource
+from ..._response import (
     to_raw_response_wrapper,
     to_streamed_response_wrapper,
     async_to_raw_response_wrapper,
     async_to_streamed_response_wrapper,
 )
-from .._base_client import make_request_options
-from ..types.turn_result import TurnResult
-from ..types.user_message_param import UserMessageParam
-from ..types.conversation_detail import ConversationDetail
-from ..types.search_filters_param import SearchFiltersParam
-from ..types.conversation_context_param import ConversationContextParam
+from .client_tokens import (
+    ClientTokensResource,
+    AsyncClientTokensResource,
+    ClientTokensResourceWithRawResponse,
+    AsyncClientTokensResourceWithRawResponse,
+    ClientTokensResourceWithStreamingResponse,
+    AsyncClientTokensResourceWithStreamingResponse,
+)
+from ..._base_client import make_request_options
+from ...types.turn_result import TurnResult
+from ...types.user_message_param import UserMessageParam
+from ...types.conversation_detail import ConversationDetail
+from ...types.search_filters_param import SearchFiltersParam
+from ...types.conversation_context_param import ConversationContextParam
 
 __all__ = ["ConversationsResource", "AsyncConversationsResource"]
 
 
 class ConversationsResource(SyncAPIResource):
+    @cached_property
+    def client_tokens(self) -> ClientTokensResource:
+        return ClientTokensResource(self._client)
+
     @cached_property
     def with_raw_response(self) -> ConversationsResourceWithRawResponse:
         """
@@ -74,7 +86,8 @@ class ConversationsResource(SyncAPIResource):
         Args:
           context: Partner-supplied context pinned to the top of a conversation thread.
 
-          conversation_id: Existing thread to continue; when omitted, a new thread is created.
+          conversation_id: Existing thread to continue. When omitted, a new thread is created and its id
+              returned.
 
           filters: Search filters for the search API.
 
@@ -160,6 +173,10 @@ class ConversationsResource(SyncAPIResource):
 
 class AsyncConversationsResource(AsyncAPIResource):
     @cached_property
+    def client_tokens(self) -> AsyncClientTokensResource:
+        return AsyncClientTokensResource(self._client)
+
+    @cached_property
     def with_raw_response(self) -> AsyncConversationsResourceWithRawResponse:
         """
         This property can be used as a prefix for any HTTP method call to return
@@ -202,7 +219,8 @@ class AsyncConversationsResource(AsyncAPIResource):
         Args:
           context: Partner-supplied context pinned to the top of a conversation thread.
 
-          conversation_id: Existing thread to continue; when omitted, a new thread is created.
+          conversation_id: Existing thread to continue. When omitted, a new thread is created and its id
+              returned.
 
           filters: Search filters for the search API.
 
@@ -297,6 +315,10 @@ class ConversationsResourceWithRawResponse:
             conversations.retrieve,
         )
 
+    @cached_property
+    def client_tokens(self) -> ClientTokensResourceWithRawResponse:
+        return ClientTokensResourceWithRawResponse(self._conversations.client_tokens)
+
 
 class AsyncConversationsResourceWithRawResponse:
     def __init__(self, conversations: AsyncConversationsResource) -> None:
@@ -308,6 +330,10 @@ class AsyncConversationsResourceWithRawResponse:
         self.retrieve = async_to_raw_response_wrapper(
             conversations.retrieve,
         )
+
+    @cached_property
+    def client_tokens(self) -> AsyncClientTokensResourceWithRawResponse:
+        return AsyncClientTokensResourceWithRawResponse(self._conversations.client_tokens)
 
 
 class ConversationsResourceWithStreamingResponse:
@@ -321,6 +347,10 @@ class ConversationsResourceWithStreamingResponse:
             conversations.retrieve,
         )
 
+    @cached_property
+    def client_tokens(self) -> ClientTokensResourceWithStreamingResponse:
+        return ClientTokensResourceWithStreamingResponse(self._conversations.client_tokens)
+
 
 class AsyncConversationsResourceWithStreamingResponse:
     def __init__(self, conversations: AsyncConversationsResource) -> None:
@@ -332,3 +362,7 @@ class AsyncConversationsResourceWithStreamingResponse:
         self.retrieve = async_to_streamed_response_wrapper(
             conversations.retrieve,
         )
+
+    @cached_property
+    def client_tokens(self) -> AsyncClientTokensResourceWithStreamingResponse:
+        return AsyncClientTokensResourceWithStreamingResponse(self._conversations.client_tokens)
