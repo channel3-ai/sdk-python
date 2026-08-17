@@ -1,5 +1,38 @@
 # Changelog
 
+## 3.6.0 (2026-08-17)
+
+Full Changelog: [v3.5.0...v3.6.0](https://github.com/channel3-ai/sdk-python/compare/v3.5.0...v3.6.0)
+
+### Features
+
+* **api:** add cleaned_url field to Image and ProductImage models ([cc93223](https://github.com/channel3-ai/sdk-python/commit/cc93223dbf33335eb64242abe9c8a239c1acb828))
+* **api:** add client_tokens methods, discussion/part events, remove old events, update types ([b35c701](https://github.com/channel3-ai/sdk-python/commit/b35c701a5bb24cd45b122f8576d74c45f6995eb8))
+* **api:** add filters parameter to responses create method ([e72d28e](https://github.com/channel3-ai/sdk-python/commit/e72d28e26ad18efc0e68f70cadc7f0b7e12b3eb4))
+* **api:** add list methods to clicks/transactions resources ([8b88885](https://github.com/channel3-ai/sdk-python/commit/8b88885435090778df6e2dcee16a49c0623f1dbd))
+* **api:** add pagination to conversation items, remove responses resource ([1d0b1b7](https://github.com/channel3-ai/sdk-python/commit/1d0b1b7898c2c7f734ce8c10f10f315c60d0ea60))
+* **api:** add responses/conversations endpoints, shared/response/conversation types ([8cb96be](https://github.com/channel3-ai/sdk-python/commit/8cb96beb03f1a2bced2b10c2ea60c0c1a99c1fa8))
+* **api:** add sort parameter to products browse method ([ddcbb2c](https://github.com/channel3-ai/sdk-python/commit/ddcbb2ca1ba7b31849b21e8162db019825fa67f5))
+* **stlc:** configurable CI runner and private-production-repo support in workflow templates ([3af7b3c](https://github.com/channel3-ai/sdk-python/commit/3af7b3c4fa6b086cf5d28f0fd60d6bed4b3c67d8))
+
+
+### Bug Fixes
+
+* **types:** remove isError alias from CatalogToolError ([17a8b01](https://github.com/channel3-ai/sdk-python/commit/17a8b017503c9fc773609a12f73f5b74130b73aa))
+* **types:** rename AffiliateProduct to ReportingProduct ([caa1b99](https://github.com/channel3-ai/sdk-python/commit/caa1b995496663a9cd1bbce6e67cf51063a4fe65))
+
+
+### Chores
+
+* **api:** remove deprecated brands.find method and enrich resource ([c92c096](https://github.com/channel3-ai/sdk-python/commit/c92c096dc78ce3f015a655ddb9c2ecd07791e787))
+* **internal:** regenerate SDK with no functional changes ([4e25c74](https://github.com/channel3-ai/sdk-python/commit/4e25c742be722cf065a37530036453e52ab4de74))
+
+
+### Documentation
+
+* **api:** clarify attributes parameter in search filters ([3150e01](https://github.com/channel3-ai/sdk-python/commit/3150e018217e775690db3ed7c615a7f287752a0e))
+* **api:** mark is_cleaned_image as deprecated in ProductImage/Image ([d6fa6ce](https://github.com/channel3-ai/sdk-python/commit/d6fa6ce4ef192d2c4a758e74e3b3f438e1c66903))
+
 ## 3.5.0 (2026-07-09)
 
 Full Changelog: [v3.4.1...v3.5.0](https://github.com/channel3-ai/sdk-python/compare/v3.4.1...v3.5.0)
