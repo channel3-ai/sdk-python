@@ -35,14 +35,15 @@ from ._base_client import (
 )
 
 if TYPE_CHECKING:
-    from .resources import brands, enrich, search, products, websites, categories, price_tracking
+    from .resources import brands, search, products, websites, reporting, categories, conversations, price_tracking
     from .resources.brands import BrandsResource, AsyncBrandsResource
-    from .resources.enrich import EnrichResource, AsyncEnrichResource
     from .resources.search import SearchResource, AsyncSearchResource
     from .resources.products import ProductsResource, AsyncProductsResource
     from .resources.websites import WebsitesResource, AsyncWebsitesResource
     from .resources.categories import CategoriesResource, AsyncCategoriesResource
     from .resources.price_tracking import PriceTrackingResource, AsyncPriceTrackingResource
+    from .resources.reporting.reporting import ReportingResource, AsyncReportingResource
+    from .resources.conversations.conversations import ConversationsResource, AsyncConversationsResource
 
 __all__ = [
     "Timeout",
@@ -163,6 +164,12 @@ class Channel3(SyncAPIClient):
         return ProductsResource(self)
 
     @cached_property
+    def reporting(self) -> ReportingResource:
+        from .resources.reporting import ReportingResource
+
+        return ReportingResource(self)
+
+    @cached_property
     def brands(self) -> BrandsResource:
         from .resources.brands import BrandsResource
 
@@ -187,16 +194,16 @@ class Channel3(SyncAPIClient):
         return PriceTrackingResource(self)
 
     @cached_property
+    def conversations(self) -> ConversationsResource:
+        from .resources.conversations import ConversationsResource
+
+        return ConversationsResource(self)
+
+    @cached_property
     def search(self) -> SearchResource:
         from .resources.search import SearchResource
 
         return SearchResource(self)
-
-    @cached_property
-    def enrich(self) -> EnrichResource:
-        from .resources.enrich import EnrichResource
-
-        return EnrichResource(self)
 
     @cached_property
     def with_raw_response(self) -> Channel3WithRawResponse:
@@ -433,6 +440,12 @@ class AsyncChannel3(AsyncAPIClient):
         return AsyncProductsResource(self)
 
     @cached_property
+    def reporting(self) -> AsyncReportingResource:
+        from .resources.reporting import AsyncReportingResource
+
+        return AsyncReportingResource(self)
+
+    @cached_property
     def brands(self) -> AsyncBrandsResource:
         from .resources.brands import AsyncBrandsResource
 
@@ -457,16 +470,16 @@ class AsyncChannel3(AsyncAPIClient):
         return AsyncPriceTrackingResource(self)
 
     @cached_property
+    def conversations(self) -> AsyncConversationsResource:
+        from .resources.conversations import AsyncConversationsResource
+
+        return AsyncConversationsResource(self)
+
+    @cached_property
     def search(self) -> AsyncSearchResource:
         from .resources.search import AsyncSearchResource
 
         return AsyncSearchResource(self)
-
-    @cached_property
-    def enrich(self) -> AsyncEnrichResource:
-        from .resources.enrich import AsyncEnrichResource
-
-        return AsyncEnrichResource(self)
 
     @cached_property
     def with_raw_response(self) -> AsyncChannel3WithRawResponse:
@@ -609,6 +622,12 @@ class Channel3WithRawResponse:
         return ProductsResourceWithRawResponse(self._client.products)
 
     @cached_property
+    def reporting(self) -> reporting.ReportingResourceWithRawResponse:
+        from .resources.reporting import ReportingResourceWithRawResponse
+
+        return ReportingResourceWithRawResponse(self._client.reporting)
+
+    @cached_property
     def brands(self) -> brands.BrandsResourceWithRawResponse:
         from .resources.brands import BrandsResourceWithRawResponse
 
@@ -633,16 +652,16 @@ class Channel3WithRawResponse:
         return PriceTrackingResourceWithRawResponse(self._client.price_tracking)
 
     @cached_property
+    def conversations(self) -> conversations.ConversationsResourceWithRawResponse:
+        from .resources.conversations import ConversationsResourceWithRawResponse
+
+        return ConversationsResourceWithRawResponse(self._client.conversations)
+
+    @cached_property
     def search(self) -> search.SearchResourceWithRawResponse:
         from .resources.search import SearchResourceWithRawResponse
 
         return SearchResourceWithRawResponse(self._client.search)
-
-    @cached_property
-    def enrich(self) -> enrich.EnrichResourceWithRawResponse:
-        from .resources.enrich import EnrichResourceWithRawResponse
-
-        return EnrichResourceWithRawResponse(self._client.enrich)
 
 
 class AsyncChannel3WithRawResponse:
@@ -656,6 +675,12 @@ class AsyncChannel3WithRawResponse:
         from .resources.products import AsyncProductsResourceWithRawResponse
 
         return AsyncProductsResourceWithRawResponse(self._client.products)
+
+    @cached_property
+    def reporting(self) -> reporting.AsyncReportingResourceWithRawResponse:
+        from .resources.reporting import AsyncReportingResourceWithRawResponse
+
+        return AsyncReportingResourceWithRawResponse(self._client.reporting)
 
     @cached_property
     def brands(self) -> brands.AsyncBrandsResourceWithRawResponse:
@@ -682,16 +707,16 @@ class AsyncChannel3WithRawResponse:
         return AsyncPriceTrackingResourceWithRawResponse(self._client.price_tracking)
 
     @cached_property
+    def conversations(self) -> conversations.AsyncConversationsResourceWithRawResponse:
+        from .resources.conversations import AsyncConversationsResourceWithRawResponse
+
+        return AsyncConversationsResourceWithRawResponse(self._client.conversations)
+
+    @cached_property
     def search(self) -> search.AsyncSearchResourceWithRawResponse:
         from .resources.search import AsyncSearchResourceWithRawResponse
 
         return AsyncSearchResourceWithRawResponse(self._client.search)
-
-    @cached_property
-    def enrich(self) -> enrich.AsyncEnrichResourceWithRawResponse:
-        from .resources.enrich import AsyncEnrichResourceWithRawResponse
-
-        return AsyncEnrichResourceWithRawResponse(self._client.enrich)
 
 
 class Channel3WithStreamedResponse:
@@ -705,6 +730,12 @@ class Channel3WithStreamedResponse:
         from .resources.products import ProductsResourceWithStreamingResponse
 
         return ProductsResourceWithStreamingResponse(self._client.products)
+
+    @cached_property
+    def reporting(self) -> reporting.ReportingResourceWithStreamingResponse:
+        from .resources.reporting import ReportingResourceWithStreamingResponse
+
+        return ReportingResourceWithStreamingResponse(self._client.reporting)
 
     @cached_property
     def brands(self) -> brands.BrandsResourceWithStreamingResponse:
@@ -731,16 +762,16 @@ class Channel3WithStreamedResponse:
         return PriceTrackingResourceWithStreamingResponse(self._client.price_tracking)
 
     @cached_property
+    def conversations(self) -> conversations.ConversationsResourceWithStreamingResponse:
+        from .resources.conversations import ConversationsResourceWithStreamingResponse
+
+        return ConversationsResourceWithStreamingResponse(self._client.conversations)
+
+    @cached_property
     def search(self) -> search.SearchResourceWithStreamingResponse:
         from .resources.search import SearchResourceWithStreamingResponse
 
         return SearchResourceWithStreamingResponse(self._client.search)
-
-    @cached_property
-    def enrich(self) -> enrich.EnrichResourceWithStreamingResponse:
-        from .resources.enrich import EnrichResourceWithStreamingResponse
-
-        return EnrichResourceWithStreamingResponse(self._client.enrich)
 
 
 class AsyncChannel3WithStreamedResponse:
@@ -754,6 +785,12 @@ class AsyncChannel3WithStreamedResponse:
         from .resources.products import AsyncProductsResourceWithStreamingResponse
 
         return AsyncProductsResourceWithStreamingResponse(self._client.products)
+
+    @cached_property
+    def reporting(self) -> reporting.AsyncReportingResourceWithStreamingResponse:
+        from .resources.reporting import AsyncReportingResourceWithStreamingResponse
+
+        return AsyncReportingResourceWithStreamingResponse(self._client.reporting)
 
     @cached_property
     def brands(self) -> brands.AsyncBrandsResourceWithStreamingResponse:
@@ -780,16 +817,16 @@ class AsyncChannel3WithStreamedResponse:
         return AsyncPriceTrackingResourceWithStreamingResponse(self._client.price_tracking)
 
     @cached_property
+    def conversations(self) -> conversations.AsyncConversationsResourceWithStreamingResponse:
+        from .resources.conversations import AsyncConversationsResourceWithStreamingResponse
+
+        return AsyncConversationsResourceWithStreamingResponse(self._client.conversations)
+
+    @cached_property
     def search(self) -> search.AsyncSearchResourceWithStreamingResponse:
         from .resources.search import AsyncSearchResourceWithStreamingResponse
 
         return AsyncSearchResourceWithStreamingResponse(self._client.search)
-
-    @cached_property
-    def enrich(self) -> enrich.AsyncEnrichResourceWithStreamingResponse:
-        from .resources.enrich import AsyncEnrichResourceWithStreamingResponse
-
-        return AsyncEnrichResourceWithStreamingResponse(self._client.enrich)
 
 
 Client = Channel3

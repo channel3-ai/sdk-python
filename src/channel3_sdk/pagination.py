@@ -12,6 +12,8 @@ __all__ = [
     "AsyncSearchPage",
     "SyncCategoryPage",
     "AsyncCategoryPage",
+    "SyncAnalyticsPage",
+    "AsyncAnalyticsPage",
 ]
 
 _T = TypeVar("_T")
@@ -124,6 +126,50 @@ class AsyncCategoryPage(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
     page: Optional[int] = None
     page_size: Optional[int] = None
     total: Optional[int] = None
+
+    @override
+    def _get_page_items(self) -> List[_T]:
+        items = self.items
+        if not items:
+            return []
+        return items
+
+    @override
+    def next_page_info(self) -> Optional[PageInfo]:
+        current_page = self.page
+        if current_page is None:
+            current_page = 1
+
+        return PageInfo(params={"page": current_page + 1})
+
+
+class SyncAnalyticsPage(BaseSyncPage[_T], BasePage[_T], Generic[_T]):
+    items: List[_T]
+    page: Optional[int] = None
+    limit: Optional[int] = None
+    total_count: Optional[int] = None
+
+    @override
+    def _get_page_items(self) -> List[_T]:
+        items = self.items
+        if not items:
+            return []
+        return items
+
+    @override
+    def next_page_info(self) -> Optional[PageInfo]:
+        current_page = self.page
+        if current_page is None:
+            current_page = 1
+
+        return PageInfo(params={"page": current_page + 1})
+
+
+class AsyncAnalyticsPage(BaseAsyncPage[_T], BasePage[_T], Generic[_T]):
+    items: List[_T]
+    page: Optional[int] = None
+    limit: Optional[int] = None
+    total_count: Optional[int] = None
 
     @override
     def _get_page_items(self) -> List[_T]:

@@ -9,7 +9,7 @@ import httpx
 
 from ..types import search_perform_params
 from .._types import Body, Omit, Query, Headers, NotGiven, omit, not_given
-from .._utils import maybe_transform, async_maybe_transform
+from .._utils import maybe_transform, strip_not_given, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -59,6 +59,7 @@ class SearchResource(SyncAPIResource):
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         query: Optional[str] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -91,6 +92,9 @@ class SearchResource(SyncAPIResource):
           query: Search query. At least one of `query`, `image_url`, `base64_image`, or
               `page_token` must be provided.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -99,6 +103,7 @@ class SearchResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._post(
             "/v1/search",
             body=maybe_transform(
@@ -153,6 +158,7 @@ class AsyncSearchResource(AsyncAPIResource):
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         query: Optional[str] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -185,6 +191,9 @@ class AsyncSearchResource(AsyncAPIResource):
           query: Search query. At least one of `query`, `image_url`, `base64_image`, or
               `page_token` must be provided.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -193,6 +202,7 @@ class AsyncSearchResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return await self._post(
             "/v1/search",
             body=await async_maybe_transform(

@@ -32,14 +32,13 @@ class ColorsPalette(TypedDict, total=False):
 
 
 class Colors(TypedDict, total=False):
-    """[Beta] Color filter wrapper.
-
-    Holds the list of required colors today;
-    reserved for future filter-level options (e.g. match modes, tolerance overrides).
-    """
+    """[Beta] Color filter wrapper. Holds required colors and optional match mode."""
 
     palette: Required[Iterable[ColorsPalette]]
     """Colors required in matching products. Treated as an AND condition."""
+
+    match: Literal["strict", "standard", "loose"]
+    """How tightly colors must match: 'strict', 'standard', or 'loose'."""
 
 
 class DimensionsHeight(TypedDict, total=False):
@@ -113,17 +112,22 @@ class SearchFiltersParam(TypedDict, total=False):
     """Filter by age group. Age-agnostic products are treated as adult products."""
 
     attributes: Optional[Dict[str, SequenceNotStr[str]]]
-    """
-    If provided, only products whose extracted attributes match these key/value
-    constraints will be returned. Keys are attribute handles (e.g. 'color',
-    'material') and values are lists of allowed values (OR within a key, AND across
-    keys). When a category filter is also supplied, all keys must be valid
-    attributes of at least one of the requested categories. See
-    `Category.attributes` for the valid keys/values per category.
+    """If provided, only products matching these key/value constraints will be
+    returned.
+
+    Keys are attribute handles (e.g. 'color', 'material') and values are lists of
+    allowed values (OR within a key, AND across keys). When a category filter is
+    also supplied, all keys must be valid attributes of at least one of the
+    requested categories. See `Category.attributes` for the valid keys and values
+    per category.
     """
 
-    availability: Optional[List[AvailabilityStatus]]
-    """If provided, only products with these availability statuses will be returned"""
+    availability: List[AvailabilityStatus]
+    """Offer availability statuses to match (OR).
+
+    Defaults to ['InStock']. An offer with no availability data counts as 'InStock'.
+    Pass every value to disable availability filtering.
+    """
 
     brand_ids: Optional[SequenceNotStr[str]]
     """If provided, only products from these brands will be returned"""
@@ -135,17 +139,13 @@ class SearchFiltersParam(TypedDict, total=False):
     """
 
     colors: Optional[Colors]
-    """[Beta] Color filter wrapper.
+    """[Beta] Color filter wrapper. Holds required colors and optional match mode."""
 
-    Holds the list of required colors today; reserved for future filter-level
-    options (e.g. match modes, tolerance overrides).
-    """
+    conditions: List[Literal["new", "used"]]
+    """Offer conditions to match (OR).
 
-    condition: Optional[Literal["new", "refurbished", "used"]]
-    """Filter by offer condition.
-
-    Requires at least one offer matching the requested condition, locale, and any
-    price filter. Offers without condition data are indexed as new.
+    Defaults to ['new'], which also matches offers whose condition is unknown. Pass
+    every value to disable condition filtering.
     """
 
     dimensions: Optional[Dimensions]
@@ -175,6 +175,10 @@ class SearchFiltersParam(TypedDict, total=False):
     """
 
     gender: Optional[Literal["male", "female"]]
+    """Product gender.
+
+    'unisex' is deprecated: coerced to None on input, never emitted.
+    """
 
     price: Optional[SearchFilterPriceParam]
     """Price filter for search. Values are inclusive."""

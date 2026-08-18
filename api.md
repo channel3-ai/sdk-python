@@ -38,6 +38,43 @@ Methods:
 - <code title="post /v1/search">client.products.<a href="./src/channel3_sdk/resources/products.py">search</a>(\*\*<a href="src/channel3_sdk/types/product_search_params.py">params</a>) -> <a href="./src/channel3_sdk/types/product_detail.py">SyncSearchPage[ProductDetail]</a></code>
 - <code title="post /v1/image-search">client.products.<a href="./src/channel3_sdk/resources/products.py">search_by_image</a>(\*\*<a href="src/channel3_sdk/types/product_search_by_image_params.py">params</a>) -> <a href="./src/channel3_sdk/types/product_detail.py">SyncSearchPage[ProductDetail]</a></code>
 
+# Reporting
+
+Types:
+
+```python
+from channel3_sdk.types import ReportingProduct
+```
+
+## Clicks
+
+Types:
+
+```python
+from channel3_sdk.types.reporting import Click, ClicksResponse, ClicksSummary
+```
+
+Methods:
+
+- <code title="get /v1/reporting/clicks">client.reporting.clicks.<a href="./src/channel3_sdk/resources/reporting/clicks.py">list</a>(\*\*<a href="src/channel3_sdk/types/reporting/click_list_params.py">params</a>) -> <a href="./src/channel3_sdk/types/reporting/click.py">SyncAnalyticsPage[Click]</a></code>
+
+## Transactions
+
+Types:
+
+```python
+from channel3_sdk.types.reporting import (
+    PublicTransactionStatus,
+    Transaction,
+    TransactionsResponse,
+    TransactionsSummary,
+)
+```
+
+Methods:
+
+- <code title="get /v1/reporting/transactions">client.reporting.transactions.<a href="./src/channel3_sdk/resources/reporting/transactions.py">list</a>(\*\*<a href="src/channel3_sdk/types/reporting/transaction_list_params.py">params</a>) -> <a href="./src/channel3_sdk/types/reporting/transaction.py">SyncAnalyticsPage[Transaction]</a></code>
+
 # Brands
 
 Types:
@@ -50,7 +87,6 @@ Methods:
 
 - <code title="get /v1/brands/{brand_id}">client.brands.<a href="./src/channel3_sdk/resources/brands.py">retrieve</a>(brand_id, \*\*<a href="src/channel3_sdk/types/brand_retrieve_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
 - <code title="get /v1/brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">list</a>(\*\*<a href="src/channel3_sdk/types/brand_list_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">SyncCursorPage[Brand]</a></code>
-- <code title="get /v0/brands">client.brands.<a href="./src/channel3_sdk/resources/brands.py">find</a>(\*\*<a href="src/channel3_sdk/types/brand_find_params.py">params</a>) -> <a href="./src/channel3_sdk/types/brand.py">Brand</a></code>
 - <code title="get /v1/brands/search">client.brands.<a href="./src/channel3_sdk/resources/brands.py">search</a>(\*\*<a href="src/channel3_sdk/types/brand_search_params.py">params</a>) -> <a href="./src/channel3_sdk/types/search_brands_response.py">SearchBrandsResponse</a></code>
 
 # Categories
@@ -111,6 +147,61 @@ Methods:
 - <code title="post /v0/price-tracking/start">client.price_tracking.<a href="./src/channel3_sdk/resources/price_tracking.py">start</a>(\*\*<a href="src/channel3_sdk/types/price_tracking_start_params.py">params</a>) -> <a href="./src/channel3_sdk/types/subscription.py">Subscription</a></code>
 - <code title="post /v0/price-tracking/stop">client.price_tracking.<a href="./src/channel3_sdk/resources/price_tracking.py">stop</a>(\*\*<a href="src/channel3_sdk/types/price_tracking_stop_params.py">params</a>) -> <a href="./src/channel3_sdk/types/subscription.py">Subscription</a></code>
 
+# Conversations
+
+Types:
+
+```python
+from channel3_sdk.types import (
+    AssistantMessage,
+    CatalogDisplayPayload,
+    CatalogToolError,
+    ConversationContext,
+    ConversationDetail,
+    ConversationError,
+    ConversationErrorBody,
+    CreateTurnRequest,
+    ImagePart,
+    PartCompletedEvent,
+    PartDeltaEvent,
+    PartStartedEvent,
+    ProductIDsInput,
+    SearchProductsInput,
+    TextPart,
+    ToolPart,
+    TurnCompletedEvent,
+    TurnErrorCode,
+    TurnErrorEvent,
+    TurnEvent,
+    TurnResult,
+    TurnStartedEvent,
+    TurnUsage,
+    UserMessage,
+)
+```
+
+Methods:
+
+- <code title="post /v1/conversations">client.conversations.<a href="./src/channel3_sdk/resources/conversations/conversations.py">create</a>(\*\*<a href="src/channel3_sdk/types/conversation_create_params.py">params</a>) -> <a href="./src/channel3_sdk/types/turn_result.py">TurnResult</a></code>
+- <code title="get /v1/conversations/{conversation_id}">client.conversations.<a href="./src/channel3_sdk/resources/conversations/conversations.py">retrieve</a>(conversation_id, \*\*<a href="src/channel3_sdk/types/conversation_retrieve_params.py">params</a>) -> <a href="./src/channel3_sdk/types/conversation_detail.py">ConversationDetail</a></code>
+
+## ClientTokens
+
+Types:
+
+```python
+from channel3_sdk.types.conversations import (
+    ClientTokenResponse,
+    CreateClientTokenRequest,
+    RevokeClientTokenRequest,
+)
+```
+
+Methods:
+
+- <code title="post /v1/conversations/client_tokens">client.conversations.client_tokens.<a href="./src/channel3_sdk/resources/conversations/client_tokens.py">create</a>(\*\*<a href="src/channel3_sdk/types/conversations/client_token_create_params.py">params</a>) -> <a href="./src/channel3_sdk/types/conversations/client_token_response.py">ClientTokenResponse</a></code>
+- <code title="post /v1/conversations/client_tokens/revoke">client.conversations.client_tokens.<a href="./src/channel3_sdk/resources/conversations/client_tokens.py">revoke</a>(\*\*<a href="src/channel3_sdk/types/conversations/client_token_revoke_params.py">params</a>) -> None</code>
+
 # Search
 
 Types:
@@ -128,15 +219,3 @@ from channel3_sdk.types import (
 Methods:
 
 - <code title="post /v1/search">client.search.<a href="./src/channel3_sdk/resources/search.py">perform</a>(\*\*<a href="src/channel3_sdk/types/search_perform_params.py">params</a>) -> <a href="./src/channel3_sdk/types/search_response.py">SearchResponse</a></code>
-
-# Enrich
-
-Types:
-
-```python
-from channel3_sdk.types import EnrichRequest, EnrichEnrichURLResponse
-```
-
-Methods:
-
-- <code title="post /v0/enrich">client.enrich.<a href="./src/channel3_sdk/resources/enrich.py">enrich_url</a>(\*\*<a href="src/channel3_sdk/types/enrich_enrich_url_params.py">params</a>) -> <a href="./src/channel3_sdk/types/enrich_enrich_url_response.py">EnrichEnrichURLResponse</a></code>

@@ -24,7 +24,9 @@ class Category(BaseModel):
     attributes: Optional[List[CategoryAttribute]] = None
     """Structured attributes applicable to this category, with their allowed values.
 
-    Usable as keys in `SearchFilters.attributes`.
+    Usable as keys in `SearchFilters.attributes`. Includes the variant axes
+    ('color', 'size', 'shoe-size') where the category defines them; those match
+    against each offer's variant options.
     """
 
     children: Optional[List[CategoryRef]] = None

@@ -5,6 +5,7 @@ from typing_extensions import Literal
 
 from .price import Price
 from .._models import BaseModel
+from .availability_status import AvailabilityStatus
 
 __all__ = ["ProductOffer", "Dimensions", "DimensionsHeight", "DimensionsLength", "DimensionsWeight", "DimensionsWidth"]
 
@@ -78,7 +79,12 @@ class Dimensions(BaseModel):
 
 
 class ProductOffer(BaseModel):
-    availability: Literal["InStock", "OutOfStock"]
+    availability: AvailabilityStatus
+    """The two availability values the public API emits on offers.
+
+    Internal `AvailabilityStatus` values are collapsed to these via
+    `AvailabilityStatus.to_api()`.
+    """
 
     domain: str
 
@@ -86,10 +92,11 @@ class ProductOffer(BaseModel):
 
     url: str
 
-    condition: Optional[Literal["new", "refurbished", "used"]] = None
-    """Condition of this merchant offer (new, used, or refurbished).
+    condition: Optional[Literal["new", "used"]] = None
+    """Offer condition.
 
-    Null when condition is unknown.
+    'refurbished' is deprecated: rejected as a filter value, coerced to None on
+    responses.
     """
 
     dimensions: Optional[Dimensions] = None

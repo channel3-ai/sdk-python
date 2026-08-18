@@ -27,10 +27,10 @@ class VariantsOptionValue(BaseModel):
     """The display value of the option value (e.g. 'Blue')"""
 
     available: Optional[AvailabilityStatus] = None
-    """The availability status of the option value.
+    """The two availability values the public API emits on offers.
 
-    None when returned on search results, hydrated only on get product detail
-    requests.
+    Internal `AvailabilityStatus` values are collapsed to these via
+    `AvailabilityStatus.to_api()`.
     """
 
     product_id: Optional[str] = None
@@ -94,14 +94,16 @@ class ProductDetail(BaseModel):
     brands: Optional[List[ProductBrand]] = None
     """Ordered list of brands."""
 
-    categories: Optional[List[str]] = None
-
     category: Optional[CategorySummary] = None
     """Lean category representation used in search hits and list rows."""
 
     description: Optional[str] = None
 
-    gender: Optional[Literal["male", "female", "unisex"]] = None
+    gender: Optional[Literal["male", "female"]] = None
+    """Product gender.
+
+    'unisex' is deprecated: coerced to None on input, never emitted.
+    """
 
     images: Optional[List[ProductImage]] = None
 

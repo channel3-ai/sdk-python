@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import Required, TypedDict
+from typing_extensions import Required, Annotated, TypedDict
 
+from .._utils import PropertyInfo
 from .locale_config_param import LocaleConfigParam
 from .search_filters_param import SearchFiltersParam
 
@@ -30,4 +31,10 @@ class ProductFindSimilarParams(TypedDict, total=False):
     page_token: Optional[str]
     """
     Opaque token from a previous similar response to fetch the next page of results.
+    """
+
+    x_user_id: Annotated[str, PropertyInfo(alias="x-user-id")]
+    """Optional user identifier to attribute clicks and sales to a user in your system.
+
+    Channel3 appends it to buy URLs in the response.
     """

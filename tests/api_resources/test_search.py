@@ -36,7 +36,6 @@ class TestSearch:
                 config={
                     "country": "US",
                     "currency": "USD",
-                    "keyword_search_only": True,
                     "language": "en",
                     "length_unit": "mm",
                     "mode": "keyword",
@@ -54,9 +53,10 @@ class TestSearch:
                                 "hex": "hex",
                                 "percentage": 0,
                             }
-                        ]
+                        ],
+                        "match": "strict",
                     },
-                    "condition": "new",
+                    "conditions": ["new"],
                     "dimensions": {
                         "height": {
                             "unit": "mm",
@@ -94,6 +94,7 @@ class TestSearch:
                 limit=1,
                 page_token="page_token",
                 query="query",
+                x_user_id="x-user-id",
             )
 
         assert_matches_type(SearchResponse, search, path=["response"])
@@ -145,7 +146,6 @@ class TestAsyncSearch:
                 config={
                     "country": "US",
                     "currency": "USD",
-                    "keyword_search_only": True,
                     "language": "en",
                     "length_unit": "mm",
                     "mode": "keyword",
@@ -163,9 +163,10 @@ class TestAsyncSearch:
                                 "hex": "hex",
                                 "percentage": 0,
                             }
-                        ]
+                        ],
+                        "match": "strict",
                     },
-                    "condition": "new",
+                    "conditions": ["new"],
                     "dimensions": {
                         "height": {
                             "unit": "mm",
@@ -203,6 +204,7 @@ class TestAsyncSearch:
                 limit=1,
                 page_token="page_token",
                 query="query",
+                x_user_id="x-user-id",
             )
 
         assert_matches_type(SearchResponse, search, path=["response"])

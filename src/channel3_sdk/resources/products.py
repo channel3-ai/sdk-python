@@ -17,7 +17,7 @@ from ..types import (
     product_search_by_image_params,
 )
 from .._types import Body, Omit, Query, Headers, NotGiven, SequenceNotStr, omit, not_given
-from .._utils import path_template, maybe_transform, async_maybe_transform
+from .._utils import path_template, maybe_transform, strip_not_given, async_maybe_transform
 from .._compat import cached_property
 from .._resource import SyncAPIResource, AsyncAPIResource
 from .._response import (
@@ -92,6 +92,7 @@ class ProductsResource(SyncAPIResource):
         length_unit: Optional[Literal["mm", "cm", "m", "in", "ft"]] | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         weight_unit: Optional[Literal["mg", "g", "kg", "oz", "lb"]] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -121,6 +122,9 @@ class ProductsResource(SyncAPIResource):
           weight_unit: Preferred unit for weight dimensions. When unset, weight is returned in the unit
               the merchant stated.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -131,6 +135,7 @@ class ProductsResource(SyncAPIResource):
         """
         if not product_id:
             raise ValueError(f"Expected a non-empty value for `product_id` but received {product_id!r}")
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._get(
             path_template("/v1/products/{product_id}", product_id=product_id),
             options=make_request_options(
@@ -159,6 +164,7 @@ class ProductsResource(SyncAPIResource):
         filters: SearchFiltersParam | Omit = omit,
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -174,9 +180,6 @@ class ProductsResource(SyncAPIResource):
         At least one of `filters.brand_ids`, `filters.category_ids`, or
         `filters.website_ids` must be provided.
 
-        Access to this endpoint is restricted. If you think your use-case requires it,
-        please contact us.
-
         Args:
           filters: Filters to browse by. At least one of `brand_ids`, `category_ids`, or
               `website_ids` must be provided.
@@ -184,6 +187,9 @@ class ProductsResource(SyncAPIResource):
           limit: Optional limit on the number of results. Default is 20, max is 30.
 
           page_token: Opaque token from a previous browse response to fetch the next page.
+
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
 
           extra_headers: Send extra headers
 
@@ -193,6 +199,7 @@ class ProductsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._get_api_list(
             "/v1/browse",
             page=SyncSearchPage[ProductDetail],
@@ -219,6 +226,7 @@ class ProductsResource(SyncAPIResource):
         filters: SearchFiltersParam | Omit = omit,
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -245,6 +253,9 @@ class ProductsResource(SyncAPIResource):
 
           page_token: Opaque token from a previous similar response to fetch the next page of results.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -253,6 +264,7 @@ class ProductsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._get_api_list(
             "/v1/similar",
             page=SyncSearchPage[ProductDetail],
@@ -278,6 +290,7 @@ class ProductsResource(SyncAPIResource):
         *,
         url: str,
         max_staleness_hours: int | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -297,6 +310,9 @@ class ProductsResource(SyncAPIResource):
           max_staleness_hours: Maximum age (in hours) of cached product data before forcing a fresh lookup.
               Defaults to 3 hours.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -305,6 +321,7 @@ class ProductsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._post(
             "/v1/lookup",
             body=maybe_transform(
@@ -324,6 +341,7 @@ class ProductsResource(SyncAPIResource):
         self,
         *,
         url: str,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -341,6 +359,9 @@ class ProductsResource(SyncAPIResource):
         Args:
           url: The URL of the product to monetize
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -349,6 +370,7 @@ class ProductsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._post(
             "/v1/monetize",
             body=maybe_transform({"url": url}, product_monetize_params.ProductMonetizeParams),
@@ -368,6 +390,7 @@ class ProductsResource(SyncAPIResource):
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         query: Optional[str] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -400,6 +423,9 @@ class ProductsResource(SyncAPIResource):
           query: Search query. At least one of `query`, `image_url`, `base64_image`, or
               `page_token` must be provided.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -408,6 +434,7 @@ class ProductsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._get_api_list(
             "/v1/search",
             page=SyncSearchPage[ProductDetail],
@@ -440,6 +467,7 @@ class ProductsResource(SyncAPIResource):
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         segment: Optional[str] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -472,6 +500,9 @@ class ProductsResource(SyncAPIResource):
               and crops the main product automatically. A custom string (e.g. "shoe", "mug")
               segments the specified object.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -480,6 +511,7 @@ class ProductsResource(SyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._get_api_list(
             "/v1/image-search",
             page=SyncSearchPage[ProductDetail],
@@ -557,6 +589,7 @@ class AsyncProductsResource(AsyncAPIResource):
         length_unit: Optional[Literal["mm", "cm", "m", "in", "ft"]] | Omit = omit,
         website_ids: Optional[SequenceNotStr[str]] | Omit = omit,
         weight_unit: Optional[Literal["mg", "g", "kg", "oz", "lb"]] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -586,6 +619,9 @@ class AsyncProductsResource(AsyncAPIResource):
           weight_unit: Preferred unit for weight dimensions. When unset, weight is returned in the unit
               the merchant stated.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -596,6 +632,7 @@ class AsyncProductsResource(AsyncAPIResource):
         """
         if not product_id:
             raise ValueError(f"Expected a non-empty value for `product_id` but received {product_id!r}")
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return await self._get(
             path_template("/v1/products/{product_id}", product_id=product_id),
             options=make_request_options(
@@ -624,6 +661,7 @@ class AsyncProductsResource(AsyncAPIResource):
         filters: SearchFiltersParam | Omit = omit,
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -639,9 +677,6 @@ class AsyncProductsResource(AsyncAPIResource):
         At least one of `filters.brand_ids`, `filters.category_ids`, or
         `filters.website_ids` must be provided.
 
-        Access to this endpoint is restricted. If you think your use-case requires it,
-        please contact us.
-
         Args:
           filters: Filters to browse by. At least one of `brand_ids`, `category_ids`, or
               `website_ids` must be provided.
@@ -649,6 +684,9 @@ class AsyncProductsResource(AsyncAPIResource):
           limit: Optional limit on the number of results. Default is 20, max is 30.
 
           page_token: Opaque token from a previous browse response to fetch the next page.
+
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
 
           extra_headers: Send extra headers
 
@@ -658,6 +696,7 @@ class AsyncProductsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._get_api_list(
             "/v1/browse",
             page=AsyncSearchPage[ProductDetail],
@@ -684,6 +723,7 @@ class AsyncProductsResource(AsyncAPIResource):
         filters: SearchFiltersParam | Omit = omit,
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -710,6 +750,9 @@ class AsyncProductsResource(AsyncAPIResource):
 
           page_token: Opaque token from a previous similar response to fetch the next page of results.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -718,6 +761,7 @@ class AsyncProductsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._get_api_list(
             "/v1/similar",
             page=AsyncSearchPage[ProductDetail],
@@ -743,6 +787,7 @@ class AsyncProductsResource(AsyncAPIResource):
         *,
         url: str,
         max_staleness_hours: int | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -762,6 +807,9 @@ class AsyncProductsResource(AsyncAPIResource):
           max_staleness_hours: Maximum age (in hours) of cached product data before forcing a fresh lookup.
               Defaults to 3 hours.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -770,6 +818,7 @@ class AsyncProductsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return await self._post(
             "/v1/lookup",
             body=await async_maybe_transform(
@@ -789,6 +838,7 @@ class AsyncProductsResource(AsyncAPIResource):
         self,
         *,
         url: str,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -806,6 +856,9 @@ class AsyncProductsResource(AsyncAPIResource):
         Args:
           url: The URL of the product to monetize
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -814,6 +867,7 @@ class AsyncProductsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return await self._post(
             "/v1/monetize",
             body=await async_maybe_transform({"url": url}, product_monetize_params.ProductMonetizeParams),
@@ -833,6 +887,7 @@ class AsyncProductsResource(AsyncAPIResource):
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         query: Optional[str] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -865,6 +920,9 @@ class AsyncProductsResource(AsyncAPIResource):
           query: Search query. At least one of `query`, `image_url`, `base64_image`, or
               `page_token` must be provided.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -873,6 +931,7 @@ class AsyncProductsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._get_api_list(
             "/v1/search",
             page=AsyncSearchPage[ProductDetail],
@@ -905,6 +964,7 @@ class AsyncProductsResource(AsyncAPIResource):
         limit: Optional[int] | Omit = omit,
         page_token: Optional[str] | Omit = omit,
         segment: Optional[str] | Omit = omit,
+        x_user_id: str | Omit = omit,
         # Use the following arguments if you need to pass additional parameters to the API that aren't available via kwargs.
         # The extra values given here take precedence over values defined on the client or passed to this method.
         extra_headers: Headers | None = None,
@@ -937,6 +997,9 @@ class AsyncProductsResource(AsyncAPIResource):
               and crops the main product automatically. A custom string (e.g. "shoe", "mug")
               segments the specified object.
 
+          x_user_id: Optional user identifier to attribute clicks and sales to a user in your system.
+              Channel3 appends it to buy URLs in the response.
+
           extra_headers: Send extra headers
 
           extra_query: Add additional query parameters to the request
@@ -945,6 +1008,7 @@ class AsyncProductsResource(AsyncAPIResource):
 
           timeout: Override the client-level default timeout for this request, in seconds
         """
+        extra_headers = {**strip_not_given({"x-user-id": x_user_id}), **(extra_headers or {})}
         return self._get_api_list(
             "/v1/image-search",
             page=AsyncSearchPage[ProductDetail],

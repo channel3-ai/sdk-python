@@ -4,9 +4,8 @@ from __future__ import annotations
 
 from typing_extensions import Required, TypedDict
 
-__all__ = ["EnrichEnrichURLParams"]
+__all__ = ["ClientTokenRevokeParams"]
 
 
-class EnrichEnrichURLParams(TypedDict, total=False):
-    url: Required[str]
-    """The URL of the product to enrich"""
+class ClientTokenRevokeParams(TypedDict, total=False):
+    token: Required[str]

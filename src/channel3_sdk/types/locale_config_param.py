@@ -38,24 +38,13 @@ class LocaleConfigParam(TypedDict, total=False):
             "RO",
         ]
     ]
-    """ISO 3166-1 alpha-2 country code.
-
-    May stay unset for pan-region storefronts (e.g. `currency=EUR` with no specific
-    country).
-    """
+    """ISO 3166-1 alpha-2 country code (plus the pan-region `EU`)."""
 
     currency: Optional[Literal["USD", "CAD", "AUD", "GBP", "EUR", "SEK", "CZK", "RON"]]
-    """ISO 4217 currency code.
-
-    When unset, inferred from `country` (e.g. `GB` → `GBP`), defaulting to `USD`.
-    """
+    """ISO 4217 currency code."""
 
     language: Optional[Literal["en", "de", "fr", "it", "es", "nl", "sv", "fi", "pt", "cs", "el", "ro"]]
-    """ISO 639-1 language code.
-
-    When unset, inferred from `country` (preferred) then `currency`, defaulting to
-    `en`.
-    """
+    """ISO 639-1 language code."""
 
     length_unit: Optional[Literal["mm", "cm", "m", "in", "ft"]]
     """Preferred unit for length dimensions (length/width/height) in responses.

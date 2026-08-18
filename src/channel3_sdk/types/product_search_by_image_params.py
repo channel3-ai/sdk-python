@@ -3,8 +3,9 @@
 from __future__ import annotations
 
 from typing import Optional
-from typing_extensions import TypedDict
+from typing_extensions import Annotated, TypedDict
 
+from .._utils import PropertyInfo
 from .locale_config_param import LocaleConfigParam
 from .search_filters_param import SearchFiltersParam
 
@@ -42,4 +43,10 @@ class ProductSearchByImageParams(TypedDict, total=False):
     None (default) disables segmentation. "AUTO" segments and crops the main product
     automatically. A custom string (e.g. "shoe", "mug") segments the specified
     object.
+    """
+
+    x_user_id: Annotated[str, PropertyInfo(alias="x-user-id")]
+    """Optional user identifier to attribute clicks and sales to a user in your system.
+
+    Channel3 appends it to buy URLs in the response.
     """

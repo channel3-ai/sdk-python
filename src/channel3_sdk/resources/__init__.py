@@ -8,14 +8,6 @@ from .brands import (
     BrandsResourceWithStreamingResponse,
     AsyncBrandsResourceWithStreamingResponse,
 )
-from .enrich import (
-    EnrichResource,
-    AsyncEnrichResource,
-    EnrichResourceWithRawResponse,
-    AsyncEnrichResourceWithRawResponse,
-    EnrichResourceWithStreamingResponse,
-    AsyncEnrichResourceWithStreamingResponse,
-)
 from .search import (
     SearchResource,
     AsyncSearchResource,
@@ -40,6 +32,14 @@ from .websites import (
     WebsitesResourceWithStreamingResponse,
     AsyncWebsitesResourceWithStreamingResponse,
 )
+from .reporting import (
+    ReportingResource,
+    AsyncReportingResource,
+    ReportingResourceWithRawResponse,
+    AsyncReportingResourceWithRawResponse,
+    ReportingResourceWithStreamingResponse,
+    AsyncReportingResourceWithStreamingResponse,
+)
 from .categories import (
     CategoriesResource,
     AsyncCategoriesResource,
@@ -47,6 +47,14 @@ from .categories import (
     AsyncCategoriesResourceWithRawResponse,
     CategoriesResourceWithStreamingResponse,
     AsyncCategoriesResourceWithStreamingResponse,
+)
+from .conversations import (
+    ConversationsResource,
+    AsyncConversationsResource,
+    ConversationsResourceWithRawResponse,
+    AsyncConversationsResourceWithRawResponse,
+    ConversationsResourceWithStreamingResponse,
+    AsyncConversationsResourceWithStreamingResponse,
 )
 from .price_tracking import (
     PriceTrackingResource,
@@ -64,6 +72,12 @@ __all__ = [
     "AsyncProductsResourceWithRawResponse",
     "ProductsResourceWithStreamingResponse",
     "AsyncProductsResourceWithStreamingResponse",
+    "ReportingResource",
+    "AsyncReportingResource",
+    "ReportingResourceWithRawResponse",
+    "AsyncReportingResourceWithRawResponse",
+    "ReportingResourceWithStreamingResponse",
+    "AsyncReportingResourceWithStreamingResponse",
     "BrandsResource",
     "AsyncBrandsResource",
     "BrandsResourceWithRawResponse",
@@ -88,16 +102,16 @@ __all__ = [
     "AsyncPriceTrackingResourceWithRawResponse",
     "PriceTrackingResourceWithStreamingResponse",
     "AsyncPriceTrackingResourceWithStreamingResponse",
+    "ConversationsResource",
+    "AsyncConversationsResource",
+    "ConversationsResourceWithRawResponse",
+    "AsyncConversationsResourceWithRawResponse",
+    "ConversationsResourceWithStreamingResponse",
+    "AsyncConversationsResourceWithStreamingResponse",
     "SearchResource",
     "AsyncSearchResource",
     "SearchResourceWithRawResponse",
     "AsyncSearchResourceWithRawResponse",
     "SearchResourceWithStreamingResponse",
     "AsyncSearchResourceWithStreamingResponse",
-    "EnrichResource",
-    "AsyncEnrichResource",
-    "EnrichResourceWithRawResponse",
-    "AsyncEnrichResourceWithRawResponse",
-    "EnrichResourceWithStreamingResponse",
-    "AsyncEnrichResourceWithStreamingResponse",
 ]
